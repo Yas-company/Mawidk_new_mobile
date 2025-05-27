@@ -1,0 +1,14 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "SJH823J232.com.example.2p",
+                "paths": [
+                    "/*"
+                ]
+            }
+            
+        ]
+    }
+}

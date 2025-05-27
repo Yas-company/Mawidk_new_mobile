@@ -1,0 +1,32 @@
+class AppIcons {
+  static const String iconPath = 'assets/images/png/';
+  static const String splashIcon = '${iconPath}app_logo.png';
+  static const String logo = '${iconPath}app_logo.png';
+  static const String whiteLogo = '${iconPath}white_logo.png';
+  static const String errorPlaceHolder = '${iconPath}error_placeholder.jpeg';
+  static const String noData = '${iconPath}no_data.png';
+  static const String avatar = '${iconPath}Avatar.png';
+  static const String emptyState = '${iconPath}empty_state.png';
+  static const String newsImage = '${iconPath}newsImage.png';
+  static const String employeeVoice = '${iconPath}employee_voice.png';
+  static const String emptyStateDark = '${iconPath}emptyStateDark.png';
+  static const String female = '${iconPath}female.png';
+  static const String male = '${iconPath}male.png';
+  static const String human = '${iconPath}human.png';
+  static const String panner = '${iconPath}panner.png';
+  static const String appSplashLogo = '${iconPath}app_splash_logo.png';
+  static const String doctor = '${iconPath}doctor.png';
+  static const String patient = '${iconPath}patient.png';
+  static const String clinic = '${iconPath}clinic.png';
+  static const String healthCenter = '${iconPath}health_center.png';
+  static const String hospital = '${iconPath}hospital.png';
+  static const String icLock = '${iconPath}ic_lock.png';
+  static const String arabic = '${iconPath}arabic.png';
+  static const String english = '${iconPath}english.png';
+  // static const String english = '${iconPath}location_not_selected.png';
+  static const String tabby = '${iconPath}tabby.png';
+  static const String livePayment = '${iconPath}live_payment.png';
+  static const String applePay = '${iconPath}apple_pay.png';
+  static const String tamara = '${iconPath}tamara.png';
+  static const String successfulPayment = '${iconPath}successful_payment.png';
+}

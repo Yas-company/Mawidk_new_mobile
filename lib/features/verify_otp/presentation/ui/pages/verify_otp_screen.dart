@@ -1,0 +1,139 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mawidak/core/component/image/p_image.dart';
+import 'package:mawidak/core/component/p_otp.dart';
+
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mawidak/core/component/button/p_button.dart';
+import 'package:mawidak/core/component/p_otp.dart';
+import 'package:mawidak/core/component/text/p_text.dart';
+import 'package:mawidak/core/component/text_field/p_textfield.dart';
+import 'package:mawidak/core/component/white_background_with_image.dart';
+import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
+import 'package:mawidak/core/data/constants/app_colors.dart';
+import 'package:mawidak/core/data/constants/app_router.dart';
+import 'package:mawidak/core/data/constants/global_obj.dart';
+import 'package:mawidak/core/extensions/navigator_extensions.dart';
+import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/state/base_state.dart';
+import 'package:mawidak/di.dart';
+import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
+import 'package:mawidak/features/verify_otp/data/model/verify_otp_request_model.dart';
+import 'package:mawidak/features/verify_otp/presentation/bloc/verify_otp_bloc.dart';
+import 'package:mawidak/features/verify_otp/presentation/bloc/verify_otp_event.dart';
+
+class VerifyOtpScreen extends StatefulWidget {
+  final String phone;
+  final bool isLogin;
+  const VerifyOtpScreen({super.key,required this.phone,required this.isLogin});
+
+  @override
+  VerifyOtpScreenState createState() => VerifyOtpScreenState();
+}
+
+class VerifyOtpScreenState extends State<VerifyOtpScreen> {
+  VerifyOtpBloc verifyOtpBloc = VerifyOtpBloc(verifyOtpUseCase:getIt());
+  SurveyBloc surveyBloc = SurveyBloc(surveyUseCase: getIt());
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(create: (context) => surveyBloc,
+      child: BlocProvider(create:(context) => verifyOtpBloc,
+        child: Scaffold(
+            backgroundColor:AppColors.whiteBackground,
+            body: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: WhiteBackgroundWithImage(child:SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SingleChildScrollView(
+                    child: Column(crossAxisAlignment:CrossAxisAlignment.start,children: [
+                      Align(alignment: Alignment.bottomLeft,
+                        child: InkWell(onTap:() {
+                          Navigator.pop(context);
+                        }, child: Container(padding:EdgeInsets.all(3),
+                          child:PImage(source:AppSvgIcons.icNext,color:AppColors.primaryColor,)
+                          // Icon(Icons.arrow_forward,color:AppColors.primaryColor,),
+                        ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top:60),
+                        child: PText(title:'ادخل رمز التحقق',fontColor:AppColors.primaryColor,
+                          size:PSize.text28,fontWeight:FontWeight.w700,),
+                      ),
+                      PText(title:'من فضلك قم بادخال رمز التحقق المكون من 4 حروف', size:PSize.text16,
+                          fontColor: AppColors.grayShade3),
+                      // OtpInputScreen(),
+                      const SizedBox(height:60,),
+                      PText(title:'كلمة السر المؤقتة', size:PSize.text14),
+
+                      const SizedBox(height:14,),
+                      OtpTextField(
+                        autoFocus:true,
+                        numberOfFields:4,textStyle:
+                        TextStyle(fontSize:18,fontWeight:FontWeight.w600,
+                            fontFamily:'cairo'),
+                        showFieldAsBox: true,
+                        onCodeChanged: (String code) {
+                          verifyOtpBloc.add(ValidationEvent(code:code));
+                        }, onSubmit: (String verificationCode){
+                          verifyOtpBloc.add(ValidationEvent(code:verificationCode));
+                        }, // end onSubmit
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top:14,bottom:10),
+                        child: PButton<VerifyOtpBloc,BaseState>(onPressed:() {
+                          verifyOtpBloc.add(ApplyVerifyOtpEvent(verifyOtpRequestModel:VerifyOtpRequestModel(
+                            phone:widget.phone,otp:verifyOtpBloc.otp.text),
+                          isLogin:widget.isLogin,
+                          // surveyBloc: surveyBloc
+                          ));
+                        },title:'تحقق',hasBloc:true,isFitWidth:true,size:PSize.text16,
+                          // icon:Icon(Icons.arrow_forward,color:AppColors.whiteColor,),
+                          icon:PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,),
+                          fontWeight:FontWeight.w700,
+                          isFirstButton: true,
+                          isButtonAlwaysExist: false,),
+                      ),
+                      Row(children: [
+                        PText(title:'لم تصل الرسالة؟  ',),
+                        GestureDetector(
+                          onTap: () {
+
+                          },child: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
+                              child: PText(
+                                title:'اعادة ارسال',fontColor:AppColors.primaryColor,
+                              ),
+                            ),
+                            Positioned(
+                              bottom:5, left: 0,
+                              right: 0,
+                              child: Container(
+                                height: 1,
+                                color:AppColors.primaryColor,
+                              ),
+                            ),
+                          ],
+                        )
+                        // PText(
+                        //   title:'اعادة ارسال',fontColor:AppColors.primaryColor,
+                        //   decoration: TextDecoration.underline,
+                        // ),
+                        ),
+                      ],
+                      )
+                    ],),
+                  ),
+                ),
+              ),),
+            )
+        ),
+      ),
+    );
+  }
+}

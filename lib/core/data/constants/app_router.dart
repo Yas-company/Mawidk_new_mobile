@@ -1,0 +1,34 @@
+class AppRouter {
+  static const String initial = '/';
+  static const String splash = '/splash';
+  static const String onBoarding = '/onBoarding';
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String forgetPassword = '/forgetPassword';
+  static const String changePassword = '/changePassword';
+  static const String editPersonalInfo = '/editPersonalInfo';
+  static const String verifyOtp = '/verifyOtp';
+  static const String doctorOrPatientScreen = '/doctorOrPatientScreen';
+  static const String confirmPassword = '/confirmPassword';
+  static const String patientSurvey = '/patientSurvey';
+  static const String doctorSurvey = '/doctorSurvey';
+  static const String homePatient = '/homePatient';
+  static const String homeDoctor = '/homeDoctor';
+  static const String times = '/times';
+  static const String profile = '/profile';
+  static const String patients = '/patients';
+  static const String more = '/more';
+  static const String pickupLocationScreen = '/pickupLocationScreen';
+  static const String locationScreen = '/locationScreen';
+  static const String search = '/search';
+  static const String searchResults = '/searchResults';
+  static const String doctorProfileScreen = '/doctorProfileScreen';
+  static const String doctorRatingsScreen = '/doctorRatingsScreen';
+  static const String appointmentBookingScreen = '/appointmentBookingScreen';
+  static const String notificationScreen = '/notificationScreen';
+  static const String appointmentPaymentScreen = '/appointmentPaymentScreen';
+  static const String allSpecializationsScreen = '/allSpecializationsScreen';
+  static const String contactUsScreen = '/contactUsScreen';
+  static const String patientFavouriteScreen = '/patientFavouriteScreen';
+  static const String doctorsOfSpeciality = '/doctorsOfSpeciality';
+}
