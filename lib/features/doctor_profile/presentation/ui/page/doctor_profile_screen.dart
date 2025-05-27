@@ -181,7 +181,7 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
                                   child: PText(fontWeight:FontWeight.w500,size:PSize.text13,
-                                    title:'all_evaluations'.tr(),fontColor:AppColors.grey200,
+                                    title:'evaluations'.tr(),fontColor:AppColors.grey200,
                                   ),
                                 ),
                                 Positioned(bottom:5, left: 0, right: 0,

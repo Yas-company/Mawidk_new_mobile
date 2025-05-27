@@ -37,7 +37,7 @@ class DoctorRatingsScreenState extends State<DoctorRatingsScreen> {
           child: Padding(
             padding: const EdgeInsets.only(top:24),
             // child: appBar(context: context,backBtn: true,text:widget.name,isCenter:true,actions:[
-            child: appBar(context: context,backBtn: true,text:'التقييمات',isCenter:true,actions:[
+            child: appBar(context: context,backBtn: true,text:'all_evaluations'.tr(),isCenter:true,actions:[
               // Container(margin:EdgeInsets.only(top:20),
               //     padding:EdgeInsets.all(11),
               //     decoration:BoxDecoration(shape:BoxShape.circle,
