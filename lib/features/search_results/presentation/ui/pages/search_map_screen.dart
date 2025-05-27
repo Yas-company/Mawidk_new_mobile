@@ -180,52 +180,62 @@ class CommunicationMapScreenState extends State<SearchMapScreen> {
   }
 
   Widget buildInfoCard(ClinicData item) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      color: Colors.white,
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      PText(
-                        title: item.name ?? '',
-                        size: PSize.text16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      const SizedBox(height: 4),
-                      PText(
-                        title: item.address ?? '',
-                        size: PSize.text16,
-                        fontWeight: FontWeight.w400,
-                        fontColor: AppColors.grey200,
-                      ),
-                    ],
+    return InkWell(splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,onTap:() {
+      context.push(AppRouter.doctorProfileScreen,extra:{
+        'id':item.id??0,
+        'name':item.name??'',
+        'specialization':''
+      });
+    },child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        color: Colors.white,
+        elevation: 2,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PText(
+                          title: item.name ?? '',
+                          size: PSize.text16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        const SizedBox(height: 4),
+                        PText(
+                          title: item.address ?? '',
+                          size: PSize.text16,
+                          fontWeight: FontWeight.w400,
+                          fontColor: AppColors.grey200,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            PButton(
-              isFitWidth: true,
-              onPressed: () {
-                context.push(AppRouter.appointmentBookingScreen,extra:{
-                  'id':item.id??0,
-                  'name':item.name??'',
-                  'specialization':''
-                });                // UrlLauncherManager.redirectUrl(item.link ?? '');
-              },
-              hasBloc: false,
-              title:'book_appointment'.tr(),
-            ),
-          ],
+                ],
+              ),
+              const SizedBox(height: 14),
+              PButton(
+                isFitWidth: true,
+                onPressed: () {
+                  context.push(AppRouter.appointmentBookingScreen,extra:{
+                    'id':item.id??0,
+                    'name':item.name??'',
+                    'specialization':''
+                  });                // UrlLauncherManager.redirectUrl(item.link ?? '');
+                },
+                hasBloc: false,
+                title:'book_appointment'.tr(),
+              ),
+            ],
+          ),
         ),
       ),
     );

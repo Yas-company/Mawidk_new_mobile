@@ -42,6 +42,7 @@
   "msg": "الرسالة",
   "search_by_name": "ابحث باسم الدكتور او التخصص",
   "no_doctors": "لا يوجد اطباء في هذا التخصص",
+  "no_doctors_found": "لا يوجد اطباء",
   "save_changes": "حفظ التغييرات",
   "add_note": "أضف ملاحظاتك",
   "notes": "ملاحظات",
@@ -80,5 +81,6 @@
   "document_verified": "التحقق من الوثائق",
   "academic_qualification_verified": "مراجعة المؤهلات العلمية",
   "license_verified": "التحقق من الترخيص المهني",
+  "there_is_no_diseases": "لا توجد امراض مزمنة",
   "follow": "المتابعة"
 }

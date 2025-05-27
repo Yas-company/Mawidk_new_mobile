@@ -61,8 +61,13 @@ class SearchResultWidget extends StatelessWidget {
             // physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               SearchData item = dataList[index];
-              return DoctorsListWidget(
-                imageUrl: 'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
+              return DoctorsListWidget(onClickCard:() {
+                context.push(AppRouter.doctorProfileScreen,extra:{
+                  'id':item.id??0,
+                  'name':item.name??'',
+                  'specialization':item.specialization??''
+                });
+              },imageUrl: 'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
                 doctorName:item.name??'',
                 rating: 4.8,
                 specialization:item.specialization??'',

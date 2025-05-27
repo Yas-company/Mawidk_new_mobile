@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart' as local;
 import 'package:flutter/material.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
@@ -8,6 +9,7 @@ class DropDownWidget extends StatefulWidget {
   final List<Option> options;
   final String title;
   final String hint;
+  final bool showCheckbox;
   final List<Option> selectedValues;
   final ValueChanged<List<Option>> onChanged;
 
@@ -16,6 +18,7 @@ class DropDownWidget extends StatefulWidget {
     required this.title,
     required this.hint,
     required this.options,
+    this.showCheckbox=false,
     required this.selectedValues,
     required this.onChanged,
   });
@@ -25,6 +28,7 @@ class DropDownWidget extends StatefulWidget {
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
+  bool _isChecked = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -96,6 +100,32 @@ class _DropDownWidgetState extends State<DropDownWidget> {
               );
             }).toList(),
           ),
+          CheckboxListTile(activeColor:AppColors.primaryColor,
+            contentPadding:EdgeInsets.zero,
+            title: Row(
+              children: [
+                PText(title: 'there_is_no_diseases'.tr(),size: PSize.text18,)
+              ],
+            ),
+            value: _isChecked,
+            onChanged: (bool? value) {
+              setState(() {
+                _isChecked = value ?? false;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading, // checkbox on the left
+          )
+          // Directionality(textDirection: TextDirection.ltr,
+          //   child: CheckboxListTile(contentPadding:EdgeInsets.zero,
+          //     // title: PText(title: 'there_is_no_diseases'.tr()),
+          //     value: _isChecked,
+          //     onChanged: (bool? value) {
+          //       setState(() {
+          //         _isChecked = value ?? false;
+          //       });
+          //     },
+          //   ),
+          // )
         ],
       ),
     );

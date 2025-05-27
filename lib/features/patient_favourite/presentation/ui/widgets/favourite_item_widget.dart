@@ -30,9 +30,13 @@ class FavouriteItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom:6,left:16,right:16,top:6),
-      child: GestureDetector(onTap:onCardClick,
+    return InkWell(onTap:onCardClick,
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom:6,left:16,right:16,top:6),
         child: Card(color:AppColors.whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),

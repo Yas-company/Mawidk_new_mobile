@@ -6,6 +6,7 @@ import 'package:mawidak/core/component/custom_loader/custom_loader.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
+import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/core/p_bloc_builder.dart';
 import 'package:mawidak/di.dart';
@@ -33,7 +34,10 @@ class PatientFavouriteScreen extends StatelessWidget {
                 favouriteBloc.add(ApplyFavouriteEvent());
               },loadedWidget:(state) {
               List<FavouriteDoctorListData> dataList = ((state as LoadedState).data).model?.model ?? [];
-                return  Expanded(
+                if (dataList.isEmpty) {
+                  return Expanded(child: PText(title: 'no_doctors_found'.tr()));
+                } else {
+                  return Expanded(
                   child: ListView.builder(itemBuilder:(context, index) {
                     FavouriteDoctorListData item = dataList[index];
                     return FavouriteItemWidget(onCardClick:() {
@@ -53,7 +57,16 @@ class PatientFavouriteScreen extends StatelessWidget {
                         rating:4, location:'', specialization:item.doctor?.specialization??'');
                   },shrinkWrap: true,itemCount:dataList.length,),
                 );
-              },loadingWidget:Expanded(child: Center(child:CustomLoader(size:35,))))
+                }
+              },loadingWidget:Expanded(child: Center(child:CustomLoader(size:35,))),
+             emptyWidget:(state) {
+            return Expanded(child: Center(child: Column(mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.hourglass_empty),
+                PText(title: 'no_doctors_found'.tr(),size:PSize.text18,),
+              ],
+            )));
+          },)
         ],),
       ),),
     );
