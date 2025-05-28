@@ -127,7 +127,7 @@ class DoctorOrPatientScreenState extends State<DoctorOrPatientScreen> {
                 ),
                 const SizedBox(height:14,),
                 SizedBox(width:MediaQuery.sizeOf(context).width,
-                  child:Container(padding:EdgeInsets.only(bottom:10),decoration:BoxDecoration(
+                  child:Container(padding:EdgeInsets.only(bottom:13,top:13,right:10,left:10),decoration:BoxDecoration(
                       color:AppColors.whiteColor,
                       border:Border.all(color:Colors.transparent,width:1),
                       borderRadius:const BorderRadius.all(Radius.circular(8))
@@ -135,8 +135,9 @@ class DoctorOrPatientScreenState extends State<DoctorOrPatientScreen> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom:5),
-                        child: PImage(source:items[2]['image'],height:70,width:70, fit:BoxFit.none,),
+                        child: PImage(source:items[2]['image'],height:50,width:50,),
                       ),
+                      const SizedBox(width:10,),
                       Column(crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           PText(title:items[0]['title'],fontColor:AppColors.blackColor,fontWeight:FontWeight.w600,),

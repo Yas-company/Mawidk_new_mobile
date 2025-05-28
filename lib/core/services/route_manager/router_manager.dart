@@ -191,6 +191,7 @@ class RouterManager {
           final params = state.extra as Map<String, dynamic>;
           return createRoute(widget:  DoctorRatingsScreen(
             id:params['id'], name:params['name'],
+            isRating:params['isRating']??false,
           ));
           // return createRoute(widget:DoctorRatingsScreen(id:state.extra as int));
         },
@@ -206,7 +207,10 @@ class RouterManager {
         name: AppRouter.editPersonalInfo,
         path: AppRouter.editPersonalInfo,
         pageBuilder: (context, state) {
-          return createRoute(widget:EditPersonalInfoScreen(phone:state.extra as String,));
+          final params = state.extra as Map<String, dynamic>;
+          return createRoute(widget:EditPersonalInfoScreen(
+            phone:params['phone'],name:params['name'],
+          ));
         },
       ),
       GoRoute(

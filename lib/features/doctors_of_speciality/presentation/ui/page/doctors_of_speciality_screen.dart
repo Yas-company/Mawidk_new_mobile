@@ -42,7 +42,13 @@ class DoctorsOfSpecialityScreen extends StatelessWidget {
                   List<DoctorModel> dataList = ((state as LoadedState).data).model?.model ?? [];
                   return  ListView.builder(itemBuilder:(context, index) {
                     DoctorModel item = dataList[index];
-                    return FavouriteItemWidget(onTap:() {
+                    return FavouriteItemWidget(onCardClick:() {
+                      context.push(AppRouter.doctorProfileScreen,extra:{
+                        'id':item.id??0,
+                        'name':item.name??'',
+                        'specialization':item.specialization??''
+                      });
+                    },onTap:() {
                       context.push(AppRouter.appointmentBookingScreen,extra:{
                         'id':item.id??0,
                         'name':item.name??'',

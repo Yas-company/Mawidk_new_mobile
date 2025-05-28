@@ -26,6 +26,8 @@ class SearchMapResponseModel {
 class ClinicData {
   final int? id;
   final String? name;
+  final String? specialization;
+  final String? image;
   final String? address;
   final String? latitude;
   final String? longitude;
@@ -39,7 +41,9 @@ class ClinicData {
   ClinicData({
     this.id,
     this.name,
+    this.specialization,
     this.address,
+    this.image,
     this.latitude,
     this.longitude,
     this.workingHoursFrom,
@@ -70,6 +74,8 @@ class ClinicData {
     return {
       'id': id,
       'name': name,
+      'specialization': specialization,
+      'image': image,
       'address': address,
       'latitude': latitude,
       'longitude': longitude,
@@ -88,12 +94,14 @@ class ClinicData {
       id: json['id'] as int?,
       distance: json['distance'] as dynamic,
       name: json['name'] as String?,
+      specialization: json['specialization'] as String?,
+      image: json['image'] as String?,
       address: json['address'] as String?,
       longitude: json['longitude'] as String?,
       latitude: json['latitude'] as String?,
       workingHoursFrom: json['working_hours_from'] as String?,
       workingHoursTo: json['working_hours_to'] as String?,
-      consultationFee: json['consultationFee'] as String?,
+      consultationFee: json['consultation_fee'] as String?,
       doctorName: json['doctorName'] as String?,
       workingDays: List<String>.from(json['working_days']),
     );

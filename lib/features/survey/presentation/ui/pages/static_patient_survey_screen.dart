@@ -65,7 +65,7 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
       title: "الامراض المزمنة",
       subtitle: "هل تعاني من اي امراض مزمنة ؟",
       questions: [
-        Question(
+        Question(showCheckBoc:true,
           id: 1,
           questionText: "اختر الامراض المزمنة",
           // type: "multi_select",isRequired:true,

@@ -107,6 +107,7 @@ class Question {
   String? hint;
   String? type;
   bool? isTrue;
+  bool? showCheckBoc;
   bool? isRequired;
   int? order;
   dynamic answer;
@@ -122,6 +123,7 @@ class Question {
         this.hint,
         this.answer,
         this.isTrue,
+        this.showCheckBoc,
         this.logicRules,
         this.options});
 
@@ -131,6 +133,7 @@ class Question {
     type = json['type'];
     isRequired = json['is_required'];
     isTrue = json['isTrue'];
+    showCheckBoc = json['showCheckBoc'];
     order = json['order'];
     answer = json['answer'];
     if (json['options'] != null) {
@@ -155,6 +158,7 @@ class Question {
     data['question_text'] = this.questionText;
     data['type'] = this.type;
     data['isTrue'] = this.isTrue;
+    data['showCheckBoc'] = this.showCheckBoc;
     data['answer'] = this.answer;
     data['is_required'] = this.isRequired;
     data['order'] = order;

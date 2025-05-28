@@ -13,16 +13,17 @@ class DoctorOrPatientWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(width:MediaQuery.sizeOf(context).width*0.26,
+    return Container(width:MediaQuery.sizeOf(context).width*0.26,
+      // height:1,
       child: GestureDetector(onTap:() {
         onChange!();
-      },child: Container(padding:EdgeInsets.only(bottom:10),decoration:BoxDecoration(
+      },child: Container(padding:EdgeInsets.only(bottom:14,top:14),decoration:BoxDecoration(
             color:color!=null?color!:AppColors.whiteColor,
             border:Border.all(color:color!=null?AppColors.primaryColor:Colors.transparent,width:1),
-            borderRadius:const BorderRadius.all(Radius.circular(8))
+            borderRadius:const BorderRadius.all(Radius.circular(8)),
         ),child:Column(
           children: [
-            PImage(source:image,height:70,width:70, fit:BoxFit.none,),
+            PImage(source:image,height:48,width:48,),const SizedBox(height:8,),
             PText(title: title,fontColor:AppColors.blackColor,fontWeight:FontWeight.w600,)
           ],
         ),),

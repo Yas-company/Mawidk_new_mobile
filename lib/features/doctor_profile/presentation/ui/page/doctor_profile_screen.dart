@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mawidak/core/base_network/api_endpoints_constants.dart';
 import 'package:mawidak/core/component/appbar/p_appbar.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
 import 'package:mawidak/core/component/custom_loader/custom_loader.dart';
@@ -45,12 +46,16 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
               preferredSize: Size.fromHeight(100),
               child: Padding(
                 padding: const EdgeInsets.only(top:24),
-                child: appBar(context: context,backBtn: true,text:widget.name,isCenter:true,actions:[
-                  Container(margin:EdgeInsets.only(top:20),
-                      padding:EdgeInsets.all(11),
-                      decoration:BoxDecoration(shape:BoxShape.circle,
-                          border: Border.all(color:AppColors.grey100)),
-                      child:PImage(source:AppSvgIcons.share,width:20,height:18,)),
+                child: appBar(context: context,backBtn: true,text:'doctor_details'.tr(),isCenter:true,actions:[
+                  GestureDetector(onTap:() {
+                    SafeToast.show(message: 'Coming soon while publish the app',
+                    type: MessageType.warning);
+                  },child: Container(margin:EdgeInsets.only(top:20),
+                        padding:EdgeInsets.all(11),
+                        decoration:BoxDecoration(shape:BoxShape.circle,
+                            border: Border.all(color:AppColors.grey100)),
+                        child:PImage(source:AppSvgIcons.share,width:20,height:18,)),
+                  ),
                   const SizedBox(width:10,),
                   BlocConsumer<DoctorProfileBloc,BaseState>(listener:(context, state) {
                     if(state is FavouriteLoadingState){
@@ -66,9 +71,7 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     }else if(state is FavouriteLoadedState){
                       isFavourite = ((state).data).model?.model.isFavorite ?? false;
                     }
-
                     doctorProfileBloc.isFavourite = isFavourite ?? false;
-                    print('state>>'+state.toString());
                     return GestureDetector(onTap:() {
                       doctorProfileBloc.add(AddToFavouriteEvent(model:FavouriteRequestModel(
                           doctorId: widget.id,isFavorite:!doctorProfileBloc.isFavourite
@@ -91,14 +94,20 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 doctorProfileBloc.add(ApplyDoctorProfileEvent(id: widget.id));
               },loadedWidget:(state) {
                 DoctorModel item = ((state as LoadedState).data).model?.model ?? DoctorModel();
-
+                // print('fe>${(state).data.model}');
+                if((state).data.model==null){
+                  return Center(child: PText(title: 'no_doctor_details'.tr()));
+                }
                 return Column(
                   children: [
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
                           Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                            PImage(source:'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
+                            (item.photo??'').isEmpty?CircleAvatar(radius:35,
+                            backgroundColor: AppColors.whiteColor,
+                            child:Icon(Icons.person),):PImage(
+                              source:ApiEndpointsConstants.baseImageUrl+(item.photo??''),
                               isCircle:true,width:60,height:60,),
                             const SizedBox(width:14,),
                             Padding(
@@ -133,12 +142,17 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             infoItem(title: 'evaluations'.tr(), image: AppSvgIcons.icRatings, value:
                             (item.ratingsCount??0).toString(),onTap:() {
                               context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
-                                'id':item.id??0,
+                                'id':item.id??0,'isRating':true,
                                 'name':item.name??'',
                               });
                             },),
                             infoItem(title: 'comments'.tr(), image: AppSvgIcons.icComments, value:
-                            (item.commentsCount??0).toString()),
+                            (item.commentsCount??0).toString(),onTap:() {
+                              context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
+                                'id':item.id??0,'isRating':false,
+                                'name':item.name??'',
+                              });
+                            },),
                           ],),
                           const SizedBox(height:14,),
                           PText(title: 'about_doctor'.tr(),fontWeight:FontWeight.w700,),
@@ -174,7 +188,7 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             PText(title: 'evaluations_el'.tr(),fontWeight:FontWeight.w700,),
                             GestureDetector(onTap:() {
                               context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
-                                'id':item.id??0,
+                                'id':item.id??0,'isRating':true,
                                 'name':item.name??'',
                               });
                             },child: Stack(children: [
@@ -192,7 +206,8 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               ),
                             )
                           ],),const SizedBox(height:14,),
-                          DoctorRatingByPatient(ratings:(item.ratings??[]).first)
+                          if((item.ratings??[]).isNotEmpty)
+                            DoctorRatingByPatient(ratings:(item.ratings??[]).first)
                         ],),
                       ),
                     ),

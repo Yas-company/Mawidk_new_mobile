@@ -39,6 +39,7 @@ class DoctorsForPatientResponseModel {
 class DoctorModel {
   final int? id;
   final String? name;
+  final String? image;
   final String? specialization;
   final int? experience;
   final String? gender;
@@ -48,6 +49,7 @@ class DoctorModel {
   DoctorModel({
     this.id,
     this.name,
+    this.image,
     this.specialization,
     this.experience,
     this.gender,
@@ -59,6 +61,7 @@ class DoctorModel {
     return DoctorModel(
       id: json['id'] as int?,
       name: json['name'] as String?,
+      image: json['image'] as String?,
       specialization: json['specialization'] as String?,
       experience: json['experience'] as int?,
       gender: json['gender'] as String?,
@@ -71,6 +74,7 @@ class DoctorModel {
     return {
       'id': id,
       'name': name,
+      'image': image,
       'specialization': specialization,
       'experience': experience,
       'gender': gender,

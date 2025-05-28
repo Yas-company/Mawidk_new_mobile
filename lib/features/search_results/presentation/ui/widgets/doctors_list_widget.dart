@@ -14,6 +14,9 @@ class DoctorsListWidget extends StatelessWidget {
   final double rating;
   final String location;
   final bool showRate;
+  final String salary;
+  final Color? backgroundColor;
+  final Color? imageColor;
   final VoidCallback? onTap;
   final VoidCallback? onClickCard;
 
@@ -21,6 +24,9 @@ class DoctorsListWidget extends StatelessWidget {
     super.key,
     required this.imageUrl,
     required this.doctorName,
+    this.salary='0',
+    this.backgroundColor,
+    this.imageColor,
     required this.onClickCard,
     required this.rating,
     required this.location,
@@ -36,7 +42,7 @@ class DoctorsListWidget extends StatelessWidget {
       hoverColor: Colors.transparent,onTap: onClickCard,
       child: Padding(
         padding: const EdgeInsets.only(bottom:0),
-        child: Card(color:AppColors.whiteColor,
+        child: Card(color: backgroundColor ?? AppColors.whiteColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -48,6 +54,9 @@ class DoctorsListWidget extends StatelessWidget {
                 Row(
                   children: [
                     // Doctor Image
+                    imageUrl.isEmpty?CircleAvatar(radius:31,
+                      backgroundColor: imageColor ?? AppColors.whiteBackground,
+                      child:Icon(Icons.person),):
                     PImage(source: imageUrl,isCircle:true,height:60,width:60,),
                     const SizedBox(width: 16),
 
@@ -92,7 +101,7 @@ class DoctorsListWidget extends StatelessWidget {
                     const PImage(source:AppSvgIcons.icMoney,width:14,height:14,),
                     const SizedBox(width: 4),
                     Expanded(
-                        child:PText(title:'يبدأ من 100 ريال',fontColor:AppColors.grayShade3,
+                        child:PText(title:'يبدأ من '+salary+' ريال ',fontColor:AppColors.grayShade3,
                           overflow: TextOverflow.ellipsis,
                         )
                     ),

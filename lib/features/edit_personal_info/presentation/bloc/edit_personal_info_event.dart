@@ -14,3 +14,5 @@ class ApplyValidationEvent extends EditPersonalInfoEvent {
 }
 
 class LoadPhoneNumberEvent extends EditPersonalInfoEvent {}
+
+class GetProfileEvent extends EditPersonalInfoEvent {}

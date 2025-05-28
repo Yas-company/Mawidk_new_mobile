@@ -4,6 +4,8 @@ import 'package:mawidak/features/doctor_profile/data/model/doctor_profile_respon
 import 'package:mawidak/features/doctor_profile/data/model/favourite_response_model.dart';
 import 'package:mawidak/features/doctor_profile/domain/use_case/doctor_profile_use_case.dart';
 import 'package:mawidak/features/doctor_profile/presentation/bloc/doctor_profile_event.dart';
+import 'package:mawidak/features/patient_favourite/presentation/bloc/favourite_event.dart';
+import 'package:mawidak/features/patient_favourite/presentation/ui/page/patient_favourite_screen.dart';
 
 class DoctorProfileBloc extends Bloc<DoctorProfileEvent, BaseState> {
   final DoctorProfileUseCase doctorProfileUseCase;
@@ -31,7 +33,10 @@ class DoctorProfileBloc extends Bloc<DoctorProfileEvent, BaseState> {
     await response.fold((l) async {emit(ErrorState(l));}, (r) async {
       FavouriteData item = (r).model?.model ?? FavouriteData();
       isFavourite = item.isFavorite??false;
-      print('isFavourite>>'+isFavourite.toString());
+      // print('isFavourite>>'+isFavourite.toString());
+      // if(!favouriteBloc.isClosed){
+        favouriteBloc.add(ApplyFavouriteEvent());
+      // }
         emit(FavouriteLoadedState(r));
       },
     );

@@ -17,6 +17,8 @@ import 'package:mawidak/features/patient_favourite/presentation/bloc/favourite_b
 import 'package:mawidak/features/patient_favourite/presentation/bloc/favourite_event.dart';
 import 'package:mawidak/features/patient_favourite/presentation/ui/widgets/favourite_item_widget.dart';
 
+FavouriteBloc favouriteBloc = FavouriteBloc(favouriteUseCase: getIt());
+
 class PatientFavouriteScreen extends StatefulWidget {
   const PatientFavouriteScreen({super.key});
 
@@ -26,7 +28,7 @@ class PatientFavouriteScreen extends StatefulWidget {
 }
 
 class PatientFavouriteScreenState extends State<PatientFavouriteScreen> with TickerProviderStateMixin {
-  FavouriteBloc favouriteBloc = FavouriteBloc(favouriteUseCase: getIt());
+
   List<bool> _visibleItems = [];
 
   Future<void> refreshData() async {

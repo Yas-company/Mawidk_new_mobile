@@ -236,6 +236,7 @@ Widget buildQuestionWidget(Question q, Function setStateCallback){
     case 'drop_down':
       return DropDownWidget(hint:q.hint??'اختر',
         title: q.questionText??'',
+        showCheckbox: q.showCheckBoc??false,
         options: q.options??[],
         selectedValues: (q.answer as List?)?.cast<Option>() ?? [],
         // selectedValues: q.answer ?? [],

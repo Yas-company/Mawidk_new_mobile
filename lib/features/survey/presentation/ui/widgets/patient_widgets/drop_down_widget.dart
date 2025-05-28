@@ -28,14 +28,60 @@ class DropDownWidget extends StatefulWidget {
 }
 
 class _DropDownWidgetState extends State<DropDownWidget> {
-  bool _isChecked = false;
+  bool isEnabled = false;
+  void _setEnabled(bool value) {
+    setState(() {
+      isEnabled = value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    // print('showCheckBoc>>'+widget.showCheckbox.toString());
     return Padding(
       padding: const EdgeInsets.only(top:20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+         if(widget.showCheckbox) Row(
+            children: [
+              Expanded(child: SizedBox(width:MediaQuery.sizeOf(context).width*.80,
+                  child: PText(title:'have_diseases'.tr()))),
+              Container(width: 40, height: 40,
+                decoration:  BoxDecoration(
+                  color:(isEnabled ? AppColors.primaryColor100 : AppColors.grey100),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color:(isEnabled ? AppColors.primaryColor : AppColors.grey100)
+                  ),
+                ),
+                child: IconButton(highlightColor:Colors.transparent,
+                  padding: EdgeInsets.zero,
+                  onPressed: () => _setEnabled(true),
+                  icon: Icon(Icons.check, color:
+                   (isEnabled ? AppColors.primaryColor : AppColors.grey200)),
+                  tooltip: 'Yes',
+                ),
+              ),
+              const SizedBox(width: 10),
+              Container(width: 40, height: 40,
+                decoration: BoxDecoration(
+                  color:(!isEnabled ? AppColors.dangerColor100 : AppColors.grey100),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: (!isEnabled ? AppColors.dangerColor : AppColors.grey100)
+                  ),
+                ),
+                child: IconButton(
+                  highlightColor:Colors.transparent,
+                  onPressed: () => _setEnabled(false),
+                  icon: Icon(Icons.clear, color:
+                  (!isEnabled ? AppColors.dangerColor : AppColors.grey200)),
+                  tooltip: 'No',
+                ),
+              ),
+            ],
+          ),
+          if(widget.showCheckbox) const SizedBox(height:10,),
           PText(
             title: widget.title, size: PSize.text14,
             fontColor: AppColors.fontColor,
@@ -100,21 +146,6 @@ class _DropDownWidgetState extends State<DropDownWidget> {
               );
             }).toList(),
           ),
-          CheckboxListTile(activeColor:AppColors.primaryColor,
-            contentPadding:EdgeInsets.zero,
-            title: Row(
-              children: [
-                PText(title: 'there_is_no_diseases'.tr(),size: PSize.text18,)
-              ],
-            ),
-            value: _isChecked,
-            onChanged: (bool? value) {
-              setState(() {
-                _isChecked = value ?? false;
-              });
-            },
-            controlAffinity: ListTileControlAffinity.leading, // checkbox on the left
-          )
           // Directionality(textDirection: TextDirection.ltr,
           //   child: CheckboxListTile(contentPadding:EdgeInsets.zero,
           //     // title: PText(title: 'there_is_no_diseases'.tr()),

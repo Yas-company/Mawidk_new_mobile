@@ -67,7 +67,7 @@ class SearchResultWidget extends StatelessWidget {
                   'name':item.name??'',
                   'specialization':item.specialization??''
                 });
-              },imageUrl: 'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
+              },imageUrl:item.image??'',
                 doctorName:item.name??'',
                 rating: 4.8,
                 specialization:item.specialization??'',

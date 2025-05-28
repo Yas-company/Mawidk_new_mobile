@@ -10,4 +10,9 @@ class EditPersonalInfoUseCase {
   Future<Either> editProfile({required EditPersonalInfoRequestModel model}) async {
     return await editPersonalInfoRepository.editProfile(model: model);
   }
+
+  Future<Either> getProfile() async {
+    return await editPersonalInfoRepository.getProfile();
+  }
+
 }

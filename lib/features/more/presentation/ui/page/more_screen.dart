@@ -73,7 +73,12 @@ class MoreScreenState extends State<MoreScreen> {
                     leftIcon:AppSvgIcons.icArrow,
                     onTap: () {
                       context.push(AppRouter.editPersonalInfo,
-                          extra:SharedPreferenceService().getString(SharPrefConstants.phone));
+                          extra:{
+                        'phone':SharedPreferenceService().getString(SharPrefConstants.phone),
+                        'name':SharedPreferenceService().getString(SharPrefConstants.userName),
+                          }).then((value) {
+                            setState(() {});
+                          },);
                     },
                   ),
                   Padding(

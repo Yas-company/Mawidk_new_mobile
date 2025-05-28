@@ -82,5 +82,10 @@
   "license_verified": "Verify professional license",
   "there_is_no_diseases": "No chronic diseases",
   "no_doctors_found": "No Doctors Found",
+  "doctor_details": "Doctor Details",
+  "no_doctor_details": "There are no details for this doctor.",
+  "all_comments": "All Comments",
+  "have_diseases": "Do you Have chronic diseases ?",
+  "comment": "Comment",
   "follow": "Follow"
 }

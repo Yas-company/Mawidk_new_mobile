@@ -39,7 +39,7 @@ class DoctorRatingsResponseModel {
 class DoctorRating {
   final int? id;
   final Patient? patient;
-  final String? rating;
+  final dynamic rating;
   final String? comment;
   final String? createdAt;
 
@@ -55,7 +55,7 @@ class DoctorRating {
     return DoctorRating(
       id: json['id'] as int?,
       patient: Patient.fromMap(json['patient']),
-      rating: json['rating'] as String?,
+      rating: json['rating'] as dynamic,
       comment: json['comment'] as String?,
       createdAt: json['created_at'] as String?,
     );
@@ -75,19 +75,22 @@ class DoctorRating {
 class Patient {
   final int? id;
   final String? name;
+  final String? photo;
 
-  Patient({ this.id,  this.name});
+  Patient({ this.id,  this.name,this.photo});
 
   factory Patient.fromMap(Map<String, dynamic> json) {
     return Patient(
       id: json['id'] as int?,
       name: json['name'] as String?,
+      photo: json['photo'] as String?,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'photo': photo,
       'name': name,
     };
   }

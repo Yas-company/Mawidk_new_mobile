@@ -39,6 +39,9 @@ class TopRatedDoctorCard extends StatelessWidget {
           padding: const EdgeInsets.all(14.0),
           child: Column(
             children: [
+              imageUrl.isEmpty?CircleAvatar(radius:27,
+                backgroundColor: AppColors.whiteColor,
+                child:Icon(Icons.person),):
               PImage(source:imageUrl,height:50,width:50,isCircle:true,),
               Padding(
                 padding: const EdgeInsets.only(top:8,bottom:5),

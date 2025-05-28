@@ -25,8 +25,11 @@ class AppIcons {
   static const String english = '${iconPath}english.png';
   // static const String english = '${iconPath}location_not_selected.png';
   static const String tabby = '${iconPath}tabby.png';
-  static const String livePayment = '${iconPath}live_payment.png';
+  static const String mada = '${iconPath}mada.png';
+  static const String visa = '${iconPath}visa.png';
+  // static const String livePayment = '${iconPath}live_payment.png';
   static const String applePay = '${iconPath}apple_pay.png';
   static const String tamara = '${iconPath}tamara.png';
+  static const String masterCard = '${iconPath}master_card.png';
   static const String successfulPayment = '${iconPath}successful_payment.png';
 }

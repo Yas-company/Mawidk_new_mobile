@@ -26,7 +26,7 @@ AppBar appBar({
   // UserHeaderBloc? userHeaderBloc,
   refreshCheck = true,
   double? elevation,
-  Widget? titleWidget,
+  // Widget? titleWidget,
 }) {
   // UserHeaderBloc userHeaderBloc = UserHeaderBloc(homeUseCase: getIt());
   return AppBar(
@@ -58,34 +58,16 @@ AppBar appBar({
               ),
             if (avatarUrl != null)
               const SizedBox(width: 10,),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (text != null)
-                  Flexible(
-                    child: titleWidget ??
-                        PText(
-                          title: text,
-                          size: PSize.text18,
-                          // fontColor: AppColors.titleColor,
-                          fontWeight: FontWeight.w700,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                  ),
-                if (description != null && description.isNotEmpty)
-                  Flexible(
-                    child: titleWidget ??
-                        PText(
-                          title: description,
-                          size: PSize.text16,
-                          fontColor: AppColors.grey200,
-                          fontWeight: FontWeight.w300,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                  ),
-              ],
-            ),
+            if (text != null)
+              Flexible(
+                child: PText(
+                      title: text,
+                      size: PSize.text18,
+                      // fontColor: AppColors.titleColor,
+                      fontWeight: FontWeight.w700,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+              ),
           ]
         ],
       ),

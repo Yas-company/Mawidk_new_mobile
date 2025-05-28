@@ -1,4 +1,5 @@
 class ApiEndpointsConstants {
+  static const String baseImageUrl = 'https://mawidk.com/storage/';
   static const String baseUrl = 'https://mawidk.com/api/v1/';
   static const String register = 'auth/register';
   static const String login = 'auth/login';
@@ -6,6 +7,7 @@ class ApiEndpointsConstants {
   static const String confirmPassword = 'auth/forgot-password/reset';
   static const String changePassword = 'auth/change-password';
   static const String editProfile = 'user/update';
+  static const String getProfile = 'user/profile';
   static const String refreshToken = 'auth/refresh-token';
   static const String logout = 'auth/logout';
   static const String deleteAccount = 'auth/delete-account';
@@ -24,7 +26,8 @@ class ApiEndpointsConstants {
   // static const String getDoctorsForPatient = 'home/doctors-by-disease';
   static const String getDoctorsForPatient = 'home/doctors-by-rating';
   static const String banners = 'banners';
-  static const String searchForPatient = 'home/doctors/search?search=';
+  // static const String searchForPatient = 'home/doctors/search?search=';
+  static const String searchForPatient = 'home/doctors/search?';
   // static const String searchForPatient = 'home/doctors/search';
   static const String searchMap = 'home/nearby-clinics';
   static const String filter = 'home/filter-search';

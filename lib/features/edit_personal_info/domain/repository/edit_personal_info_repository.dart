@@ -3,4 +3,5 @@ import 'package:mawidak/features/edit_personal_info/data/model/edit_personal_inf
 
 abstract class EditPersonalInfoRepository {
   Future<Either<dynamic, dynamic>> editProfile({required EditPersonalInfoRequestModel model,});
+  Future<Either<dynamic, dynamic>> getProfile();
 }

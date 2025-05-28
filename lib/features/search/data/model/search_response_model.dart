@@ -39,6 +39,7 @@ class SearchResponseModel {
 class SearchData {
   final int? id;
   final String? name;
+  final String? image;
   final String? specialization;
   final int? experience;
   final String? gender;
@@ -46,6 +47,7 @@ class SearchData {
 
   SearchData({
     this.id,
+    this.image,
     this.name,
     this.specialization,
     this.experience,
@@ -57,6 +59,7 @@ class SearchData {
     return SearchData(
       id: json['id'] as int?,
       name: json['name'] as String?,
+      image: json['image'] as String?,
       specialization: json['specialization'] as String?,
       experience: json['experience'] as int?,
       gender: json['gender'] as String?,
@@ -68,6 +71,7 @@ class SearchData {
     return {
       'id': id,
       'name': name,
+      'image': image,
       'specialization': specialization,
       'experience': experience,
       'gender': gender,

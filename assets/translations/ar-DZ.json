@@ -26,7 +26,10 @@
   "evaluations": "تقييمات",
   "evaluations_el": "التقييمات",
   "all_evaluations": "كل التقييمات",
+  "all_comments": "كل التعليقات",
   "comments": "تعليقات",
+  "comment": "تعليق",
+  "evaluate": "تقييم",
   "about_doctor": "عن الطبيب",
   "top_rated_hospitals": "المستشفيات الاعلى تقييما",
   "favourite": "المفضلة",
@@ -82,5 +85,8 @@
   "academic_qualification_verified": "مراجعة المؤهلات العلمية",
   "license_verified": "التحقق من الترخيص المهني",
   "there_is_no_diseases": "لا توجد امراض مزمنة",
+  "have_diseases": "هل لديك امراض مزمنة ؟",
+  "doctor_details": "تفاصيل الطبيب",
+  "no_doctor_details": "لا توجد تفاصيل لهذا الطبيب",
   "follow": "المتابعة"
 }

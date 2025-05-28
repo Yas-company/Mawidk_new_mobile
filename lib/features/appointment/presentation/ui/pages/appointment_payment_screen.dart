@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawidak/core/component/appbar/p_appbar.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
+import 'package:mawidak/core/component/custom_toast/p_toast.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/component/text_field/p_textfield.dart';
@@ -66,6 +67,8 @@ class AppointmentPaymentScreenState extends State<AppointmentPaymentScreen> {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
+                    SafeToast.show(message:'Soon',type:MessageType.warning);
+                    return;
                       setState(() {
                         _selectedMethod = PaymentMethod.applePay;
                       });
@@ -117,6 +120,8 @@ class AppointmentPaymentScreenState extends State<AppointmentPaymentScreen> {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
+                      SafeToast.show(message:'Soon',type:MessageType.warning);
+                      return;
                       setState(() {
                         _selectedMethod = PaymentMethod.directPay;
                       });
@@ -144,7 +149,7 @@ class AppointmentPaymentScreenState extends State<AppointmentPaymentScreen> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 PText(
                                   title: 'الدفع المباشر',
@@ -153,8 +158,12 @@ class AppointmentPaymentScreenState extends State<AppointmentPaymentScreen> {
                                       : AppColors.grey200,
                                   size: PSize.text16,
                                   fontWeight: FontWeight.w400,
-                                ),
-                                PImage(source: AppIcons.livePayment),
+                                ),Spacer(),
+                                PImage(source: AppIcons.mada,width:44,height:24,),
+                                const SizedBox(width:8,),
+                                PImage(source: AppIcons.masterCard,width:40,height:30),
+                                const SizedBox(width:8,),
+                                PImage(source: AppIcons.visa,width:48,height:25),
                               ],
                             ),
                           ),
@@ -167,6 +176,8 @@ class AppointmentPaymentScreenState extends State<AppointmentPaymentScreen> {
                     splashColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () {
+                      SafeToast.show(message:'Soon',type:MessageType.warning);
+                      return;
                       setState(() {
                         _selectedMethod = PaymentMethod.installment;
                       });
@@ -202,10 +213,10 @@ class AppointmentPaymentScreenState extends State<AppointmentPaymentScreen> {
                                       : AppColors.grey200,
                                   size: PSize.text16,
                                   fontWeight: FontWeight.w400,
-                                ),
+                                 ),
                                 Spacer(),
-                                PImage(source:AppIcons.tamara),const SizedBox(width:10,),
-                                PImage(source:AppIcons.tabby),
+                                PImage(source:AppIcons.tamara,width:58,height:25,),const SizedBox(width:10,),
+                                PImage(source:AppIcons.tabby,width:50,height:25,),
                               ],
                             ),
                           ),

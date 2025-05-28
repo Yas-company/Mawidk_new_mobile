@@ -18,6 +18,7 @@ import 'package:mawidak/features/search/data/model/search_map_request_model.dart
 import 'package:mawidak/features/search/data/model/search_map_response_model.dart';
 import 'package:mawidak/features/search/presentation/bloc/search_bloc.dart';
 import 'package:mawidak/features/search/presentation/bloc/search_event.dart';
+import 'package:mawidak/features/search_results/presentation/ui/widgets/doctors_list_widget.dart';
 
 class SearchMapScreen extends StatefulWidget {
   final SearchBloc searchBloc;
@@ -194,48 +195,70 @@ class CommunicationMapScreenState extends State<SearchMapScreen> {
         color: Colors.white,
         elevation: 2,
         child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PText(
-                          title: item.name ?? '',
-                          size: PSize.text16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        const SizedBox(height: 4),
-                        PText(
-                          title: item.address ?? '',
-                          size: PSize.text16,
-                          fontWeight: FontWeight.w400,
-                          fontColor: AppColors.grey200,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 14),
-              PButton(
-                isFitWidth: true,
-                onPressed: () {
-                  context.push(AppRouter.appointmentBookingScreen,extra:{
-                    'id':item.id??0,
-                    'name':item.name??'',
-                    'specialization':''
-                  });                // UrlLauncherManager.redirectUrl(item.link ?? '');
-                },
-                hasBloc: false,
-                title:'book_appointment'.tr(),
-              ),
-            ],
+          padding: const EdgeInsets.all(0),
+          child:DoctorsListWidget(onClickCard:() {
+            context.push(AppRouter.doctorProfileScreen,extra:{
+              'id':item.id??0,
+              'name':item.name??'',
+              'specialization':item.specialization??''
+            });
+          },imageUrl:item.image??'',
+            imageColor: AppColors.whiteColor,
+            backgroundColor: AppColors.whiteBackground,
+            salary: item.consultationFee??'0',
+            doctorName:item.name??'',
+            rating: 4.8,
+            specialization:item.specialization??'',
+            location:item.address??'',
+            onTap: () {
+              context.push(AppRouter.appointmentBookingScreen,extra:{
+                'id':item.id??0,
+                'name':item.name??'',
+                'specialization':item.specialization??''
+              });
+            },
           ),
+          // child: Column(
+          //   children: [
+          //     Row(
+          //       children: [
+          //         const SizedBox(width: 8),
+          //         Expanded(
+          //           child: Column(
+          //             crossAxisAlignment: CrossAxisAlignment.start,
+          //             children: [
+          //               PText(
+          //                 title: item.name ?? '',
+          //                 size: PSize.text16,
+          //                 fontWeight: FontWeight.w600,
+          //               ),
+          //               const SizedBox(height: 4),
+          //               PText(
+          //                 title: item.address ?? '',
+          //                 size: PSize.text16,
+          //                 fontWeight: FontWeight.w400,
+          //                 fontColor: AppColors.grey200,
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //     const SizedBox(height: 14),
+          //     PButton(
+          //       isFitWidth: true,
+          //       onPressed: () {
+          //         context.push(AppRouter.appointmentBookingScreen,extra:{
+          //           'id':item.id??0,
+          //           'name':item.name??'',
+          //           'specialization':''
+          //         });                // UrlLauncherManager.redirectUrl(item.link ?? '');
+          //       },
+          //       hasBloc: false,
+          //       title:'book_appointment'.tr(),
+          //     ),
+          //   ],
+          // ),
         ),
       ),
     );

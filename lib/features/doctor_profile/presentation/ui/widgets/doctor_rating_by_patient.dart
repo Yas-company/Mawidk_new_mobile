@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mawidak/core/base_network/api_endpoints_constants.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
@@ -27,9 +28,13 @@ class DoctorRatingByPatient extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    (ratings.patient?.photo??'').isEmpty?
+                    CircleAvatar(radius:25,
+                      backgroundColor: AppColors.whiteBackground,
+                      child:Icon(Icons.person),):
                     PImage(
                       // source:ratings.patient?.photo??'',
-                      source: 'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
+                      source: ApiEndpointsConstants.baseImageUrl+(ratings.patient?.photo??''),
                       isCircle: true, width: 48, height: 48,
                     ),
                     const SizedBox(width: 14),

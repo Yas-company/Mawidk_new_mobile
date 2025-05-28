@@ -50,7 +50,7 @@ class HomeScreenPatient extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal:14),
               child: CustomScrollView(slivers:[
-                SliverToBoxAdapter(child:SearchWidget(isEnabled: false,onTap:() {
+                SliverToBoxAdapter(child:SearchWidget(hasFilter:false,isEnabled: false,onTap:() {
                   context.push(AppRouter.search);
                   // context.push(AppRouter.searchResults,extra:'');
                 },onTapFilter:() {
@@ -152,7 +152,7 @@ class HomeScreenPatient extends StatelessWidget {
                           DoctorModel item = itemList[index];
                           return SizedBox(width: 164,
                             child: TopRatedDoctorCard(
-                              imageUrl: 'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
+                              imageUrl: item.image??'',
                               doctorName: item.name??'',
                               rating: 4.8,
                               specialization: item.specialization??'',
@@ -202,7 +202,7 @@ class HomeScreenPatient extends StatelessWidget {
                           DoctorModel item = itemList[index];
                           return SizedBox(width: 164,
                             child: TopRatedDoctorCard(showRating:true,
-                              imageUrl: 'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
+                              imageUrl:item.image??'',
                               doctorName: item.name??'',
                               rating: 4.8,
                               specialization: item.specialization??'',

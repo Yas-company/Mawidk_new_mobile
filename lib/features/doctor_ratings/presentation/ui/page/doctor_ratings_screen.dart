@@ -20,8 +20,10 @@ import 'package:mawidak/features/doctor_ratings/presentation/ui/widgets/doctor_r
 
 class DoctorRatingsScreen extends StatefulWidget {
   final int id;
+  final bool isRating;
   final String name;
-  const DoctorRatingsScreen({super.key,required this.id,required this.name});
+  const DoctorRatingsScreen({super.key,required this.id,required this.name,
+  this.isRating = true});
   @override
   State<DoctorRatingsScreen> createState() => DoctorRatingsScreenState();
 }
@@ -76,7 +78,8 @@ class DoctorRatingsScreenState extends State<DoctorRatingsScreen> with TickerPro
             child: Padding(
               padding: const EdgeInsets.only(top:24),
               // child: appBar(context: context,backBtn: true,text:widget.name,isCenter:true,actions:[
-              child: appBar(context: context,backBtn: true,text:'all_evaluations'.tr(),isCenter:true,actions:[
+              child: appBar(context: context,backBtn: true,
+                  text:widget.isRating?'all_evaluations'.tr():'all_comments'.tr(),isCenter:true,actions:[
                 // Container(margin:EdgeInsets.only(top:20),
                 //     padding:EdgeInsets.all(11),
                 //     decoration:BoxDecoration(shape:BoxShape.circle,
@@ -113,12 +116,13 @@ class DoctorRatingsScreenState extends State<DoctorRatingsScreen> with TickerPro
                       padding: const EdgeInsets.symmetric(horizontal:20),
                       child: Column(children: [
                         Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
-                          PText(title: 'evaluations'.tr(),fontWeight:FontWeight.w700,),
+                          PText(title:widget.isRating?'evaluations'.tr():'comments'.tr(),fontWeight:FontWeight.w700,),
                           Stack(children: [
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
                                 child: PText(fontWeight:FontWeight.w500,size:PSize.text13,
-                                  title:'${dataList.length}  تقييم',fontColor:AppColors.grey200,
+                                  title:
+                                  '${dataList.length} ${widget.isRating?'evaluate'.tr():'comment'.tr()}',fontColor:AppColors.grey200,
                                 ),
                               ),
                               Positioned(bottom:5, left: 0, right: 0,
