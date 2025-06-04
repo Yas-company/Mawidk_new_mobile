@@ -5,10 +5,13 @@ import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/features/Splash/presentation/ui/splash_screen.dart';
+import 'package:mawidak/features/all_patients/data/model/patients_response_model.dart';
+import 'package:mawidak/features/all_patients/presentation/ui/page/patients_screen.dart';
 import 'package:mawidak/features/all_specializations/presentation/ui/page/all_specializations_screen.dart';
 import 'package:mawidak/features/appointment/data/model/appointment_reques_model.dart';
 import 'package:mawidak/features/appointment/presentation/ui/pages/appointment_booking_screen.dart';
 import 'package:mawidak/features/appointment/presentation/ui/pages/appointment_payment_screen.dart';
+import 'package:mawidak/features/appointments/presentation/ui/page/appointments_screen.dart';
 import 'package:mawidak/features/change_password/presentation/ui/page/change_password_screen.dart';
 import 'package:mawidak/features/confirm_password/presentation/ui/pages/confirm_password_screen.dart';
 import 'package:mawidak/features/contact_us/presentation/ui/page/contact_us_screen.dart';
@@ -26,10 +29,11 @@ import 'package:mawidak/features/notification/presentation/ui/page/notification_
 import 'package:mawidak/features/onboarding/onboarding_screen.dart';
 import 'package:mawidak/features/parent_screen/parent_screen.dart';
 import 'package:mawidak/features/patient_favourite/presentation/ui/page/patient_favourite_screen.dart';
-import 'package:mawidak/features/profile/profile_screen.dart';
 import 'package:mawidak/features/register/presentation/ui/pages/register_screen.dart';
 import 'package:mawidak/features/search/presentation/ui/pages/search_screen.dart';
 import 'package:mawidak/features/search_results/presentation/ui/pages/search_results_screen.dart';
+import 'package:mawidak/features/search_results_for_doctor/presentation/ui/pages/search_for_doctors_screen.dart';
+import 'package:mawidak/features/show_file/presentation/ui/page/show_file_screen.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_cubit.dart';
 import 'package:mawidak/features/survey/presentation/ui/pages/doctor_survey_screen.dart';
@@ -38,7 +42,6 @@ import 'package:mawidak/features/survey/presentation/ui/pages/static_doctor_surv
 import 'package:mawidak/features/survey/presentation/ui/pages/static_patient_survey_screen.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/doctor_widgets/location_widget.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/doctor_widgets/pickup_location_screen.dart';
-import 'package:mawidak/features/times/times_screen.dart';
 import 'package:mawidak/features/verify_otp/presentation/ui/pages/verify_otp_screen.dart';
 
 final ValueNotifier<bool> _refreshNotifier = ValueNotifier<bool>(false);
@@ -162,7 +165,13 @@ class RouterManager {
         name: AppRouter.searchResults,
         path: AppRouter.searchResults,
         pageBuilder: (context, state) {
-          return createRoute(widget:SearchResultsScreen(searchKey:state.extra as String));
+          final params = state.extra as Map<String, dynamic>;
+          return createRoute(widget:  SearchResultsScreen(
+            lookupBloc:params['lookupBloc'] , searchKey: params['searchKey'],
+            isFilterClicked: params['isFilterClicked'],
+            filterRequestModel: params['filterRequestModel'],
+          ));
+          // return createRoute(widget:SearchResultsScreen(searchKey:state.extra as String));
         },
       ),
       GoRoute(
@@ -248,10 +257,24 @@ class RouterManager {
         },
       ),
       GoRoute(
+        name: AppRouter.searchResultsForDoctor,
+        path: AppRouter.searchResultsForDoctor,
+        pageBuilder: (context, state) {
+          return createRoute(widget:SearchForDoctorsScreen(searchKey:state.extra as String,));
+        },
+      ),
+      GoRoute(
         name: AppRouter.allSpecializationsScreen,
         path: AppRouter.allSpecializationsScreen,
         pageBuilder: (context, state) {
           return createRoute(widget:AllSpecializationsScreen());
+        },
+      ),
+      GoRoute(
+        name: AppRouter.showFileScreen,
+        path: AppRouter.showFileScreen,
+        pageBuilder: (context, state) {
+          return createRoute(widget:ShowFileScreen(patientData:state.extra as PatientData,));
         },
       ),
       GoRoute(
@@ -266,7 +289,8 @@ class RouterManager {
             return ParentScreen(navigationShell: navigationShell);
           },
           branches: [
-            if(isDoctor())StatefulShellBranch(routes: [
+            // if(isDoctor())
+              StatefulShellBranch(routes: [
               GoRoute(
                 name: AppRouter.homeDoctor,
                 path: AppRouter.homeDoctor,
@@ -275,7 +299,8 @@ class RouterManager {
                 },
               ),
             ]),
-            if(!isDoctor())StatefulShellBranch(routes: [
+            // if(!isDoctor())
+              StatefulShellBranch(routes: [
               GoRoute(
                 name: AppRouter.homePatient,
                 path: AppRouter.homePatient,
@@ -286,10 +311,19 @@ class RouterManager {
             ]),
             StatefulShellBranch(routes: [
               GoRoute(
-                name: AppRouter.times,
-                path: AppRouter.times,
+                name: AppRouter.appointments,
+                path: AppRouter.appointments,
                 pageBuilder: (context, state) {
-                  return createRoute(widget: const TimesScreen());
+                  return createRoute(widget: const AppointmentsScreen());
+                },
+              ),
+            ]),
+            StatefulShellBranch(routes: [
+              GoRoute(
+                name: AppRouter.doctorPatients,
+                path: AppRouter.doctorPatients,
+                pageBuilder: (context, state) {
+                  return createRoute(widget: const PatientsScreen());
                 },
               ),
             ]),

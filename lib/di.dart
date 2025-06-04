@@ -8,9 +8,15 @@ import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/services/local_storage/secure_storage/secure_storage_service.dart';
 import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/core/services/log/app_log.dart';
+import 'package:mawidak/features/all_patients/data/repository/patients_repository_impl.dart';
+import 'package:mawidak/features/all_patients/domain/repository/patients_repository.dart';
+import 'package:mawidak/features/all_patients/domain/use_case/patients_use_case.dart';
 import 'package:mawidak/features/appointment/data/repository/appoitment_booking_repository_impl.dart';
 import 'package:mawidak/features/appointment/domain/repository/appoitment_booking_repository.dart';
 import 'package:mawidak/features/appointment/domain/use_case/appoitment_booking_use_case.dart';
+import 'package:mawidak/features/appointments/data/repository/doctor_appointments_repository_impl.dart';
+import 'package:mawidak/features/appointments/domain/repository/doctor_appointments_repository.dart';
+import 'package:mawidak/features/appointments/domain/use_case/doctor_appointments_use_case.dart';
 import 'package:mawidak/features/change_password/data/repository/change_password_repository_impl.dart';
 import 'package:mawidak/features/change_password/domain/repository/change_password_repository.dart';
 import 'package:mawidak/features/change_password/domain/use_case/change_password_use_case.dart';
@@ -59,6 +65,12 @@ import 'package:mawidak/features/register/domain/use_case/register_use_case.dart
 import 'package:mawidak/features/search/data/repository/search_respository_impl.dart';
 import 'package:mawidak/features/search/domain/domain/use_case/search_use_case.dart';
 import 'package:mawidak/features/search/domain/repository/search_respository.dart';
+import 'package:mawidak/features/search_results_for_doctor/data/repository/search_for_doctors_repository_impl.dart';
+import 'package:mawidak/features/search_results_for_doctor/domain/repository/search_for_doctors_repository.dart';
+import 'package:mawidak/features/search_results_for_doctor/domain/use_case/search_for_doctors_use_case.dart';
+import 'package:mawidak/features/show_file/data/repository/show_file_repository_impl.dart';
+import 'package:mawidak/features/show_file/domain/repository/show_file_repository.dart';
+import 'package:mawidak/features/show_file/domain/use_case/show_file_use_case.dart';
 import 'package:mawidak/features/survey/data/repository/survey_repository_impl.dart';
 import 'package:mawidak/features/survey/domain/repository/survey_repo.dart';
 import 'package:mawidak/features/survey/domain/use_case/survey_use_case.dart';
@@ -153,6 +165,14 @@ getIt.registerLazySingleton<NotificationUseCase>(() => NotificationUseCase(
 
     getIt.registerLazySingleton<FavouriteUseCase>(() => FavouriteUseCase(
       favouriteRepository: getIt(),));
+   getIt.registerLazySingleton<PatientsUseCase>(() => PatientsUseCase(
+      patientsRepository: getIt(),));
+    getIt.registerLazySingleton<SearchForDoctorsUseCase>(() => SearchForDoctorsUseCase(
+      searchRepository: getIt(),));
+   getIt.registerLazySingleton<ShowFileUseCase>(() => ShowFileUseCase(
+      showFileRepository: getIt(),));
+   getIt.registerLazySingleton<DoctorAppointmentsUseCase>(() => DoctorAppointmentsUseCase(
+      doctorAppointmentsRepository: getIt(),));
 
 
     // Repositories
@@ -206,6 +226,16 @@ getIt.registerLazySingleton<NotificationUseCase>(() => NotificationUseCase(
 
     getIt.registerLazySingleton<FavouriteRepository>(
             () => FavouriteRepositoryIml(networkInfo: getIt(), remoteData: getIt()));
+
+ getIt.registerLazySingleton<PatientsRepository>(
+            () => PatientsRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
+ getIt.registerLazySingleton<SearchForDoctorsRepository>(
+            () => SearchForDoctorsRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
+
+ getIt.registerLazySingleton<ShowFileRepository>(
+            () => ShowFileRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
+   getIt.registerLazySingleton<DoctorAppointmentsRepository>(
+              () => DoctorAppointmentsRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
 
 
     await DioClient().updateHeader();

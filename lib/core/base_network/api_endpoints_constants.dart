@@ -28,19 +28,28 @@ class ApiEndpointsConstants {
   static const String banners = 'banners';
   // static const String searchForPatient = 'home/doctors/search?search=';
   static const String searchForPatient = 'home/doctors/search?';
+  static const String searchForDoctor = 'home/filter-search-patient?';
   // static const String searchForPatient = 'home/doctors/search';
   static const String searchMap = 'home/nearby-clinics';
   static const String filter = 'home/filter-search';
   static const String cities = 'cities';
   static const String doctorRatingsById = 'ratings/';
+  static const String doctorCommentsById = 'ratings/comments/';
   static const String doctorDetails = 'user/doctor-details/';
   static const String notification = 'notification';
   static const String notificationById = 'notification/show/';
   static const String bookAppointment = 'appointment/store';
+  static const String contactUs = 'notification/create-ticket';
   static const String doctorsBySpeciality = 'home/doctors-by-speciality/';
   static const String doctorProfileStatus = 'user/doctor-profile-status';
   static const String detailsHomeDoctor = 'home/details-home-doctor';
   static const String addToFavourite = 'user/favorite-status';
   static const String updatePhoto = 'user/update-photo';
   static const String favoriteDoctorList = 'user/favorites';
+  static const String doctorPatients = 'user/doctor-patients';
+  
+  static const String basicInformation = 'user/patient-personal-info/';
+  static const String doctorAppointments = 'appointment/doctor';
+  static String doctorAppointmentCancel(int doctorId) => 'appointment/$doctorId/cancel';
+
 }

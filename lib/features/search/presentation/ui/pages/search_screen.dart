@@ -6,10 +6,27 @@ import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
+import 'package:mawidak/di.dart';
 import 'package:mawidak/features/home/presentation/ui/widgets/search_widget.dart';
+import 'package:mawidak/features/lookups/lookup_bloc.dart';
+import 'package:mawidak/features/lookups/lookup_event.dart';
+import 'package:mawidak/features/search/data/model/filter_request_model.dart';
+import 'package:mawidak/features/search/presentation/ui/widgets/filter_bottom_sheet.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => SearchScreenState();
+}
+
+class SearchScreenState extends State<SearchScreen> {
+  LookupBloc lookupBloc = LookupBloc(lookupUseCase:getIt());
+  @override
+  void initState() {
+    super.initState();
+    lookupBloc.add(FetchCitiesEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +46,21 @@ class SearchScreen extends StatelessWidget {
                   // isEnabled: false,
                   onChanged:(value) {
                 },onFieldSubmitted:(value) {
-                    context.push(AppRouter.searchResults,extra:value??'');
+                    context.push(AppRouter.searchResults, extra:{
+                      'searchKey':value??'', 'lookupBloc':lookupBloc,
+                      'isFilterClicked':false,
+                        });
                 },onTapFilter:() {
-                      context.push(AppRouter.searchResults,extra:'');
+                        filterBottomSheet(context,lookupBloc,(location, specialization, selectedVisitIndex) {
+                          context.push(AppRouter.searchResults, extra:{
+                            'searchKey':specializations.firstWhere((e) => e.id== (specialization??0)).optionText,
+                            'lookupBloc':lookupBloc,
+                            'isFilterClicked':true,
+                            'filterRequestModel':
+                          FilterRequestModel(specializationId:specialization??0,cityId:location??0)
+                          });
+                        },);
+                      // context.push(AppRouter.searchResults,extra:'');
                     }),
                 Padding(
                   padding: const EdgeInsets.only(top:20,bottom:10),
@@ -55,7 +84,11 @@ class SearchScreen extends StatelessWidget {
                           fontFamily:'cairo',fontSize:12
                       ),
                       onSelected:(value) {
-                        context.push(AppRouter.searchResults,extra:item.optionText);
+                        context.push(AppRouter.searchResults, extra:{
+                          'searchKey':item.optionText, 'lookupBloc':lookupBloc,
+                          'isFilterClicked':false,
+                        });
+                        // context.push(AppRouter.searchResults,extra:item.optionText);
                       },
                     );
                   }).toList(),

@@ -4,5 +4,6 @@ abstract class DoctorRatingsEvent {
 
 class ApplyDoctorRatingsEvent extends DoctorRatingsEvent {
   final int id;
-  const ApplyDoctorRatingsEvent({required this.id}) : super();
+  final bool isRate;
+  const ApplyDoctorRatingsEvent({required this.id,required this.isRate}) : super();
 }

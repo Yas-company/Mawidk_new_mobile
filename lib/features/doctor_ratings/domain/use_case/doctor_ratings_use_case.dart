@@ -6,7 +6,7 @@ class DoctorRatingsUseCase {
 
   DoctorRatingsUseCase({required this.doctorRatingsRepository});
 
-  Future<Either> getDoctorRatingsById({required int id}) async {
-    return await doctorRatingsRepository.getDoctorRatingsById(id:id);
+  Future<Either> getDoctorRatingsById({required int id,required bool isRate}) async {
+    return await doctorRatingsRepository.getDoctorRatingsById(id:id,isRate: isRate);
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawidak/core/component/appbar/p_appbar.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/home/presentation/ui/widgets/search_widget.dart';
@@ -16,8 +19,12 @@ import 'package:mawidak/features/search_results/presentation/ui/pages/search_res
 import 'package:mawidak/features/search_results/presentation/ui/widgets/search_map_or_list_widget.dart';
 
 class SearchResultsScreen extends StatefulWidget{
+  final LookupBloc lookupBloc;
   String searchKey;
-  SearchResultsScreen({super.key,required this.searchKey});
+  bool isFilterClicked ;
+  FilterRequestModel? filterRequestModel ;
+  SearchResultsScreen({super.key,required this.searchKey,
+  required this.lookupBloc,this.isFilterClicked=false,this.filterRequestModel});
 
   @override
   State<SearchResultsScreen> createState() => SearchResultsState();
@@ -25,11 +32,17 @@ class SearchResultsScreen extends StatefulWidget{
 
 class SearchResultsState extends State<SearchResultsScreen> {
   SearchBloc searchBloc = SearchBloc(searchUseCase:getIt());
-  LookupBloc lookupBloc = LookupBloc(lookupUseCase:getIt());
+  // LookupBloc lookupBloc = LookupBloc(lookupUseCase:getIt());
   @override
   void initState() {
     super.initState();
-    lookupBloc.add(FetchCitiesEvent());
+    // print('model>>'+jsonEncode(widget.filterRequestModel));
+    // lookupBloc.add(FetchCitiesEvent());
+    if(widget.isFilterClicked){
+      searchBloc.add(ApplyIsMapEvent(isMap: false));
+      searchBloc.add(ApplyFilterEvent(filterRequestModel:widget.filterRequestModel??
+          FilterRequestModel(specializationId:0, cityId:0)));
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -53,12 +66,13 @@ class SearchResultsState extends State<SearchResultsScreen> {
                     widget.searchKey = value??'';
                       searchBloc.add(ApplySearchForPatient(key:value??''));
                     },onTapFilter:() {
-                        filterBottomSheet(context,lookupBloc,(location, specialization, selectedVisitIndex) {
+                        filterBottomSheet(context,widget.lookupBloc,(location, specialization, selectedVisitIndex) {
+                          widget.searchKey = specializations.firstWhere((e) => e.id == (specialization??0)).optionText??'';
                           searchBloc.add(ApplyIsMapEvent(isMap: false));
                           // setState(() {});
                           searchBloc.add(ApplyFilterEvent(filterRequestModel:FilterRequestModel(
-                              // specializationId:specialization??0, cityId:location??0
-                              specializationId:1, cityId:11
+                              specializationId:specialization??0, cityId:location??0
+                              // specializationId:1, cityId:11
                           )));
                         },);
                       }),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/extensions/string_extensions.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
@@ -26,6 +27,8 @@ class ContactUsBloc extends Bloc<ContactUsEvent, BaseState> {
     await response.fold((l) async {emit(ErrorState(l));},
           (r) async {
         emit(LoadedState(r,isMap:false));
+        if (!Get.navigatorState!.mounted) return;
+        Navigator.pop(Get.navigatorState!.context);
       },
     ); 
   }

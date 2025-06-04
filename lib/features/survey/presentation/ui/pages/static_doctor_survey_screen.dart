@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mawidak/core/bloc/upload_bloc.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/assets_helper/app_icon.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
-import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawidak/core/global/global_func.dart';
@@ -18,6 +16,7 @@ import 'package:mawidak/features/survey/presentation/bloc/survey_event.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/doctor_widgets/images_files_upload_widget.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/dynamic_question_widget.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/steper_indicator.dart';
+import 'package:sizer/sizer.dart';
 
 class StaticDoctorSurveyScreen extends StatefulWidget {
   const StaticDoctorSurveyScreen({super.key});
@@ -128,170 +127,187 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
             ),
           ),
         );
-      },
-      );
+      },);
       return false;
       },
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: BlocProvider(
-          create: (context) => surveyBloc,
-          child: Stack(
-            children: [
-              Scaffold(
-                backgroundColor:AppColors.whiteBackground,
-                appBar: AppBar(backgroundColor:AppColors.primaryTransparent,
-                  leadingWidth: 0,titleSpacing:0,automaticallyImplyLeading: false,
-                  leading:null,flexibleSpace:null,
-                  bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(20),
-                    child :Container(color:AppColors.primaryTransparent,
-                        child: BlocBuilder<StaticSurveyBloc, BaseState>(
-                          bloc: surveyBloc,
-                          builder: (context, state) {
-                            return StepIndicator(
-                              currentStep: surveyBloc.index,
-                              allSteps: surveyBloc.surveyList.length,
-                            );
-                          },
-                        )
-                    ),
-                  ),
-                ),
-                body: Column(children: [
-                  Expanded(
-                    child: PageView.builder(
-                      controller: _controller,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: surveyBloc.surveyList.length,
-                      itemBuilder: (context, index) {
-                        final page = surveyBloc.surveyList[index];
-                        if(index == surveyBloc.surveyList.length-1){
-                          return ImagesFilesUploadWidget(files:surveyBloc.selectedFiles,onChange:(selectedFiles) {
-                            surveyBloc.selectedFiles = selectedFiles;
-                            surveyBloc.add(FillSelectedFilesEvent(files: selectedFiles));
-                            surveyBloc.add(ValidateSurveyEvent());
-                          });
-                        }
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom:10),
-                          child: SingleChildScrollView(
-                            child: Column(mainAxisSize:MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 400, color:AppColors.primaryTransparent,
-                                  padding: const EdgeInsets.only(
-                                    left: 20, right: 20, top: 40, bottom: 30,),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      index==0?Row(
-                                        children: [
-                                          Icon(Icons.star,size:12,color:Color(0xffD32F2F),),
-                                          const SizedBox(width: 4,),
-                                          PText(title: page.title??'', size: PSize.text20,),
-                                        ],
-                                      ):PText(title: page.title??'', size: PSize.text20,),
-                                      PText(title: page.subtitle??'', size: PSize.text14,
-                                        fontColor: AppColors.grey200, fontWeight: FontWeight.w400,),
-                                      const SizedBox(height: 20),
-                                    ],
-                                  ),
-                                ),
-                                if(page.questions!=null&& page.questions!.isNotEmpty)
-                                  ...page.questions!.map((q) => Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal:20),
-                                    child:buildQuestionWidget(q, (callback) {
-                                      setState(callback);
-                                      surveyBloc.add(ValidateSurveyEvent());
-                                    }),
-                                  )
-                                  ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left:14,right:14,bottom:10),
-                    // padding: const EdgeInsets.symmetric(horizontal:14,vertical:0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Scaffold(
+        backgroundColor:AppColors.whiteBackground,
+        body: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: BlocProvider(
+            create: (context) => surveyBloc,
+            child: SizedBox(height:double.infinity,
+              child: Stack(
+                children: [
+                  Container(
+                    height: 31.h, width: double.infinity,
+                    decoration: BoxDecoration(color:Color(0xFFF1F8FF)),
+                    child: Stack(
                       children: [
-                        BlocBuilder<StaticSurveyBloc, BaseState>(
-                          bloc:surveyBloc,
-                          builder: (context, currentPage) {
-                            return surveyBloc.index > 0? Container(
-                              margin: EdgeInsets.only(left:10),
-                              child: PButton(borderRadius:12,onPressed:() {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                surveyBloc.add(PrevPageEvent(controller:_controller));
-                                setState(() {});
-                              },title:'',fillColor:AppColors.secondary,
-                                hasBloc:false,size:PSize.text16,
-                                icon:PImage(source:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
-                                padding:EdgeInsets.zero,
-                              ),
-                            ) : const SizedBox.shrink() ;
-                          },
-                        ),
-
-                        BlocBuilder<StaticSurveyBloc, BaseState>(
-                          bloc:surveyBloc,
-                          builder: (context, currentPage) {
-                            final isLastPage = surveyBloc.index == surveyBloc.surveyList.length - 1;
-                            final currentPageIndex = surveyBloc.index;
-                            final isFileEmpty = surveyBloc.selectedFiles.isEmpty;
-                            // print('blob>>'+context.read<UploadBloc>().selectedFiles.length.toString());
-                            return Expanded(
-                              child: PButton(
-                                borderRadius: 12,
-                                onPressed: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty) ? null : () {
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  surveyBloc.add(NextPageEvent(controller: _controller));
-                                },
-                                title: isLastPage ? 'حفظ' : 'التالي',
-                                fontWeight: FontWeight.w700,
-                                hasBloc: false,
-                                size: PSize.text16,
-                                icon: isLastPage
-                                    ? null
-                                    : PImage(
-                                  source: AppSvgIcons.icNext,
-                                  height: 14,
-                                  fit: BoxFit.scaleDown,
-                                  color: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty)
-                                      ? AppColors.blackColor
-                                      : AppColors.whiteColor,
-                                ),
-                                textColor: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty)
-                                    ? AppColors.blackColor
-                                    : AppColors.whiteColor,
-                                borderColor: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty)
-                                    ? Colors.transparent
-                                    : AppColors.primaryColor,
-                              ),
-                            );
-                          },
+                        Positioned(
+                          top:7.h, right: 2,
+                          child: CustomImageView(
+                            imagePath: AppIcons.imgVector,color:Colors.white.withOpacity(0.6),
+                            height: 22.8.h, width:33.5.w,fit: BoxFit.fitHeight,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height:20,)
+                  Positioned(top:60,left:16,right:16,
+                    child: BlocBuilder<StaticSurveyBloc, BaseState>(
+                      bloc: surveyBloc,
+                      builder: (context, state) {
+                        return StepIndicator(
+                          currentStep: surveyBloc.index,
+                          allSteps: surveyBloc.surveyList.length,
+                        );
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    top: 18.h, right: 0, left: 0, bottom: 0,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: PageView.builder(
+                            controller: _controller,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: surveyBloc.surveyList.length,
+                            itemBuilder: (context, index) {
+                              final page = surveyBloc.surveyList[index];
+
+                              if (index == surveyBloc.surveyList.length - 1) {
+                                return ImagesFilesUploadWidget(
+                                  files: surveyBloc.selectedFiles,
+                                  onChange: (selectedFiles) {
+                                    surveyBloc.selectedFiles = selectedFiles;
+                                    surveyBloc.add(FillSelectedFilesEvent(files: selectedFiles));
+                                    surveyBloc.add(ValidateSurveyEvent());
+                                  },
+                                );
+                              }
+
+                              return SingleChildScrollView(
+                                padding: const EdgeInsets.all(16),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if (index == 0)
+                                      Row(
+                                        children: [
+                                          Icon(Icons.star, size: 12, color: Color(0xffD32F2F)),
+                                          SizedBox(width: 4),
+                                          PText(title: page.title ?? '', size: PSize.text20),
+                                        ],
+                                      )
+                                    else
+                                      PText(title: page.title ?? '', size: PSize.text20),
+                                    PText(
+                                      title: page.subtitle ?? '',
+                                      size: PSize.text14,
+                                      fontColor: AppColors.grey200,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    SizedBox(height: 20),
+                                    if (page.questions != null && page.questions!.isNotEmpty)
+                                      ...page.questions!.map((q) => Padding(
+                                        padding: const EdgeInsets.symmetric(vertical:30),
+                                        child: buildQuestionWidget(q, (callback) {
+                                          setState(callback);
+                                          surveyBloc.add(ValidateSurveyEvent());
+                                        }),
+                                      )),
+                                    SizedBox(height: 100), // space for buttons
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14, right: 14, bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BlocBuilder<StaticSurveyBloc, BaseState>(
+                                bloc: surveyBloc,
+                                builder: (context, currentPage) {
+                                  return surveyBloc.index > 0
+                                      ? Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    child: PButton(
+                                      borderRadius: 12,
+                                      onPressed: () {
+                                        FocusManager.instance.primaryFocus?.unfocus();
+                                        surveyBloc.add(PrevPageEvent(controller: _controller));
+                                        setState(() {});
+                                      },
+                                      title: '',
+                                      fillColor: AppColors.secondary,
+                                      hasBloc: false,
+                                      size: PSize.text16,
+                                      icon: PImage(
+                                        source: AppSvgIcons.icBack,
+                                        height: 14,
+                                        fit: BoxFit.scaleDown,
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                    ),
+                                  )
+                                      : SizedBox.shrink();
+                                },
+                              ),
+                              BlocBuilder<StaticSurveyBloc, BaseState>(
+                                bloc: surveyBloc,
+                                builder: (context, currentPage) {
+                                  final isLastPage = surveyBloc.index == surveyBloc.surveyList.length - 1;
+                                  final currentPageIndex = surveyBloc.index;
+                                  final isFileEmpty = surveyBloc.selectedFiles.isEmpty;
+
+                                  return Expanded(
+                                    child: PButton(
+                                      borderRadius: 12,
+                                      onPressed: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty)
+                                          ? null
+                                          : () {
+                                        FocusManager.instance.primaryFocus?.unfocus();
+                                        surveyBloc.add(NextPageEvent(controller: _controller));
+                                      },
+                                      title: isLastPage ? 'حفظ' : 'التالي',
+                                      fontWeight: FontWeight.w700,
+                                      hasBloc: false,
+                                      size: PSize.text16,
+                                      icon: isLastPage
+                                          ? null
+                                          : PImage(
+                                        source: AppSvgIcons.icNext,
+                                        height: 14,
+                                        fit: BoxFit.scaleDown,
+                                        color: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty)
+                                            ? AppColors.blackColor
+                                            : AppColors.whiteColor,
+                                      ),
+                                      textColor: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty)
+                                          ? AppColors.blackColor
+                                          : AppColors.whiteColor,
+                                      borderColor: !(surveyBloc.validateCurrentPage()) || (currentPageIndex == 2 && isFileEmpty)
+                                          ? Colors.transparent
+                                          : AppColors.primaryColor,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
-                ),
               ),
-              Positioned(
-                  top:50,
-                  right:10,
-                  child:PImage(source:AppSvgIcons.heartWhite,width:190,height:170,
-                    color:Colors.white.withOpacity(0.4),fit: BoxFit.fitHeight,)
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -312,3 +328,92 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
 
 
 
+
+
+class CustomImageView extends StatelessWidget {
+  CustomImageView({
+    this.imagePath,
+    this.height,
+    this.width,
+    this.color,
+    this.fit,
+    this.alignment,
+    this.onTap,
+    this.radius,
+    this.margin,
+    this.border,
+    this.placeHolder,
+  }) {
+  }
+
+  ///[imagePath] is required parameter for showing image
+  late String? imagePath;
+
+  final double? height;
+
+  final double? width;
+
+  final Color? color;
+
+  final BoxFit? fit;
+
+  final String? placeHolder;
+
+  final Alignment? alignment;
+
+  final VoidCallback? onTap;
+
+  final EdgeInsetsGeometry? margin;
+
+  final BorderRadius? radius;
+
+  final BoxBorder? border;
+
+  @override
+  Widget build(BuildContext context) {
+    return alignment != null
+        ? Align(alignment: alignment!, child: _buildWidget())
+        : _buildWidget();
+  }
+
+  Widget _buildWidget() {
+    return Padding(
+      padding: margin ?? EdgeInsets.zero,
+      child: InkWell(onTap: onTap, child: _buildCircleImage()),
+    );
+  }
+
+  ///build the image with border radius
+  _buildCircleImage() {
+    if (radius != null) {
+      return ClipRRect(
+        borderRadius: radius ?? BorderRadius.zero,
+        child: _buildImageWithBorder(),
+      );
+    } else {
+      return _buildImageWithBorder();
+    }
+  }
+
+  ///build the image with border and border radius style
+  _buildImageWithBorder() {
+    if (border != null) {
+      return Container(
+        decoration: BoxDecoration(border: border, borderRadius: radius),
+        child: _buildImageView(),
+      );
+    } else {
+      return _buildImageView();
+    }
+  }
+
+  Widget _buildImageView() {
+        return Image.asset(
+          imagePath!,
+          height: height,
+          width: width,
+          fit: fit ?? BoxFit.cover,
+          color: color,
+        );
+    }
+  }

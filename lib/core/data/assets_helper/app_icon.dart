@@ -32,4 +32,6 @@ class AppIcons {
   static const String tamara = '${iconPath}tamara.png';
   static const String masterCard = '${iconPath}master_card.png';
   static const String successfulPayment = '${iconPath}successful_payment.png';
+  static const String splashIconEmpty = '${iconPath}splash_icon_empty.png';
+  static const String imgVector = '${iconPath}img_vector.png';
 }

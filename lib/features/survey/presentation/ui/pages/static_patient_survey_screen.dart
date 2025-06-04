@@ -18,6 +18,7 @@ import 'package:mawidak/di.dart';
 import 'package:mawidak/features/survey/data/model/survey_response_model.dart';
 import 'package:mawidak/features/survey/presentation/bloc/static_survey_bloc.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_event.dart';
+import 'package:mawidak/features/survey/presentation/ui/pages/static_doctor_survey_screen.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/dynamic_question_widget.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/steper_indicator.dart';
 
@@ -265,185 +266,189 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
       );
       return false;
     },
-      child: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: BlocProvider(
-          create: (context) => surveyBloc,
-          child: Stack(
-            children: [
-              Positioned(
-                  top: 0,
-                  right:0,
-                  child:PImage(source:AppIcons.human,height:300,width:380,
-                    color:Colors.red,fit: BoxFit.fitHeight,)
-              ),
-              Scaffold(
-                backgroundColor: AppColors.whiteBackground,
-                appBar: AppBar(backgroundColor:Color(0xffF1F8FF),
-                  leadingWidth: 0,titleSpacing:0,automaticallyImplyLeading: false,
-                  leading:null,flexibleSpace:null,
-                  bottom: PreferredSize(
-                    preferredSize: Size.fromHeight(20),
-                    child :Container(color:Color(0xffF1F8FF),
-                        child: BlocBuilder<StaticSurveyBloc, BaseState>(
-                          bloc: surveyBloc,
-                          builder: (context, state) {
-                            return StepIndicator(
-                              currentStep: surveyBloc.index,
-                              allSteps: surveyBloc.surveyList.length,
-                            );
-                          },
-                        )
-                    ),
-                  ),
-                ),
-                body: Column(children: [
-                  Expanded(
-                    child: PageView.builder(
-                      controller: _controller,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: surveyBloc.surveyList.length,
-                      itemBuilder: (context, index) {
-                        final page = surveyBloc.surveyList[index];
-                        return index==0?
-                        Stack(children: [
-                          Positioned(
-                              left:-142,
-                              top:165,child: PImage(source:AppIcons.human,fit:BoxFit.fitWidth,
-                            height:MediaQuery.sizeOf(context).height*0.50,)),
-                          SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 400, color:Color(0xffF1F8FF),
-                                  padding: const EdgeInsets.only(
-                                    left: 20, right: 20, top: 40, bottom: 30,),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      PText(title: page.title??'', size: PSize.text20,),
-                                      PText(title: page.subtitle??'', size: PSize.text14,
-                                        fontColor: AppColors.grey200, fontWeight: FontWeight.w400,),
-                                      const SizedBox(height: 20),
-                                    ],
-                                  ),
-                                ),
-                                if(page.questions!=Icons.not_listed_location&&
-                                    page.questions!.isNotEmpty)...page.questions!.map((q) => Padding(
-                                  padding:EdgeInsets.only(left:
-                                  index==0?MediaQuery.sizeOf(context).width*0.45:20,
-                                      right:20,top:10),
-                                  child:buildQuestionWidget(q, (callback) {
-                                    setState(callback);
-                                    surveyBloc.add(ValidateSurveyEvent());
-                                  }),
-                                )
-                                ),
-                              ],
-                            ),
-                          )
-                        ],)
-                            :Padding(
-                          padding: const EdgeInsets.only(bottom:10),
-                          child: SingleChildScrollView(
-                            child: Column(mainAxisSize:MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 400, color:Color(0xffF1F8FF),
-                                  padding: const EdgeInsets.only(
-                                    left: 20, right: 20, top: 40, bottom: 30,),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      PText(title: page.title??'', size: PSize.text20,),
-                                      PText(title: page.subtitle??'', size: PSize.text14,
-                                        fontColor: AppColors.grey200, fontWeight: FontWeight.w400,),
-                                      const SizedBox(height: 20),
-                                    ],
-                                  ),
-                                ),
-                                if(page.questions!=null&& page.questions!.isNotEmpty)
-                                  ...page.questions!.map((q) => Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal:20),
-                                    child:buildQuestionWidget(q, (callback) {
-                                      setState(callback);
-                                      surveyBloc.add(ValidateSurveyEvent());
-                                    }),
-                                  )
-                                  ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left:14,right:14,bottom:10),
-                    // padding: const EdgeInsets.symmetric(horizontal:14,vertical:0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Scaffold(backgroundColor:AppColors.whiteBackground,
+        body: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: BlocProvider(
+            create: (context) => surveyBloc,
+            child: SizedBox(height:double.infinity,
+              child: Stack(
+                children: [
+                  Container(
+                    height: 250, width: double.infinity,
+                    decoration: BoxDecoration(color:Color(0xFFF1F8FF)),
+                    child: Stack(
                       children: [
-                        BlocBuilder<StaticSurveyBloc, BaseState>(
-                          bloc:surveyBloc,
-                          builder: (context, currentPage) {
-                            return surveyBloc.index > 0? Container(
-                              margin: EdgeInsets.only(left:10),
-                              child: PButton(borderRadius:12,onPressed:() {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                surveyBloc.add(PrevPageEvent(controller:_controller));
-                                setState(() {});
-                              },title:'',fillColor:AppColors.secondary,
-                                hasBloc:false,size:PSize.text16,
-                                icon:PImage(source:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
-                                padding:EdgeInsets.zero,
-                              ),
-                            ) : const SizedBox.shrink() ;
-                          },
-                        ),
-
-                        BlocBuilder<StaticSurveyBloc, BaseState>(
-                          bloc:surveyBloc,
-                          builder: (context, currentPage) {
-                            final isLastPage = surveyBloc.index == surveyBloc.surveyList.length - 1;
-                            return Expanded(
-                              child: PButton(borderRadius:12,onPressed:
-                              !(surveyBloc.validateCurrentPage())?null:() {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                surveyBloc.add(NextPageEvent(controller:_controller));
-                              },title: isLastPage ? 'حفظ' : 'التالي',
-                                  fontWeight:FontWeight.w700,
-                                  hasBloc:false,size:PSize.text16,
-                                  icon:isLastPage ?null:
-                                  PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,
-                                    color:!(surveyBloc.validateCurrentPage())?
-                                    AppColors.blackColor:AppColors.whiteColor,),
-
-                                  // Icon(Icons.arrow_forward,color:!(surveyBloc.validateCurrentPage())?
-                                  // AppColors.blackColor:AppColors.whiteColor,),
-                                  textColor:!(surveyBloc.validateCurrentPage())?AppColors.blackColor:AppColors.whiteColor,
-                                  borderColor:!(surveyBloc.validateCurrentPage())?Colors.transparent:AppColors.primaryColor
-                              ),
-                            );
-                          },
+                        Positioned(
+                          top:50, right: 2,
+                          child: CustomImageView(
+                            imagePath: AppIcons.imgVector,color:Colors.white.withOpacity(0.6),
+                            height: 174, width: 124,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height:20,)
+                  Positioned(top:60,left:16,right:16,
+                    child: BlocBuilder<StaticSurveyBloc, BaseState>(
+                      bloc: surveyBloc,
+                      builder: (context, state) {
+                        return StepIndicator(
+                          currentStep: surveyBloc.index,
+                          allSteps: surveyBloc.surveyList.length,
+                        );
+                      },
+                    ),
+                  ),
+                  Positioned(top: 120, right: 0, left: 0, bottom: 0,
+                    child: Column(children: [
+                        Expanded(
+                          child: PageView.builder(
+                            controller: _controller,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: surveyBloc.surveyList.length,
+                            itemBuilder: (context, index) {
+                              final page = surveyBloc.surveyList[index];
+                              return index==0?
+                              Stack(children: [
+                                Positioned(
+                                    left:-142,
+                                    top:165,child: PImage(source:AppIcons.human,fit:BoxFit.fitWidth,
+                                  height:MediaQuery.sizeOf(context).height*0.50,)),
+                                SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 400,
+                                        padding: const EdgeInsets.only(
+                                          left: 20, right: 20, top: 40, bottom: 30,),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            PText(title: page.title??'', size: PSize.text20,),
+                                            PText(title: page.subtitle??'', size: PSize.text14,
+                                              fontColor: AppColors.grey200, fontWeight: FontWeight.w400,),
+                                            const SizedBox(height: 20),
+                                          ],
+                                        ),
+                                      ),
+                                      if(page.questions!=Icons.not_listed_location&&
+                                          page.questions!.isNotEmpty)...page.questions!.map((q) => Padding(
+                                        padding:EdgeInsets.only(left:
+                                        index==0?MediaQuery.sizeOf(context).width*0.45:20,
+                                            right:20,top:10),
+                                        child:buildQuestionWidget(q, (callback) {
+                                          setState(callback);
+                                          surveyBloc.add(ValidateSurveyEvent());
+                                        }),
+                                      )
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],)
+                                  :Padding(
+                                padding: const EdgeInsets.only(bottom:10),
+                                child: SingleChildScrollView(
+                                  child: Column(mainAxisSize:MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 400,
+                                        padding: const EdgeInsets.only(
+                                          left: 20, right: 20, top: 40, bottom: 30,),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            PText(title: page.title??'', size: PSize.text20,),
+                                            PText(title: page.subtitle??'', size: PSize.text14,
+                                              fontColor: AppColors.grey200, fontWeight: FontWeight.w400,),
+                                            const SizedBox(height: 20),
+                                          ],
+                                        ),
+                                      ),
+                                      if(page.questions!=null&& page.questions!.isNotEmpty)
+                                        ...page.questions!.map((q) => Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal:20),
+                                          child:buildQuestionWidget(q, (callback) {
+                                            setState(callback);
+                                            surveyBloc.add(ValidateSurveyEvent());
+                                          }),
+                                        )
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left:14,right:14,bottom:10),
+                          // padding: const EdgeInsets.symmetric(horizontal:14,vertical:0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              BlocBuilder<StaticSurveyBloc, BaseState>(
+                                bloc:surveyBloc,
+                                builder: (context, currentPage) {
+                                  return surveyBloc.index > 0? Container(
+                                    margin: EdgeInsets.only(left:10),
+                                    child: PButton(borderRadius:12,onPressed:() {
+                                      FocusManager.instance.primaryFocus?.unfocus();
+                                      surveyBloc.add(PrevPageEvent(controller:_controller));
+                                      setState(() {});
+                                    },title:'',fillColor:AppColors.secondary,
+                                      hasBloc:false,size:PSize.text16,
+                                      icon:PImage(source:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
+                                      padding:EdgeInsets.zero,
+                                    ),
+                                  ) : const SizedBox.shrink() ;
+                                },
+                              ),
+
+                              BlocBuilder<StaticSurveyBloc, BaseState>(
+                                bloc:surveyBloc,
+                                builder: (context, currentPage) {
+                                  final isLastPage = surveyBloc.index == surveyBloc.surveyList.length - 1;
+                                  return Expanded(
+                                    child: PButton(borderRadius:12,onPressed:
+                                    !(surveyBloc.validateCurrentPage())?null:() {
+                                      FocusManager.instance.primaryFocus?.unfocus();
+                                      surveyBloc.add(NextPageEvent(controller:_controller));
+                                    },title: isLastPage ? 'حفظ' : 'التالي',
+                                        fontWeight:FontWeight.w700,
+                                        hasBloc:false,size:PSize.text16,
+                                        icon:isLastPage ?null:
+                                        PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,
+                                          color:!(surveyBloc.validateCurrentPage())?
+                                          AppColors.blackColor:AppColors.whiteColor,),
+
+                                        // Icon(Icons.arrow_forward,color:!(surveyBloc.validateCurrentPage())?
+                                        // AppColors.blackColor:AppColors.whiteColor,),
+                                        textColor:!(surveyBloc.validateCurrentPage())?AppColors.blackColor:AppColors.whiteColor,
+                                        borderColor:!(surveyBloc.validateCurrentPage())?Colors.transparent:AppColors.primaryColor
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height:20,)
+                      ],),
+                  ),
+                  // Positioned(
+                  //     top:50,
+                  //     right:10,
+                  //     child:PImage(source:AppSvgIcons.heartWhite,width:190,height:170,
+                  //       color:Colors.white.withOpacity(0.4),fit: BoxFit.fitHeight,)
+                  // ),
                 ],
-                ),
               ),
-              Positioned(
-                  top:50,
-                  right:10,
-                  child:PImage(source:AppSvgIcons.heartWhite,width:190,height:170,
-                    color:Colors.white.withOpacity(0.4),fit: BoxFit.fitHeight,)
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -81,7 +81,8 @@ class RegisterScreenState extends State<RegisterScreen> {
                         registerBloc.add(ValidationEvent());
                       }, validator:(value) => null,),
                     const SizedBox(height:14,),
-                    PTextField(textInputAction:TextInputAction.next,isEmail:true,isOptional:true,textInputType: TextInputType.emailAddress,controller:registerBloc.email,
+                    PTextField(textInputAction:TextInputAction.next,isEmail:true,
+                      isOptional:true,textInputType: TextInputType.emailAddress,controller:registerBloc.email,
                       labelAbove:'البريد الالكتروني',
                       prefixIcon:PImage(source:AppSvgIcons.mail,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
                       // prefixIcon: Icon(Icons.email_rounded,size:20,color:AppColors.primaryColor,),

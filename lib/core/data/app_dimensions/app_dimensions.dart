@@ -38,6 +38,7 @@ class AppDimensions {
   static double text13 = 14.sp; // 12
   static double text14 = 14.81.sp; // 12
   static double text16 = 15.95.sp; // 16
+  static double text17 = 16.50.sp; // 16
   static double text18 = 16.93.sp; // 18
   static double text20 = 17.84.sp; // 20
   static double text24 = 19.55.sp; // 24

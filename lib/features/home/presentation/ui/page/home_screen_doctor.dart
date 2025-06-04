@@ -49,9 +49,9 @@ class HomeScreenDoctor extends StatelessWidget {
               hideLoadingDialog();
             }
           },builder:(context, state) {
-            DoctorHomeDetailsResponseModel model = (state is LoadedState)?
+            DoctorHomeModel model = (state is LoadedState)?
             (((state).data).model?.model ??
-                DoctorHomeDetailsResponseModel()):DoctorHomeDetailsResponseModel();
+                DoctorHomeModel()):DoctorHomeModel();
             return Padding(
                 padding: EdgeInsets.symmetric(horizontal:isProfileDoctorIsActive?0:14),
                 child: !isProfileDoctorIsActive ? UnActiveDoctorHomeScreen():CustomScrollView(slivers:[
@@ -71,7 +71,7 @@ class HomeScreenDoctor extends StatelessWidget {
                           mainAxisSize:MainAxisSize.max,children: [
                             Expanded(
                                 child:TimeAskCard(title:'home_visit', image:AppSvgIcons.icHomeVisit,
-                                  value:model.model?.homeVisitAppointments??0,
+                                  value:model.homeVisitAppointments??0,
                                   onTap:() {
 
                                   },)
@@ -79,7 +79,7 @@ class HomeScreenDoctor extends StatelessWidget {
                             const SizedBox(width:3,),
                             Expanded(
                                 child:TimeAskCard(title:'book_online', image:AppSvgIcons.icBookOnline,
-                                  value:model.model?.onlineAppointments??0,
+                                  value:model.onlineAppointments??0,
                                   onTap:() {
 
                                   },)
@@ -90,7 +90,7 @@ class HomeScreenDoctor extends StatelessWidget {
                           mainAxisSize:MainAxisSize.max,children: [
                             Expanded(
                                 child:TimeAskCard(title:'attendance', image:AppSvgIcons.icAttendance,
-                                  value:model.model?.onlineAppointments??0,
+                                  value:model.onlineAppointments??0,
                                   onTap:() {
 
                                   },)
@@ -98,7 +98,7 @@ class HomeScreenDoctor extends StatelessWidget {
                             const SizedBox(width:3,),
                             Expanded(
                                 child:TimeAskCard(title:'follow', image:AppSvgIcons.icFollow,
-                                  value:model.model?.followUpAppointments??0,
+                                  value:model.followUpAppointments??0,
                                   onTap:() {
 
                                   },)
@@ -125,17 +125,17 @@ class HomeScreenDoctor extends StatelessWidget {
                           PText(title:'patient_statistics'.tr(),size:PSize.text18,),
                           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              PatientsStatisticsCard(title:(model.model?.totalPatients??0).toString(),
+                              PatientsStatisticsCard(title:(model.totalPatients??0).toString(),
                                 image: AppSvgIcons.user,value:'مريض',
                                 onTap:() {
 
                                 },),
-                              PatientsStatisticsCard(title:(model.model?.newPatients??0).toString(),
+                              PatientsStatisticsCard(title:(model.newPatients??0).toString(),
                                 image: AppSvgIcons.icPatientsColored,value:'مرضى جدد',
                                 onTap:() {
 
                                 },),
-                              PatientsStatisticsCard(title:(model.model?.averageRating??0).toString(),
+                              PatientsStatisticsCard(title:(model.averageRating??0).toString(),
                                 image: AppSvgIcons.icStar,value:'تقييمات',
                                 onTap:() {
 

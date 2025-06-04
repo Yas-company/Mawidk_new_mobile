@@ -19,8 +19,8 @@ class ContactUsRepositoryImpl extends MainRepository implements ContactUsReposit
   Future<Either> contactUs({required ContactUsRequestModel model}) async {
     try {
       final result = await remoteData.post(
-        // body:model.toJson(),
-        path: ApiEndpointsConstants.bookAppointment,
+        body:model.toJson(),
+        path: ApiEndpointsConstants.contactUs,
         headers: headers,
         model: GeneralResponseModel(),
       );

@@ -14,10 +14,10 @@ class DoctorRatingsRepositoryImpl extends MainRepository implements DoctorRating
   });
 
   @override
-  Future<Either> getDoctorRatingsById({required int id}) async{
+  Future<Either> getDoctorRatingsById({required int id,required bool isRate}) async{
     try {
       final result = await remoteData.get(
-        path: ApiEndpointsConstants.doctorRatingsById+id.toString(),
+        path: (isRate?ApiEndpointsConstants.doctorRatingsById:ApiEndpointsConstants.doctorCommentsById)+id.toString(),
         headers: headers,
         model: GeneralResponseModel(model:DoctorRatingsResponseModel()),
       );

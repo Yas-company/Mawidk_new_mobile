@@ -9,7 +9,8 @@ import 'package:mawidak/features/doctor_ratings/presentation/ui/widgets/star_rat
 
 class DoctorRatingByPatient extends StatelessWidget {
   final Ratings ratings;
-  const DoctorRatingByPatient({super.key,required this.ratings});
+  final num rate;
+  const DoctorRatingByPatient({super.key,required this.ratings,required this.rate});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,8 @@ class DoctorRatingByPatient extends StatelessWidget {
               const SizedBox(width:14),
               Padding(
                 padding: const EdgeInsets.only(top:2),
-                child: StarRating(rating: ratings.rate??0),
+                child: StarRating(rating:rate,),
+                // child: StarRating(rating: ratings.rate??0),
               ),
             ],
           ),

@@ -16,51 +16,48 @@ class StepIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int totalSteps = allSteps;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal:12),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(crossAxisAlignment:CrossAxisAlignment.start,
-              children: [
-                Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,children: [
-                    PText(title: '${currentStep+1} من $allSteps'),
-                  if(!SharedPreferenceService().getBool(SharPrefConstants.isDoctor))InkWell(onTap:() async {
-                    await SharedPreferenceService().setBool(SharPrefConstants.surveyStatus,false);
-                    await SharedPreferenceService().setBool(SharPrefConstants.isSKippedSurvey,true);
-                    Get.context!.go(isDoctor()?AppRouter.homeDoctor:AppRouter.homePatient);
-                  },child: Padding(
-                    padding: const EdgeInsets.only(bottom:0),
-                    child: PText(title: 'تخطي',fontColor: AppColors.grey200,),
-                  ))
-                  ],
-                ),
-                const SizedBox(height:20,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(totalSteps, (index) {
-                    return Expanded(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 4),
-                        height:6,
-                        decoration: BoxDecoration(
-                          color: index <= currentStep
-                              ? AppColors.primaryColor
-                              : AppColors.grey100,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(crossAxisAlignment:CrossAxisAlignment.start,
+            children: [
+              Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,children: [
+                  PText(title: '${currentStep+1} من $allSteps'),
+                if(!SharedPreferenceService().getBool(SharPrefConstants.isDoctor))InkWell(onTap:() async {
+                  await SharedPreferenceService().setBool(SharPrefConstants.surveyStatus,false);
+                  await SharedPreferenceService().setBool(SharPrefConstants.isSKippedSurvey,true);
+                  Get.context!.go(isDoctor()?AppRouter.homeDoctor:AppRouter.homePatient);
+                },child: Padding(
+                  padding: const EdgeInsets.only(bottom:0),
+                  child: PText(title: 'تخطي',fontColor: AppColors.grey200,),
+                ))
+                ],
+              ),
+              const SizedBox(height:20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(totalSteps, (index) {
+                  return Expanded(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 4),
+                      height:6,
+                      decoration: BoxDecoration(
+                        color: index <= currentStep
+                            ? AppColors.primaryColor
+                            : AppColors.grey100,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    );
-                  }),
-                ),
-              ],
-            ),
+                    ),
+                  );
+                }),
+              ),
+            ],
           ),
-          // if(!SharedPreferenceService().getBool(SharPrefConstants.isDoctor))const SizedBox(width:14,),
+        ),
+        // if(!SharedPreferenceService().getBool(SharPrefConstants.isDoctor))const SizedBox(width:14,),
 
-        ],
-      ),
+      ],
     );
   }
 }

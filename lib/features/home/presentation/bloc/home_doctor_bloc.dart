@@ -16,11 +16,11 @@ class HomeDoctorBloc extends Bloc<HomePatientEvent, BaseState> {
     final response = await homePatientUseCase.getDoctorHomeDetails();
     await response.fold((l) async {emit(ErrorState(l));},
           (r) async {
-        final list = (r).model?.model?? [];
-        if(list.isEmpty){
-          emit(EmptyState(r.message,));
-          return;
-        }
+        // final list = (r).model?.model?? [];
+        // if(list.isEmpty){
+        //   emit(EmptyState(r.message,));
+        //   return;
+        // }
         emit(LoadedState(r));
       },
     );

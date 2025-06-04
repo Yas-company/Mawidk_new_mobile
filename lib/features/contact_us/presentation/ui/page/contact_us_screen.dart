@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,6 +63,7 @@ class ContactUsScreenState extends State<ContactUsScreen> {
                           } else if (!saudiPhoneRegex.hasMatch(value)) {
                             return 'valid_saudi_phone'.tr();
                           }
+                          contactUsBloc.model.phone = value;
                           return null;
                         },),
                       const SizedBox(height:14,),
@@ -70,6 +73,7 @@ class ContactUsScreenState extends State<ContactUsScreen> {
                         prefixIcon:PImage(source:AppSvgIcons.mail,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
                         // prefixIcon: Icon(Icons.email_rounded,size:20,color:AppColors.primaryColor,),
                         hintText: 'Example@mail.com', feedback:(value) {
+                          contactUsBloc.model.email = value;
                           contactUsBloc.add(ApplyValidationEvent());
                         }, validator:(value) {
                           if (value == null || value.trim().isEmpty) return null; // OK if empty
@@ -82,6 +86,7 @@ class ContactUsScreenState extends State<ContactUsScreen> {
                       const SizedBox(height:14,),
                       PTextField(maxLines:4,labelAbove:'msg'.tr(),
                         controller:contactUsBloc.message,hintText:'type_msg'.tr(), feedback:(value) {
+                          contactUsBloc.model.message = value;
                         contactUsBloc.add(ApplyValidationEvent());
                       },)
                     ],),
@@ -89,16 +94,18 @@ class ContactUsScreenState extends State<ContactUsScreen> {
                 ),
               ),
             ),
-          bottomNavigationBar: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16,vertical:16),
-            child: PButton<ContactUsBloc,BaseState>(title:'send'.tr(),onPressed:() {
-              // print('widget.model>>'+jsonEncode(widget.model));
-              contactUsBloc.add(ApplyContactUsEvent(model: contactUsBloc.model));
-            },isFirstButton: true,hasBloc:true,
-                isButtonAlwaysExist: false,isFitWidth:true,
-                icon:PImage(source:
-                isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,
-                  height:14,fit:BoxFit.scaleDown,)),
+          bottomNavigationBar: SizedBox(height:88,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16,vertical:16),
+              child: PButton<ContactUsBloc,BaseState>(title:'send'.tr(),onPressed:() {
+                print('widget.model>>'+jsonEncode(contactUsBloc.model));
+                contactUsBloc.add(ApplyContactUsEvent(model: contactUsBloc.model));
+              },isFirstButton: true,hasBloc:true,
+                  isButtonAlwaysExist: false,isFitWidth:true,
+                  icon:PImage(source:
+                  isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,
+                    height:14,fit:BoxFit.scaleDown,)),
+            ),
           ),
         ),
       ),

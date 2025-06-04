@@ -29,9 +29,13 @@ class DropDownWidget extends StatefulWidget {
 
 class _DropDownWidgetState extends State<DropDownWidget> {
   bool isEnabled = false;
+  List<Option> emptyOptions = [];
   void _setEnabled(bool value) {
     setState(() {
       isEnabled = value;
+      if(!isEnabled){
+        widget.selectedValues.clear();
+      }
     });
   }
   @override
@@ -101,6 +105,11 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                 hint:PText(title:widget.hint),
                 value: null,
                 onChanged: (Option? newValue) {
+                  if(widget.showCheckbox){
+                    if(!isEnabled){
+                      return;
+                    }
+                  }
                   if (newValue == null) return;
                   setState(() {
                     if (widget.selectedValues.contains(newValue)) {
@@ -111,7 +120,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                   });
                   widget.onChanged(widget.selectedValues);
                 },
-                items: widget.options.map((Option value) {
+                items: ((widget.showCheckbox&&!isEnabled)?emptyOptions:widget.options).map((Option value) {
                   return DropdownMenuItem<Option>(
                     value: value,
                     enabled: !widget.selectedValues.contains(value),
@@ -128,7 +137,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           const SizedBox(height: 12),
           Wrap(
             spacing: 8, runSpacing: 6,
-            children: widget.selectedValues.map((value) {
+            children: (widget.selectedValues).map((value) {
               return Chip(
                 label:PText(title:value.optionText ?? '',
                     fontColor:AppColors.whiteColor,size:PSize.text14),

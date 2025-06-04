@@ -51,12 +51,12 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     SafeToast.show(message: 'Coming soon while publish the app',
                     type: MessageType.warning);
                   },child: Container(margin:EdgeInsets.only(top:20),
-                        padding:EdgeInsets.all(11),
+                        padding:EdgeInsets.all(9.5),
                         decoration:BoxDecoration(shape:BoxShape.circle,
                             border: Border.all(color:AppColors.grey100)),
-                        child:PImage(source:AppSvgIcons.share,width:20,height:18,)),
+                        child:PImage(source:AppSvgIcons.share,width:16,height:16)),
                   ),
-                  const SizedBox(width:10,),
+                  const SizedBox(width:8,),
                   BlocConsumer<DoctorProfileBloc,BaseState>(listener:(context, state) {
                     if(state is FavouriteLoadingState){
                       loadDialog();
@@ -77,10 +77,10 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                           doctorId: widget.id,isFavorite:!doctorProfileBloc.isFavourite
                       )));
                     },child: Container(margin:EdgeInsets.only(top:20),
-                        padding:EdgeInsets.all(11),
+                        padding:EdgeInsets.all(9.5),
                         decoration:BoxDecoration(shape:BoxShape.circle,
                             border: Border.all(color:AppColors.grey100)),
-                        child:PImage(source: AppSvgIcons.love,width:20,height:18,
+                        child:PImage(source: AppSvgIcons.love,width:16,height:16,
                             color:doctorProfileBloc.isFavourite?Colors.red:AppColors.grayColor200)),
                     );
                   },),
@@ -207,7 +207,8 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                             )
                           ],),const SizedBox(height:14,),
                           if((item.ratings??[]).isNotEmpty)
-                            DoctorRatingByPatient(ratings:(item.ratings??[]).first)
+                            DoctorRatingByPatient(ratings:(item.ratings??[]).first,
+                            rate:item.averageRating??0.0,)
                         ],),
                       ),
                     ),

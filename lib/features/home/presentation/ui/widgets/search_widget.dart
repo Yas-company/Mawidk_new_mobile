@@ -25,8 +25,6 @@ class SearchWidget extends StatelessWidget {
         onFieldSubmitted:onFieldSubmitted,
         borderRadius:20,textInputAction:textInputAction,
         contentPadding:EdgeInsets.symmetric(vertical:15),
-        // prefixIcon:Icon(Icons.search,color:AppColors.primaryColor,size:40,),
-        // prefixIcon:SvgPicture.asset(AppSvgIcons.icSearch,height:20,width:40,fit: BoxFit.scaleDown,),
         prefixIcon:PImage(source:AppSvgIcons.icSearch,height:10,width:10,fit:BoxFit.scaleDown ),
         suffixIcon:hasFilter?InkWell(onTap:onTapFilter,
           child: Padding(
@@ -36,7 +34,6 @@ class SearchWidget extends StatelessWidget {
                   color:AppColors.background,
                   borderRadius:BorderRadius.circular(16)
                 ),
-                // child: Icon(Icons.imagesearch_roller_sharp,color:AppColors.primaryColor,)),
                 child: PImage(source:AppSvgIcons.icFilter,height:24,width:20,fit:BoxFit.contain,)),
           ),
         ):null,

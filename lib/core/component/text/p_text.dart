@@ -66,6 +66,8 @@ class PText extends StatelessWidget {
         return AppDimensions.text14;
       case PSize.text16:
         return AppDimensions.text16;
+      case PSize.text17:
+        return AppDimensions.text17;
       case PSize.text18:
         return AppDimensions.text18;
       case PSize.text20:

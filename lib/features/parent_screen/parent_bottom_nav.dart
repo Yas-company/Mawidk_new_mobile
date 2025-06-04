@@ -20,7 +20,7 @@ class CustomBottomNavigation extends StatelessWidget {
     ),
     const BottomNavItem(
       icon: AppSvgIcons.icCalendar,
-      redirect: AppRouter.times,
+      redirect: AppRouter.appointments,
       label: 'times',
     ),
 
@@ -58,8 +58,30 @@ class CustomBottomNavigation extends StatelessWidget {
   }
 
   void moveTo(BuildContext context, int index) {
+    print('index>>'+index.toString());
     indexNotifier.value = index;
-    navigationShell.goBranch(index);
+    if(isDoctor()){
+      if(index ==0){
+        navigationShell.goBranch(0);
+      }else if(index ==1){
+        navigationShell.goBranch(2);
+      }else if(index == 2){
+        navigationShell.goBranch(3);
+      }else if(index == 3){
+        navigationShell.goBranch(5);
+      }
+    }else{
+      if(index ==0){
+        navigationShell.goBranch(1);
+      }else if(index ==1){
+        navigationShell.goBranch(2);
+      }else if(index == 2){
+        navigationShell.goBranch(4);
+      }else if(index == 3){
+        navigationShell.goBranch(5);
+      }
+    }
+    // navigationShell.goBranch(index);
     // indexNotifier.value = index;
     // context.go(_navItems[index].redirect);
   }

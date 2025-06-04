@@ -53,6 +53,7 @@ class ButtonWidget extends StatelessWidget {
       onPressed: onPressed,
       onHover: (m) {},
       style: ElevatedButton.styleFrom(
+        overlayColor:AppColors.grey200,
         backgroundColor: fillColor ?? AppColors.primaryColor,
         disabledBackgroundColor: fillColor,
         shape: RoundedRectangleBorder(

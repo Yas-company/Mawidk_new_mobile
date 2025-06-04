@@ -60,13 +60,16 @@ AppBar appBar({
               const SizedBox(width: 10,),
             if (text != null)
               Flexible(
-                child: PText(
-                      title: text,
-                      size: PSize.text18,
-                      // fontColor: AppColors.titleColor,
-                      fontWeight: FontWeight.w700,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: PText(
+                        title: text,
+                        size: PSize.text18,
+                        // fontColor: AppColors.titleColor,
+                        fontWeight: FontWeight.w700,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                ),
               ),
           ]
         ],

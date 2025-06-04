@@ -73,7 +73,7 @@ class SingleChoice extends StatelessWidget {
             );
           }).toList(),
         ):GridView.count(
-          crossAxisCount: 3,
+          crossAxisCount: 3,padding: EdgeInsets.only(top:2),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           mainAxisSpacing: 12,

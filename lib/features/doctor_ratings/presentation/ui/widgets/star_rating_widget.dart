@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 
 class StarRating extends StatelessWidget {
-  final int rating; // from 0 to 5
+  final num rating; // Can be int, double, etc.
   final int maxRating;
   final Color filledColor;
   final Color unfilledColor;
   final double size;
 
-   const StarRating({
+  const StarRating({
     super.key,
     required this.rating,
     this.maxRating = 5,
@@ -19,15 +19,32 @@ class StarRating extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(textDirection:TextDirection.ltr,
+    return Directionality(
+      textDirection: TextDirection.ltr,
       child: Row(
         children: List.generate(maxRating, (index) {
-          return Icon(Icons.star,
-            color: index < rating ? filledColor : unfilledColor,
-            size: size,
-          );
+          IconData icon;
+          Color color;
+
+          if (rating >= index + 1) {
+            // Full star
+            icon = Icons.star;
+            color = filledColor;
+          } else if (rating > index) {
+            // Partial star
+            icon = Icons.star_half;
+            color = filledColor;
+          } else {
+            // Empty star
+            icon = Icons.star;
+            color = unfilledColor;
+          }
+
+          return Icon(icon, color: color, size: size);
         }),
       ),
     );
   }
 }
+
+

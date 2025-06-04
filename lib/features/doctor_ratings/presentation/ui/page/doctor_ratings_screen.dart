@@ -43,7 +43,7 @@ class DoctorRatingsScreenState extends State<DoctorRatingsScreen> with TickerPro
       }
     });
     // Trigger refresh
-    doctorRatingsBloc.add(ApplyDoctorRatingsEvent(id: widget.id));
+    doctorRatingsBloc.add(ApplyDoctorRatingsEvent(id: widget.id,isRate: widget.isRating));
 
     // Wait for completion
     await completer.future;
@@ -101,7 +101,8 @@ class DoctorRatingsScreenState extends State<DoctorRatingsScreen> with TickerPro
               child: PBlocBuilder<DoctorRatingsBloc,BaseState>(bloc:doctorRatingsBloc,
                   init:() {
                     // doctorRatingsBloc.add(ApplyDoctorRatingsEvent(id: id));
-                    doctorRatingsBloc.add(ApplyDoctorRatingsEvent(id: widget.id));
+                    doctorRatingsBloc.add(ApplyDoctorRatingsEvent(id: widget.id,
+                    isRate: widget.isRating));
                   },loadingWidget: Center(child:CustomLoader(size:35,)),
                   loadedWidget:(state) {
                     List<DoctorRating> dataList = ((state as LoadedState).data).model?.model ?? [];
@@ -141,7 +142,8 @@ class DoctorRatingsScreenState extends State<DoctorRatingsScreen> with TickerPro
                               child: AnimatedSlide(
                               duration: const Duration(milliseconds: 500),
                                   offset: visible ? Offset.zero : const Offset(0, 0.2),
-                                  child: DoctorRatingsItem(doctorRating:dataList[index])));
+                                  child: DoctorRatingsItem(doctorRating:dataList[index],
+                                  showRating: widget.isRating,)));
                         },itemCount:dataList.length,shrinkWrap:true,)
                       ],),
                     );

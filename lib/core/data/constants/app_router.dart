@@ -14,7 +14,7 @@ class AppRouter {
   static const String doctorSurvey = '/doctorSurvey';
   static const String homePatient = '/homePatient';
   static const String homeDoctor = '/homeDoctor';
-  static const String times = '/times';
+  static const String appointments = '/appointments';
   static const String profile = '/profile';
   static const String patients = '/patients';
   static const String more = '/more';
@@ -22,6 +22,7 @@ class AppRouter {
   static const String locationScreen = '/locationScreen';
   static const String search = '/search';
   static const String searchResults = '/searchResults';
+  static const String searchResultsForDoctor = '/searchResultsForDoctor';
   static const String doctorProfileScreen = '/doctorProfileScreen';
   static const String doctorRatingsScreen = '/doctorRatingsScreen';
   static const String appointmentBookingScreen = '/appointmentBookingScreen';
@@ -30,5 +31,7 @@ class AppRouter {
   static const String allSpecializationsScreen = '/allSpecializationsScreen';
   static const String contactUsScreen = '/contactUsScreen';
   static const String patientFavouriteScreen = '/patientFavouriteScreen';
+  static const String doctorPatients = '/doctorPatients';
   static const String doctorsOfSpeciality = '/doctorsOfSpeciality';
+  static const String showFileScreen = '/showFileScreen';
 }

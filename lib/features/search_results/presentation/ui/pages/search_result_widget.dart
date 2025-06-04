@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
@@ -37,14 +38,14 @@ class SearchResultWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     PImage(source: AppSvgIcons.emptySearch, width: 170, height: 170,),
-                    PText(title: 'عفوا', size: PSize.text18, fontWeight: FontWeight.w700),
+                    PText(title: 'sorry'.tr(), size: PSize.text18, fontWeight: FontWeight.w700),
                     const SizedBox(height:10,),
                     PText(title: state.data, size: PSize.text14),
                     const SizedBox(height:10,),
                     PButton(onPressed:() {
                       // Navigator.pop(context);
                       Navigator.of(context).popUntil((route) => route.isFirst);
-                    },title:'العودة للرئيسية',hasBloc: false,)
+                    },title:'back_to_home'.tr(),hasBloc: false,)
                   ],
                 ),
               ),

@@ -12,6 +12,7 @@ import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/login/data/model/login_request_model.dart';
@@ -81,13 +82,16 @@ class LoginScreenState extends State<LoginScreen> {
                         }
                         return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
                       },),
-                    InkWell(onTap:() {
-                      Get.context?.push(AppRouter.forgetPassword);
-                    },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top:10),
-                        child: Align(alignment:Alignment.centerLeft,child:
-                        PText(title:'نسيت كلمة المرور',fontColor:AppColors.danger,fontWeight:FontWeight.w700,)),
+
+                    Align(alignment:isArabic()?Alignment.centerLeft:Alignment.centerRight,
+                      child: InkWell(onTap:() {
+                        Get.context?.push(AppRouter.forgetPassword);
+                      },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top:10),
+                          child: PText(title:'نسيت كلمة المرور',fontColor:
+                          AppColors.danger,fontWeight:FontWeight.w700,),
+                        ),
                       ),
                     ),
                     Padding(
@@ -105,7 +109,7 @@ class LoginScreenState extends State<LoginScreen> {
                         isFirstButton: true,
                         isButtonAlwaysExist: false,),
                     ),
-                    Row(children: [
+                    Row(mainAxisSize: MainAxisSize.min,children: [
                       PText(title:'ليس لديك حساب ؟ ',),
                         GestureDetector(
                           onTap: () {

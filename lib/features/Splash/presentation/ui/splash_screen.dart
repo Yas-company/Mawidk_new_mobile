@@ -131,7 +131,8 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                     child: ScaleTransition(
                       scale: _logoScale,
                       child: Image.asset(
-                        AppIcons.appSplashLogo,
+                        // AppIcons.appSplashLogo,
+                        AppIcons.splashIconEmpty,
                         width: 135,
                         height: 138,
                       ),
@@ -159,3 +160,11 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     );
   }
 }
+
+
+
+
+
+
+
+

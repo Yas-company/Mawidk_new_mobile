@@ -1,10 +1,10 @@
 class DoctorHomeDetailsResponseModel {
-  Model? model;
+  DoctorHomeModel? model;
 
   DoctorHomeDetailsResponseModel({this.model});
 
   DoctorHomeDetailsResponseModel fromMap(Map<String, dynamic> json) {
-    model = json['model'] != null ? Model().fromMap(json['model']) : null;
+    model = json['model'] != null ? DoctorHomeModel().fromMap(json['model']) : null;
     return DoctorHomeDetailsResponseModel(model:model);
   }
 
@@ -17,7 +17,7 @@ class DoctorHomeDetailsResponseModel {
   }
 }
 
-class Model {
+class DoctorHomeModel {
   int? clinicAppointments;
   int? onlineAppointments;
   int? followUpAppointments;
@@ -27,7 +27,7 @@ class Model {
   int? averageRating;
   dynamic upcomingAppointment;
 
-  Model(
+  DoctorHomeModel(
       {this.clinicAppointments,
         this.onlineAppointments,
         this.followUpAppointments,
@@ -37,7 +37,7 @@ class Model {
         this.averageRating,
         this.upcomingAppointment});
 
-  Model fromMap(Map<String, dynamic> json) {
+  DoctorHomeModel fromMap(Map<String, dynamic> json) {
     clinicAppointments = json['clinic_appointments'];
     onlineAppointments = json['online_appointments'];
     followUpAppointments = json['follow_up_appointments'];
@@ -46,7 +46,7 @@ class Model {
     newPatients = json['new_patients'];
     averageRating = json['average_rating'];
     upcomingAppointment = json['upcoming_appointment'];
-    return Model(averageRating: averageRating,clinicAppointments: clinicAppointments,newPatients:newPatients,
+    return DoctorHomeModel(averageRating: averageRating,clinicAppointments: clinicAppointments,newPatients:newPatients,
     followUpAppointments: followUpAppointments,homeVisitAppointments: homeVisitAppointments,totalPatients:totalPatients,
     onlineAppointments: onlineAppointments,upcomingAppointment:upcomingAppointment);
   }

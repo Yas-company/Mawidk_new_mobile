@@ -9,7 +9,8 @@ import 'package:mawidak/features/doctor_ratings/presentation/ui/widgets/star_rat
 
 class DoctorRatingsItem extends StatelessWidget {
   final DoctorRating doctorRating;
-  const DoctorRatingsItem({super.key,required this.doctorRating});
+  final bool showRating;
+  const DoctorRatingsItem({super.key,required this.doctorRating,this.showRating=true});
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +60,9 @@ class DoctorRatingsItem extends StatelessWidget {
               ),
             ),
             const SizedBox(width:14),
-            Padding(
+           if(showRating) Padding(
               padding: const EdgeInsets.only(top:2),
-              child: StarRating(rating: int.parse((doctorRating.rating??0).toString())),
+              child: StarRating(rating:(doctorRating.rating??0)),
             ),
           ],
         ),

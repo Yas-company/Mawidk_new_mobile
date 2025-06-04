@@ -11,7 +11,7 @@ class DoctorRatingsBloc extends Bloc<DoctorRatingsEvent, BaseState> {
 
   Future<void> onApplyDoctorRatingsEvent(ApplyDoctorRatingsEvent event, Emitter emit) async {
     emit(LoadingState());
-    final response = await doctorRatingsUseCase.getDoctorRatingsById(id:event.id);
+    final response = await doctorRatingsUseCase.getDoctorRatingsById(id:event.id,isRate:event.isRate);
     await response.fold((l) async {emit(ErrorState(l));}, (r) async {
         final list = (r).model?.model?? [];
         if(list.isEmpty){

@@ -72,4 +72,7 @@ class AppSvgIcons {
   static const String icHomeVisit = '${_svgIconPath}home_visit.svg';
   static const String icStar = '${_svgIconPath}ic_star.svg';
   static const String checkCircle = '${_svgIconPath}check_circle.svg';
+  static const String icOnline = '${_svgIconPath}ic_online.svg';
+  static const String icLocation = '${_svgIconPath}ic_locaton.svg';
+
 }
