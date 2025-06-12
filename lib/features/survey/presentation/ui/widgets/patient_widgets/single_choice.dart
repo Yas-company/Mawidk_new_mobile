@@ -51,7 +51,7 @@ class SingleChoice extends StatelessWidget {
                   children: [
                     if(item.optionText=='ذكر')Padding(
                       padding: const EdgeInsets.only(bottom:4),
-                      child: PImage(source:AppIcons.male,),
+                      child: PImage(source:AppIcons.male,fit: BoxFit.scaleDown,),
                     ),
                     if(item.optionText=='انثي'||item.optionText.toString().contains('أنثى'))Padding(
                       padding: const EdgeInsets.only(bottom:4),

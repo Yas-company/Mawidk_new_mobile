@@ -28,9 +28,11 @@ class ErrorState extends BaseState {
 }
 
 class LoadedState<T> extends BaseState {
-  const LoadedState(this.data, {this.mappedData,this.canPop=false,this.isMap=false});
+  const LoadedState(this.data, {this.mappedData,this.canPop=false,this.isMap=false,
+  this.showToast=true});
   final T? data;
   final bool? canPop;
+  final bool? showToast;
   final bool? isMap;
   final dynamic mappedData;
 }

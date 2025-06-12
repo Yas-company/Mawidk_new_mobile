@@ -48,14 +48,14 @@ class SearchScreenState extends State<SearchScreen> {
                 },onFieldSubmitted:(value) {
                     context.push(AppRouter.searchResults, extra:{
                       'searchKey':value??'', 'lookupBloc':lookupBloc,
-                      'isFilterClicked':false,
+                      'isFilterClicked':false,'specializationId':0
                         });
                 },onTapFilter:() {
                         filterBottomSheet(context,lookupBloc,(location, specialization, selectedVisitIndex) {
                           context.push(AppRouter.searchResults, extra:{
                             'searchKey':specializations.firstWhere((e) => e.id== (specialization??0)).optionText,
                             'lookupBloc':lookupBloc,
-                            'isFilterClicked':true,
+                            'isFilterClicked':true,'specializationId':specialization??0,
                             'filterRequestModel':
                           FilterRequestModel(specializationId:specialization??0,cityId:location??0)
                           });
@@ -86,7 +86,7 @@ class SearchScreenState extends State<SearchScreen> {
                       onSelected:(value) {
                         context.push(AppRouter.searchResults, extra:{
                           'searchKey':item.optionText, 'lookupBloc':lookupBloc,
-                          'isFilterClicked':false,
+                          'isFilterClicked':true,'specializationId':item.id
                         });
                         // context.push(AppRouter.searchResults,extra:item.optionText);
                       },

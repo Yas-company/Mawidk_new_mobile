@@ -138,5 +138,16 @@
   "start_date": "تاريخ البدء",
   "start_date_hint": "ضع التاريخ",
   "usage_info": "تعليمات الاستخدام",
-  "time": "الوقت"
+  "time": "الوقت",
+  "accept": "قبول",
+  "all_appointments": "كل المواعيد",
+  "next_appointments": "المواعيد القادمة",
+  "past_appointments": "المواعيد المنتهية",
+  "my_appointments": "مواعيدي",
+  "start_calll": "ابدأ المكالمة",
+  "change_appointment": "تغيير الموعد",
+  "cancel_appointment": "الغاء الموعد",
+  "question_cancel_appointment": "هل انت متأكد من الغاء الموعد ؟",
+  "back": "الرجوع",
+  "refuse": "رفض"
 }

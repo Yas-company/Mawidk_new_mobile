@@ -136,5 +136,16 @@
   "start_date": "Start Date",
   "start_date_hint": "Type Date",
   "usage_info": "Usage Requirements",
-  "address": "Address"
+  "address": "Address",
+  "accept": "Accept",
+  "all_appointments": "All Appointments",
+  "next_appointments": "Next Appointments",
+  "past_appointments": "Past Appointments",
+  "my_appointments": "My Appointments",
+  "start_calll": "Start Call",
+  "change_appointment": "Change Appointment",
+  "cancel_appointment": "Cancel Appointment",
+  "question_cancel_appointment": "Are you sure you want to cancel the appointment?",
+  "back": "Back",
+  "refuse": "Refuse"
 }

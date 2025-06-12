@@ -3,8 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
+import 'package:mawidak/di.dart';
 import 'package:mawidak/features/survey/data/model/survey_response_model.dart';
+import 'package:mawidak/features/survey/presentation/bloc/static_survey_bloc.dart';
+import 'package:mawidak/features/survey/presentation/bloc/survey_event.dart';
+import 'package:mawidak/features/survey/presentation/ui/widgets/dynamic_question_widget.dart';
 
+StaticSurveyBloc staticSurveyBloc = StaticSurveyBloc(surveyUseCase: getIt());
 class DropDownWidget extends StatefulWidget {
   final List<Option> options;
   final String title;
@@ -35,6 +41,11 @@ class _DropDownWidgetState extends State<DropDownWidget> {
       isEnabled = value;
       if(!isEnabled){
         widget.selectedValues.clear();
+      }
+      if(!isDoctor()){
+      isTrue = isEnabled;
+      options = widget.selectedValues;
+      staticSurveyBloc.add(ValidateSurveyEvent());
       }
     });
   }

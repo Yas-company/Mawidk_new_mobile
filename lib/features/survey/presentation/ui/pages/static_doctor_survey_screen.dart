@@ -39,7 +39,7 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
           options: [Option(id:1,optionText:"ذكر"), Option(id:2,optionText:"انثي")],
         ),
         Question(
-          id: 1,isRequired:false,hint: 'اختر تخصصك',
+          id: 1,isRequired:true,hint: 'اختر تخصصك',
           questionText: "اختر تخصصك",
           // type: "multi_select",
           // type: "multi_select_doctor",

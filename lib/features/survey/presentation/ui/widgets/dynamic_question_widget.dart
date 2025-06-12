@@ -14,6 +14,8 @@ import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/single_choice.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/single_select_choice.dart';
 
+bool isTrue = false;
+List<Option> options = [];
 
 Widget buildQuestionWidget(Question q, Function setStateCallback){
   switch (q.type) {

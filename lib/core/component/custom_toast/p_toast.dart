@@ -223,11 +223,19 @@ Widget _buildToastLayout(MessageType type, String message,
             Container(color:AppColors.whiteColor, width: 3.5, height: 60,),
             const SizedBox(width:10,),
 
-            Container(
-                padding:const EdgeInsets.all(10),
-                decoration:BoxDecoration(
-                    shape:BoxShape.circle,color:getColorTints(type)
-                ),child: getIcon(type)),
+            InkWell(onTap:() {
+             // need here to remove snackBar
+              if(type == MessageType.error){
+                final context = navigatorKey.currentContext;
+                if (context == null) return;
+                ScaffoldMessenger.of(navigatorKey.currentState!.context).hideCurrentSnackBar();
+              }
+            },child: Container(
+                  padding:const EdgeInsets.all(10),
+                  decoration:BoxDecoration(
+                      shape:BoxShape.circle,color:getColorTints(type)
+                  ),child: getIcon(type)),
+            ),
             type == MessageType.success ? Expanded(child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Row(

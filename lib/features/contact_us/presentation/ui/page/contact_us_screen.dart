@@ -14,9 +14,11 @@ import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/global_obj.dart';
+import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
+import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/contact_us/presentation/bloc/contact_us_bloc.dart';
 import 'package:mawidak/features/contact_us/presentation/bloc/contact_us_event.dart';
@@ -51,7 +53,11 @@ class ContactUsScreenState extends State<ContactUsScreen> {
                   padding: const EdgeInsets.only(top:20,left:20,right:20),
                   child: SingleChildScrollView(
                     child: Column(crossAxisAlignment:CrossAxisAlignment.start,children: [
-                      PTextField(textInputAction:TextInputAction.next,controller:contactUsBloc.phone,labelAbove:'رقم الجوال',
+                      PTextField(
+                        enabled: false,
+                        textInputAction:TextInputAction.next,
+                        controller:contactUsBloc.phone = TextEditingController
+                          (text: SharedPreferenceService().getString(SharPrefConstants.phone)),labelAbove:'رقم الجوال',
                         prefixIcon:PImage(source:AppSvgIcons.call,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
                         // prefixIcon: Icon(size:20,Icons.phone_in_talk_rounded,color:AppColors.primaryColor,),
                         hintText: '05XXXXXXX', feedback:(value) {
@@ -65,24 +71,28 @@ class ContactUsScreenState extends State<ContactUsScreen> {
                           }
                           contactUsBloc.model.phone = value;
                           return null;
-                        },),
-                      const SizedBox(height:14,),
-                      PTextField(textInputAction:TextInputAction.next,isEmail:true,isOptional:true,
-                        textInputType: TextInputType.emailAddress,controller:contactUsBloc.email,
-                        labelAbove:'البريد الالكتروني',
-                        prefixIcon:PImage(source:AppSvgIcons.mail,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
-                        // prefixIcon: Icon(Icons.email_rounded,size:20,color:AppColors.primaryColor,),
-                        hintText: 'Example@mail.com', feedback:(value) {
-                          contactUsBloc.model.email = value;
-                          contactUsBloc.add(ApplyValidationEvent());
-                        }, validator:(value) {
-                          if (value == null || value.trim().isEmpty) return null; // OK if empty
-                          final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                          if (!emailRegex.hasMatch(value.trim())) {
-                            return 'valid_email'.tr();
-                          }
-                          return null;
-                        },),
+                        },disabledBorderColor:Colors.transparent,),
+                      if(SharedPreferenceService().getString(SharPrefConstants.emailKey).isNotEmpty)...[
+                        const SizedBox(height:14,),
+                        PTextField(textInputAction:TextInputAction.next,isEmail:true,isOptional:true,
+                          textInputType: TextInputType.emailAddress,controller:contactUsBloc.email
+                          = TextEditingController
+                                (text: SharedPreferenceService().getString(SharPrefConstants.emailKey)),
+                          labelAbove:'البريد الالكتروني',
+                          prefixIcon:PImage(source:AppSvgIcons.mail,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
+                          // prefixIcon: Icon(Icons.email_rounded,size:20,color:AppColors.primaryColor,),
+                          hintText: 'Example@mail.com', feedback:(value) {
+                            contactUsBloc.model.email = value;
+                            contactUsBloc.add(ApplyValidationEvent());
+                          }, validator:(value) {
+                            if (value == null || value.trim().isEmpty) return null; // OK if empty
+                            final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                            if (!emailRegex.hasMatch(value.trim())) {
+                              return 'valid_email'.tr();
+                            }
+                            return null;
+                          },disabledBorderColor:Colors.transparent)
+                      ],
                       const SizedBox(height:14,),
                       PTextField(maxLines:4,labelAbove:'msg'.tr(),
                         controller:contactUsBloc.message,hintText:'type_msg'.tr(), feedback:(value) {

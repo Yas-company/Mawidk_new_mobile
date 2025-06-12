@@ -22,9 +22,11 @@ class SearchResultsScreen extends StatefulWidget{
   final LookupBloc lookupBloc;
   String searchKey;
   bool isFilterClicked ;
+  int? specializationId ;
   FilterRequestModel? filterRequestModel ;
   SearchResultsScreen({super.key,required this.searchKey,
-  required this.lookupBloc,this.isFilterClicked=false,this.filterRequestModel});
+  required this.lookupBloc,this.isFilterClicked=false,this.filterRequestModel,
+  this.specializationId=0});
 
   @override
   State<SearchResultsScreen> createState() => SearchResultsState();
@@ -41,7 +43,7 @@ class SearchResultsState extends State<SearchResultsScreen> {
     if(widget.isFilterClicked){
       searchBloc.add(ApplyIsMapEvent(isMap: false));
       searchBloc.add(ApplyFilterEvent(filterRequestModel:widget.filterRequestModel??
-          FilterRequestModel(specializationId:0, cityId:0)));
+          FilterRequestModel(specializationId:widget.specializationId??-1, cityId:0)));
     }
   }
   @override
@@ -68,6 +70,7 @@ class SearchResultsState extends State<SearchResultsScreen> {
                     },onTapFilter:() {
                         filterBottomSheet(context,widget.lookupBloc,(location, specialization, selectedVisitIndex) {
                           widget.searchKey = specializations.firstWhere((e) => e.id == (specialization??0)).optionText??'';
+                          setState(() {});
                           searchBloc.add(ApplyIsMapEvent(isMap: false));
                           // setState(() {});
                           searchBloc.add(ApplyFilterEvent(filterRequestModel:FilterRequestModel(

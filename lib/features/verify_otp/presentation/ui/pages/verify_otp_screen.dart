@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mawidak/core/component/custom_toast/p_toast.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/p_otp.dart';
-
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
-import 'package:mawidak/core/component/p_otp.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
-import 'package:mawidak/core/component/text_field/p_textfield.dart';
 import 'package:mawidak/core/component/white_background_with_image.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
-import 'package:mawidak/core/data/constants/app_router.dart';
-import 'package:mawidak/core/data/constants/global_obj.dart';
-import 'package:mawidak/core/extensions/navigator_extensions.dart';
+import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
+import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/di.dart';
+import 'package:mawidak/features/login/data/model/login_request_model.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
 import 'package:mawidak/features/verify_otp/data/model/verify_otp_request_model.dart';
 import 'package:mawidak/features/verify_otp/presentation/bloc/verify_otp_bloc.dart';
@@ -63,7 +60,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         child: PText(title:'ادخل رمز التحقق',fontColor:AppColors.primaryColor,
                           size:PSize.text28,fontWeight:FontWeight.w700,),
                       ),
-                      PText(title:'من فضلك قم بادخال رمز التحقق المكون من 4 حروف', size:PSize.text16,
+                      PText(title:'من فضلك قم بادخال رمز التحقق المكون من 4 أرقام', size:PSize.text16,
                           fontColor: AppColors.grayShade3),
                       // OtpInputScreen(),
                       const SizedBox(height:60,),
@@ -99,15 +96,28 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       ),
                       Row(children: [
                         PText(title:'لم تصل الرسالة؟  ',),
-                        GestureDetector(
-                          onTap: () {
-
-                          },child: Stack(
+                        BlocListener<VerifyOtpBloc,BaseState>(listener: (context, state) {
+                          if(state is LoadingState){
+                            loadDialog();
+                          }else if(state is LoadedState){
+                            hideLoadingDialog();
+                            SafeToast.show(message:'تم اعادة الارسال بنجاح');
+                          }else if(state is ErrorState){
+                            hideLoadingDialog();
+                          }
+                        },child:GestureDetector(
+                            onTap: () {
+                              verifyOtpBloc.add(ReSendOtpEvent(loginRequestModel:LoginRequestModel(
+                                  type:isDoctor()?UserType.doctor.index :UserType.patient.index,
+                                  phone:widget.phone,
+                                  password:SharedPreferenceService().getString(SharPrefConstants.passwordKey)
+                              )));
+                            },child: Stack(
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
                               child: PText(
-                                title:'اعادة ارسال',fontColor:AppColors.primaryColor,
+                                title:'إعادة الإرسال',fontColor:AppColors.primaryColor,
                               ),
                             ),
                             Positioned(
@@ -120,11 +130,11 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             ),
                           ],
                         )
-                        // PText(
-                        //   title:'اعادة ارسال',fontColor:AppColors.primaryColor,
-                        //   decoration: TextDecoration.underline,
-                        // ),
-                        ),
+                          // PText(
+                          //   title:'اعادة ارسال',fontColor:AppColors.primaryColor,
+                          //   decoration: TextDecoration.underline,
+                          // ),
+                        ),),
                       ],
                       )
                     ],),

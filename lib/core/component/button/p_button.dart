@@ -293,7 +293,7 @@ class PButton<B extends BlocBase<S>, S> extends StatelessWidget {
           // if (Navigator.canPop(context)) {
           //   Navigator.pop(context);
           // }
-          if ((state.data?.message ?? '').toString().isNotEmpty) {
+          if ((state.data?.message ?? '').toString().isNotEmpty && (state.showToast??true)) {
             SafeToast.show(
                 // context: context,
                 message: state.data?.message ?? 'Success',

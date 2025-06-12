@@ -1,4 +1,4 @@
-import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
+import 'package:mawidak/features/login/data/model/login_request_model.dart';
 import 'package:mawidak/features/verify_otp/data/model/verify_otp_request_model.dart';
 
 abstract class VerifyOtpEvent {
@@ -20,3 +20,9 @@ class ValidationEvent extends VerifyOtpEvent {
   const ValidationEvent({required this.code}) : super();
 }
 
+
+
+class ReSendOtpEvent extends VerifyOtpEvent {
+  final LoginRequestModel loginRequestModel;
+  const ReSendOtpEvent({required this.loginRequestModel,}) : super();
+}

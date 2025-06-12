@@ -74,5 +74,12 @@ class AppSvgIcons {
   static const String checkCircle = '${_svgIconPath}check_circle.svg';
   static const String icOnline = '${_svgIconPath}ic_online.svg';
   static const String icLocation = '${_svgIconPath}ic_locaton.svg';
+  static const String icDate = '${_svgIconPath}ic_date.svg';
+  static const String icTime = '${_svgIconPath}ic_time.svg';
+  static const String icChange = '${_svgIconPath}ic_change.svg';
+  static const String icEdit = '${_svgIconPath}ic_edit.svg';
+  static const String icCancel = '${_svgIconPath}ic_cancel.svg';
+  static const String icEdit2 = '${_svgIconPath}ic_edit2.svg';
+  static const String icClose = '${_svgIconPath}ic_close.svg';
 
 }

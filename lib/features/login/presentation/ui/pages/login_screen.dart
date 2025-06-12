@@ -11,9 +11,11 @@ import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/global_obj.dart';
+import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
+import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/login/data/model/login_request_model.dart';
 import 'package:mawidak/features/login/presentation/bloc/login_bloc.dart';
@@ -74,13 +76,14 @@ class LoginScreenState extends State<LoginScreen> {
                       isPassword:true,
                       // prefixIcon: Icon(Icons.lock,color:AppColors.primaryColor,size:20),
                       prefixIcon:PImage(source:AppSvgIcons.lock,fit:BoxFit.scaleDown,color:AppColors.primaryColor,),
-                      hintText: 'كلمة المرور', feedback:(value) {
+                      hintText: 'كلمة المرور', feedback:(value) async {
+                        await SharedPreferenceService().setString(SharPrefConstants.passwordKey,value??'');
                         loginBloc.add(LoginValidationEvent());
                       }, validator:(value) {
                         if((value??'').isNotEmpty&&value!.length>=6){
                           return null;
                         }
-                        return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
+                        return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
                       },),
 
                     Align(alignment:isArabic()?Alignment.centerLeft:Alignment.centerRight,
@@ -89,7 +92,7 @@ class LoginScreenState extends State<LoginScreen> {
                       },
                         child: Padding(
                           padding: const EdgeInsets.only(top:10),
-                          child: PText(title:'نسيت كلمة المرور',fontColor:
+                          child: PText(title:'هل نسيت كلمة المرور؟',fontColor:
                           AppColors.danger,fontWeight:FontWeight.w700,),
                         ),
                       ),

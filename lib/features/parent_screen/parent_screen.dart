@@ -9,6 +9,7 @@ import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
+import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/features/home/presentation/ui/page/home_screen_doctor.dart';
@@ -69,13 +70,21 @@ class _NavigationScreenState extends State<ParentScreen>
       builder: (context, value, child) {
         return Scaffold(
             backgroundColor:AppColors.background,
-            appBar:(value==3||value==2)?null:
-            (isDoctor()&&!isProfileDoctorIsActive)?null:appBar(backgroundColor:AppColors.background,context: context,backBtn:false,actions:[
+            appBar:(value==3||value==2||value==1)?null:
+            (isDoctor()&& !isProfileDoctorIsActive)?null:appBar(
+                backgroundColor:AppColors.background,context: context,backBtn:false,actions:[
               Row(
                 children: [
-                  if(isDoctor())Padding(
+                  if(isDoctor())
+                    (SharedPreferenceService().getString(SharPrefConstants.image)).isEmpty?Padding(
+                      padding: const EdgeInsets.only(right:14),
+                      child: CircleAvatar(radius:29,
+                        backgroundColor: AppColors.whiteColor,
+                        child:Icon(Icons.person),),
+                    ):
+                    Padding(
                     padding: const EdgeInsets.only(right:14),
-                    child: PImage(source:'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
+                    child: PImage(source:SharedPreferenceService().getString(SharPrefConstants.image),
                       width:60,height:60,isCircle:true,),
                   ),
                   Padding(
@@ -84,7 +93,8 @@ class _NavigationScreenState extends State<ParentScreen>
                       padding: const EdgeInsets.symmetric(horizontal:14),
                       child: Column(crossAxisAlignment:CrossAxisAlignment.start,children: [
                         PText(title: 'hello'.tr(),fontColor:AppColors.grey200,),
-                        PText(title:SharedPreferenceService().getString(SharPrefConstants.userName)),
+                        PText(title:SharedPreferenceService().getString(SharPrefConstants.userName),
+                        fontWeight: FontWeight.w700,size:PSize.text20,),
                       ],
                       ),
                     ),

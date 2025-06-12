@@ -28,10 +28,13 @@ class AppRouter {
   static const String appointmentBookingScreen = '/appointmentBookingScreen';
   static const String notificationScreen = '/notificationScreen';
   static const String appointmentPaymentScreen = '/appointmentPaymentScreen';
+  static const String doctorPendingAppointments = '/doctorPendingAppointments';
   static const String allSpecializationsScreen = '/allSpecializationsScreen';
   static const String contactUsScreen = '/contactUsScreen';
   static const String patientFavouriteScreen = '/patientFavouriteScreen';
   static const String doctorPatients = '/doctorPatients';
   static const String doctorsOfSpeciality = '/doctorsOfSpeciality';
+  static const String patientAppointmentsScreen = '/patientAppointmentsScreen';
   static const String showFileScreen = '/showFileScreen';
+  static const String consultationBottomSheet = '/consultationBottomSheet';
 }

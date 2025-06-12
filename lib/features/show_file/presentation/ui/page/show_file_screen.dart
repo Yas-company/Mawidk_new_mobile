@@ -7,6 +7,11 @@ import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/features/all_patients/data/model/patients_response_model.dart';
 import 'package:mawidak/features/show_file/presentation/ui/widgets/basic_information_widget.dart';
+import 'package:mawidak/features/show_file/presentation/ui/widgets/consultation_widget.dart';
+import 'package:mawidak/features/show_file/presentation/ui/widgets/diagnosis_widget.dart';
+import 'package:mawidak/features/show_file/presentation/ui/widgets/drug_widget.dart';
+import 'package:mawidak/features/show_file/presentation/ui/widgets/medical_history_widget.dart';
+import 'package:mawidak/features/show_file/presentation/ui/widgets/notes_widget.dart';
 // Add imports for other tab widgets here
 
 class ShowFileScreen extends StatefulWidget {
@@ -81,17 +86,17 @@ class ShowFileScreenState extends State<ShowFileScreen> {
       case 0:
         return BasicInformationWidget(id: widget.patientData.id ?? 0);
       case 1:
-        return Center(child: Text("Medical History")); // Replace with actual widget
+        return MedicalHistoryWidget(id: widget.patientData.id ?? 0);
       case 2:
-        return Center(child: Text("Consultations")); // Replace with actual widget
+        return ConsultationWidget(id: widget.patientData.id ?? 0);
       case 3:
-        return Center(child: Text("Diagnoses")); // Replace with actual widget
+        return DiagnosisWidget(id: widget.patientData.id ?? 0);
       case 4:
-        return Center(child: Text("Medicines")); // Replace with actual widget
+        return DrugWidget(id: widget.patientData.id ?? 0);
       case 5:
         return Center(child: Text("Tests")); // Replace with actual widget
       case 6:
-        return Center(child: Text("Notes")); // Replace with actual widget
+        return NotesWidget(id: widget.patientData.id ?? 0);
       default:
         return Center(child: Text("Not Implemented"));
     }

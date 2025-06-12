@@ -51,7 +51,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top:60),
-                      child: PText(title:'نسيت كلمة المرور',fontColor:AppColors.primaryColor,
+                      child: PText(title:'هل نسيت كلمة المرور؟',fontColor:AppColors.primaryColor,
                         size:PSize.text28,fontWeight:FontWeight.w700,),
                     ),
                     PText(title:'من فضلك قم بادخال رقم الهاتف لاعادة تعيين كلمة المرور', size:PSize.text16,

@@ -20,6 +20,7 @@ import 'package:mawidak/features/survey/presentation/bloc/static_survey_bloc.dar
 import 'package:mawidak/features/survey/presentation/bloc/survey_event.dart';
 import 'package:mawidak/features/survey/presentation/ui/pages/static_doctor_survey_screen.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/dynamic_question_widget.dart';
+import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/drop_down_widget.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/steper_indicator.dart';
 
 class StaticPatientSurveyScreen extends StatefulWidget {
@@ -201,6 +202,7 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
   @override
   void initState() {
     super.initState();
+    if(!isDoctor()){staticSurveyBloc = surveyBloc;}
     _controller = PageController();
     surveyBloc.surveyList = patientStaticSurvey;
     surveyBloc.add(ValidateSurveyEvent()); // Validate first page

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mawidak/core/component/custom_toast/p_toast.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
@@ -109,7 +110,8 @@ class HomeScreenDoctor extends StatelessWidget {
                   ),),
                   SliverToBoxAdapter(
                     child:ClinicManagementCard(list:list, onTap:() {
-                      context.push(AppRouter.locationScreen);
+                      SafeToast.show(message:'Coming Soon',type:MessageType.warning);
+                      // context.push(AppRouter.locationScreen);
                     },),
                   ),
                   SliverToBoxAdapter(child:Card(color:Colors.white,

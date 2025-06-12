@@ -14,6 +14,7 @@ import 'package:mawidak/core/services/local_storage/secure_storage/secure_storag
 import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/login/data/model/login_response_model.dart';
+import 'package:mawidak/features/login/domain/use_case/login_use_case.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_event.dart';
 import 'package:mawidak/features/verify_otp/domain/use_case/verify_otp_use_case.dart';
@@ -26,6 +27,7 @@ class VerifyOtpBloc extends Bloc<VerifyOtpEvent,BaseState> {
   VerifyOtpBloc({required this.verifyOtpUseCase}) : super(ButtonDisabledState()) {
     on<ApplyVerifyOtpEvent>(verifyOtp);
     on<ValidationEvent>(onValidateAllFields);
+    on<ReSendOtpEvent>(onReSendOtpEvent);
   }
 
   void onValidateAllFields(ValidationEvent event, Emitter emit) {
@@ -88,6 +90,18 @@ class VerifyOtpBloc extends Bloc<VerifyOtpEvent,BaseState> {
           handleError(errors: r.errors ?? [], statusCode: r.statusCode ?? 0);
         }
         emit(LoadedState(r));
+      },
+    );
+  }
+
+
+  Future<void> onReSendOtpEvent(ReSendOtpEvent event, Emitter emit) async {
+    emit(LoadingState());
+    event.loginRequestModel.type = isDoctor()?UserType.doctor.index
+        :UserType.patient.index;
+    final response = await LoginUseCase(loginRepository:getIt()).login(event.loginRequestModel,);
+    await response.fold((l) async {emit(ErrorState(l));},
+          (r) async {emit(LoadedState(r,showToast:false));
       },
     );
   }

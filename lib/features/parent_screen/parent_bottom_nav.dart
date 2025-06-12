@@ -74,7 +74,7 @@ class CustomBottomNavigation extends StatelessWidget {
       if(index ==0){
         navigationShell.goBranch(1);
       }else if(index ==1){
-        navigationShell.goBranch(2);
+        navigationShell.goBranch(6);
       }else if(index == 2){
         navigationShell.goBranch(4);
       }else if(index == 3){

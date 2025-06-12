@@ -11,7 +11,10 @@ import 'package:mawidak/features/all_specializations/presentation/ui/page/all_sp
 import 'package:mawidak/features/appointment/data/model/appointment_reques_model.dart';
 import 'package:mawidak/features/appointment/presentation/ui/pages/appointment_booking_screen.dart';
 import 'package:mawidak/features/appointment/presentation/ui/pages/appointment_payment_screen.dart';
+import 'package:mawidak/features/appointments/data/model/doctor_appointments_response_model.dart';
+import 'package:mawidak/features/appointments/presentation/bloc/doctor_appointments_bloc.dart';
 import 'package:mawidak/features/appointments/presentation/ui/page/appointments_screen.dart';
+import 'package:mawidak/features/appointments/presentation/ui/page/doctor_pending_appointments_screen.dart';
 import 'package:mawidak/features/change_password/presentation/ui/page/change_password_screen.dart';
 import 'package:mawidak/features/confirm_password/presentation/ui/pages/confirm_password_screen.dart';
 import 'package:mawidak/features/contact_us/presentation/ui/page/contact_us_screen.dart';
@@ -28,12 +31,14 @@ import 'package:mawidak/features/more/presentation/ui/page/more_screen.dart';
 import 'package:mawidak/features/notification/presentation/ui/page/notification_screen.dart';
 import 'package:mawidak/features/onboarding/onboarding_screen.dart';
 import 'package:mawidak/features/parent_screen/parent_screen.dart';
+import 'package:mawidak/features/patient_appointments/presentation/ui/page/patient_appointments_screen.dart';
 import 'package:mawidak/features/patient_favourite/presentation/ui/page/patient_favourite_screen.dart';
 import 'package:mawidak/features/register/presentation/ui/pages/register_screen.dart';
 import 'package:mawidak/features/search/presentation/ui/pages/search_screen.dart';
 import 'package:mawidak/features/search_results/presentation/ui/pages/search_results_screen.dart';
 import 'package:mawidak/features/search_results_for_doctor/presentation/ui/pages/search_for_doctors_screen.dart';
 import 'package:mawidak/features/show_file/presentation/ui/page/show_file_screen.dart';
+import 'package:mawidak/features/show_file/presentation/ui/widgets/consultation_bottom_sheet.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_cubit.dart';
 import 'package:mawidak/features/survey/presentation/ui/pages/doctor_survey_screen.dart';
@@ -170,10 +175,25 @@ class RouterManager {
             lookupBloc:params['lookupBloc'] , searchKey: params['searchKey'],
             isFilterClicked: params['isFilterClicked'],
             filterRequestModel: params['filterRequestModel'],
+            specializationId:params['specializationId'],
           ));
           // return createRoute(widget:SearchResultsScreen(searchKey:state.extra as String));
         },
       ),
+
+      GoRoute(
+        name: AppRouter.consultationBottomSheet,
+        path: AppRouter.consultationBottomSheet,
+        pageBuilder: (context, state) {
+          final params = state.extra as Map<String, dynamic>;
+          return createRoute(widget:  ConsultationBottomSheet(
+            onSubmit:params['onSubmit'],
+            isEdit:params['isEdit'],
+            // item:params['item'],
+          ));
+        },
+      ),
+
       GoRoute(
         name: AppRouter.onBoarding,
         path: AppRouter.onBoarding,
@@ -254,6 +274,16 @@ class RouterManager {
         path: AppRouter.appointmentPaymentScreen,
         pageBuilder: (context, state) {
           return createRoute(widget:AppointmentPaymentScreen(model:state.extra as AppointmentRequestModel,));
+        },
+      ),
+      GoRoute(
+        name: AppRouter.doctorPendingAppointments,
+        path: AppRouter.doctorPendingAppointments,
+        pageBuilder: (context, state) {
+          return createRoute(widget:DoctorPendingAppointmentsScreen(
+            // pendingList:state.extra as List<DoctorAppointmentsData>,
+            doctorAppointmentsBloc:state.extra as DoctorAppointmentsBloc,
+          ));
         },
       ),
       GoRoute(
@@ -342,6 +372,16 @@ class RouterManager {
                 path: AppRouter.more,
                 pageBuilder: (context, state) {
                   return createRoute(widget: const MoreScreen());
+                },
+              ),
+            ]),
+
+            StatefulShellBranch(routes: [
+              GoRoute(
+                name: AppRouter.patientAppointmentsScreen,
+                path: AppRouter.patientAppointmentsScreen,
+                pageBuilder: (context, state) {
+                  return createRoute(widget: const PatientAppointmentsScreen());
                 },
               ),
             ]),

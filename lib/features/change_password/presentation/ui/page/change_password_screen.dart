@@ -36,7 +36,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   if((value??'').isNotEmpty&&value!.length>=6){
                     return null;
                   }
-                  return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
+                  return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
                 },),
               const SizedBox(height:16,),
               PTextField(controller:changePasswordBloc.newPass,labelAbove:'كلمة المرور الجديدة',isPassword:true,
@@ -47,7 +47,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   if((value??'').isNotEmpty&&value!.length>=6){
                     return null;
                   }
-                  return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
+                  return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
                 },),
               const SizedBox(height:16,),
               PTextField(controller:changePasswordBloc.confirmNewPass,labelAbove:'تأكيد كلمة المرور',isPassword:true,
@@ -62,7 +62,7 @@ class ChangePasswordScreen extends StatelessWidget {
                       return 'يجب أن تساوي كلمة المرور تأكيد كلمة المرور';
                     }
                   }
-                  return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
+                  return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
                 },),
             ],),
 

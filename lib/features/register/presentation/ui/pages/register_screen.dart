@@ -108,7 +108,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         if((value??'').isNotEmpty&&value!.length>=6){
                           return null;
                         }
-                        return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
+                        return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
                       },),
                     const SizedBox(height:14,),
                     PTextField(textInputType: TextInputType.text,controller:registerBloc.confirmPassword,
@@ -126,7 +126,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                             return 'يجب أن تساوي كلمة المرور تأكيد كلمة المرور';
                           }
                         }
-                        return 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.';
+                        return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
                       },),
                     const SizedBox(height:14,),
                     Padding(

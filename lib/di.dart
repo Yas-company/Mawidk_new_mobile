@@ -56,6 +56,9 @@ import 'package:mawidak/features/more/domain/logout_use_case.dart';
 import 'package:mawidak/features/notification/data/repository/notification_repository_impl.dart';
 import 'package:mawidak/features/notification/domain/repository/notification_repository.dart';
 import 'package:mawidak/features/notification/domain/use_case/notification_use_case.dart';
+import 'package:mawidak/features/patient_appointments/data/repository/patient_appointments_repository_impl.dart';
+import 'package:mawidak/features/patient_appointments/domain/repository/patient_appointments_repository.dart';
+import 'package:mawidak/features/patient_appointments/domain/use_case/patient_appointments_use_case.dart';
 import 'package:mawidak/features/patient_favourite/data/domain/repository/favourite_repository.dart';
 import 'package:mawidak/features/patient_favourite/data/domain/use_case/favourite_use_case.dart';
 import 'package:mawidak/features/patient_favourite/data/repository/favourite_repository_iml.dart';
@@ -173,6 +176,8 @@ getIt.registerLazySingleton<NotificationUseCase>(() => NotificationUseCase(
       showFileRepository: getIt(),));
    getIt.registerLazySingleton<DoctorAppointmentsUseCase>(() => DoctorAppointmentsUseCase(
       doctorAppointmentsRepository: getIt(),));
+    getIt.registerLazySingleton<PatientAppointmentsUseCase>(() => PatientAppointmentsUseCase(
+      patientAppointmentsRepository: getIt(),));
 
 
     // Repositories
@@ -237,6 +242,8 @@ getIt.registerLazySingleton<NotificationUseCase>(() => NotificationUseCase(
    getIt.registerLazySingleton<DoctorAppointmentsRepository>(
               () => DoctorAppointmentsRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
 
+    getIt.registerLazySingleton<PatientAppointmentsRepository>(
+            () => PatientAppointmentsRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
 
     await DioClient().updateHeader();
 

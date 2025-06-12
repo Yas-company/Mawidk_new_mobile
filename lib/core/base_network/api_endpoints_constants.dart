@@ -49,7 +49,29 @@ class ApiEndpointsConstants {
   static const String doctorPatients = 'user/doctor-patients';
   
   static const String basicInformation = 'user/patient-personal-info/';
+  static const String medicalHistory = 'user/medical-history/';
+  static const String diagnosis = 'user/diagnosis/';
+  static const String addDiagnosis = 'user/add-diagnosis';
+  static const String updateDiagnosis = 'user/update-diagnosis/';
   static const String doctorAppointments = 'appointment/doctor';
+  static const String patientAppointments = 'appointment/patient';
   static String doctorAppointmentCancel(int doctorId) => 'appointment/$doctorId/cancel';
+  static String doctorAppointmentAccept(int doctorId) => 'appointment/$doctorId/change-status';
+  static const String doctorPendingAppointments = 'appointment/doctor/pending';
 
+  // _________ drugs
+  static const String getDrugs = 'user/drugs/';
+  static const String addDrug = 'user/add-drug';
+  static const String updateDrug = 'user/update-drug/';
+  static const String deleteDrug = 'user/delete-drug/';
+
+  // _____________________ Notes
+  static const String getNotes = 'user/doctor-notes/';
+  static const String addNote = 'user/doctor-note';
+  static const String updateNote = 'user/doctor-note/';
+  static const String deleteNote = 'user/doctor-note/';
+
+  // _____________________ Consultation
+  static const String getConsultations = 'user/consultations/';
+  static const String addConsultation = 'user/add-consultation';
 }

@@ -22,6 +22,7 @@ import 'package:mawidak/features/survey/data/model/survey_submit_request_model.d
 import 'package:mawidak/features/survey/domain/use_case/survey_use_case.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_event.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/doctor_widgets/information_completed_widget.dart';
+import 'package:mawidak/features/survey/presentation/ui/widgets/dynamic_question_widget.dart';
 import 'package:path/path.dart';
 
 
@@ -94,7 +95,7 @@ class StaticSurveyBloc extends Bloc<SurveyEvent, BaseState> {
   bool validateCurrentPage() {
     final currentQuestions = surveyList[index].questions ?? [];
     for (final question in currentQuestions) {
-      if (question.isRequired != true) continue;
+      if (question.isRequired != true && !isTrue) continue;
       final type = question.type ?? '';
       if (question.answer == null ||
           ((type=='multi_select'||type=='drop_down') && (question.answer as List).isEmpty) ||
@@ -105,7 +106,13 @@ class StaticSurveyBloc extends Bloc<SurveyEvent, BaseState> {
           ((type == 'tag'||type=='tapped_text_field') && (question.isTrue == null || (question.isTrue == true &&
               (question.answer == null || (question.answer as List).isEmpty))))
       ) {
-        if(((type == 'tag'||type=='tapped_text_field') && (question.isTrue != null && (question.isTrue == false)))){
+        // if((isTrue && options.isNotEmpty)|| !isTrue){
+        //   return true;
+        // }else{
+        //   return false;
+        // }
+        if(((type == 'tag'||type=='tapped_text_field') && (question.isTrue != null && (question.isTrue == false)))
+        && (!isDoctor() && ((isTrue && options.isNotEmpty)|| !isTrue))){
           return true;
         }
         return false;
