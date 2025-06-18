@@ -17,4 +17,5 @@ class SharPrefConstants {
   static const String isFirstTimeToOpenAppKey = 'isFirstTimeToOpenAppKey';
   static const String isDarkThemeKey = 'themeKey';
   static const String isNotificationOnline = 'isNotificationOnline';
+  static const String profileCompletionPercentage = 'profileCompletionPercentage';
 }

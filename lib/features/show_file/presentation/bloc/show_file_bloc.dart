@@ -22,6 +22,7 @@ class ShowFileBloc extends Bloc<ShowFileEvent, BaseState> {
     on<ApplyDeleteNote>(onApplyDeleteNote);
     on<ApplyConsultations>(onApplyConsultations);
     on<ApplyAddingConsultation>(onApplyAddingConsultation);
+    on<ApplyConsultationById>(onApplyConsultationById);
   }
 
 
@@ -186,6 +187,15 @@ class ShowFileBloc extends Bloc<ShowFileEvent, BaseState> {
     final response = await showFileUseCase.addConsultation(model:event.addConsultationRequestModel);
     await response.fold((l) async {emit(ErrorState(l));}, (r) async {
       emit(FormLoadedState(r,));
+    },
+    );
+  }
+
+  Future<void> onApplyConsultationById(ApplyConsultationById event, Emitter emit) async {
+    emit(LoadingState());
+    final response = await showFileUseCase.getConsultationById(id:event.id);
+    await response.fold((l) async {emit(ErrorState(l));}, (r) async {
+      emit(LoadedState(r,isMap:false));
     },
     );
   }

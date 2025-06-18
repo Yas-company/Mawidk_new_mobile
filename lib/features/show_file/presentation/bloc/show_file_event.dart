@@ -96,3 +96,8 @@ class ApplyAddingConsultation extends ShowFileEvent {
   final AddConsultationRequestModel addConsultationRequestModel;
   const ApplyAddingConsultation({required this.addConsultationRequestModel}) : super();
 }
+
+class ApplyConsultationById extends ShowFileEvent {
+  final int id;
+  const ApplyConsultationById({required this.id}) : super();
+}

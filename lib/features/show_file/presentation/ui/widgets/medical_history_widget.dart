@@ -55,7 +55,7 @@ class MedicalHistoryWidget extends StatelessWidget {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PText(title:'الامراض المزمنة'.tr(),fontWeight:FontWeight.w700,),
+          PText(title:'chronic_diseases'.tr(),fontWeight:FontWeight.w700,),
           const SizedBox(height:14,),
           // ...chronicDiseases.map((e) {
           ...List.generate(chronicDiseases.length, (index) {
@@ -89,7 +89,7 @@ class MedicalHistoryWidget extends StatelessWidget {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PText(title:'التاريخ العائلي'.tr(),fontWeight:FontWeight.w700,),
+          PText(title:'family_history'.tr(),fontWeight:FontWeight.w700,),
           const SizedBox(height:14,),
           PText(title:familyHistory)
         ],
@@ -106,7 +106,7 @@ class MedicalHistoryWidget extends StatelessWidget {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PText(title:'العمليات الجراحية'.tr(),fontWeight:FontWeight.w700,),
+          PText(title:'surgical_operations'.tr(),fontWeight:FontWeight.w700,),
           const SizedBox(height:14,),
           PText(title:familyHistory)
         ],
@@ -123,11 +123,11 @@ class MedicalHistoryWidget extends StatelessWidget {
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          PText(title:'نمط الحياة'.tr(),fontWeight:FontWeight.w700,),
+          PText(title:'life_style'.tr(),fontWeight:FontWeight.w700,),
           const SizedBox(height:14,),
           Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
             children: [
-              PText(title:'التدخين'.tr()), PText(title:smoke),
+              PText(title:'smoking'.tr()), PText(title:smoke),
             ],
           ),
           Padding(
@@ -136,7 +136,7 @@ class MedicalHistoryWidget extends StatelessWidget {
           ),
           Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
             children: [
-              PText(title:'الكحول'.tr()), PText(title:water),
+              PText(title:'alcohol'.tr()), PText(title:water),
             ],
           ),
           Padding(
@@ -145,7 +145,7 @@ class MedicalHistoryWidget extends StatelessWidget {
           ),
           Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,
             children: [
-              PText(title:'الرياضة'.tr()), PText(title:sport),
+              PText(title:'sport'.tr()), PText(title:sport),
             ],
           ),
           const SizedBox(height:8,),

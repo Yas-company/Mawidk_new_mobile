@@ -51,7 +51,7 @@ class SearchScreenState extends State<SearchScreen> {
                       'isFilterClicked':false,'specializationId':0
                         });
                 },onTapFilter:() {
-                        filterBottomSheet(context,lookupBloc,(location, specialization, selectedVisitIndex) {
+                        filterBottomSheet(context,lookupBloc,(location, specialization, selectedVisitIndex,evaluate) {
                           context.push(AppRouter.searchResults, extra:{
                             'searchKey':specializations.firstWhere((e) => e.id== (specialization??0)).optionText,
                             'lookupBloc':lookupBloc,

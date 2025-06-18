@@ -66,18 +66,19 @@ class ImagesFilesUploadWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      PText(title:'الشهادات', size: PSize.text20,),
-                      PText(title:'هل لديك شهادات طبية او دورات ؟ يمكنك رفعها هنا', size: PSize.text14,
+                      PText(title:'certifications'.tr(), size: PSize.text20,),
+                      // PText(title:'هل لديك شهادات طبية او دورات ؟ يمكنك رفعها هنا', size: PSize.text14,
+                      PText(title:'certifications_here'.tr(), size: PSize.text14,
                         fontColor: AppColors.grey200, fontWeight: FontWeight.w400,),
                       const SizedBox(height:0),
                     ],
                   ),
                 ),
-                PText(title: 'حمل ملفاتك', size: PSize.text20),
+                PText(title: 'upload_files'.tr(), size: PSize.text20),
                 Padding(
                   padding: const EdgeInsets.only(top: 0, bottom: 20),
                   child: PText(
-                    title: 'بصيغة JPG, PNG, PDF ',
+                    title: 'extensions'.tr(),
                     size: PSize.text14,
                     fontColor: AppColors.grey200,
                   ),
@@ -110,7 +111,7 @@ class ImagesFilesUploadWidget extends StatelessWidget {
                             ),
                             const SizedBox(height: 12),
                             PText(
-                              title: 'اختر ملف',
+                              title: 'choose_file'.tr(),
                               decoration: TextDecoration.underline,
                               size: PSize.text16,
                             ),

@@ -61,6 +61,9 @@ class VerifyOtpBloc extends Bloc<VerifyOtpEvent,BaseState> {
             await SharedPreferenceService().setString(SharPrefConstants.phone,
                 ((r).model as LoginResponseModel)
                     .model?.phone ?? '');
+            await SharedPreferenceService().setString(
+                SharPrefConstants.profileCompletionPercentage,
+                (((r).model as LoginResponseModel).model?.profileCompletionPercentage ?? 0).toString());
             // print('ttt>>'+(((r).model as LoginResponseModel).model?.surveyStatus ?? false).toString());
             // bool isDoctor = SharedPreferenceService().getBool(SharPrefConstants.isDoctor);
             bool isSKippedSurvey = SharedPreferenceService().getBool(SharPrefConstants.isSKippedSurvey);

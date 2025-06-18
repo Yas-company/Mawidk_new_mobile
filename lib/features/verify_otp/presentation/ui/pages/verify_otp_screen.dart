@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawidak/core/component/custom_toast/p_toast.dart';
@@ -57,14 +58,14 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top:60),
-                        child: PText(title:'ادخل رمز التحقق',fontColor:AppColors.primaryColor,
+                        child: PText(title:'enter_otp'.tr(),fontColor:AppColors.primaryColor,
                           size:PSize.text28,fontWeight:FontWeight.w700,),
                       ),
-                      PText(title:'من فضلك قم بادخال رمز التحقق المكون من 4 أرقام', size:PSize.text16,
+                      PText(title:'otp_please'.tr(), size:PSize.text16,
                           fontColor: AppColors.grayShade3),
                       // OtpInputScreen(),
                       const SizedBox(height:60,),
-                      PText(title:'كلمة السر المؤقتة', size:PSize.text14),
+                      PText(title:'second_password'.tr(), size:PSize.text14),
 
                       const SizedBox(height:14,),
                       OtpTextField(
@@ -87,21 +88,21 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           isLogin:widget.isLogin,
                           // surveyBloc: surveyBloc
                           ));
-                        },title:'تحقق',hasBloc:true,isFitWidth:true,size:PSize.text16,
+                        },title:'',hasBloc:true,isFitWidth:true,size:PSize.text16,
                           // icon:Icon(Icons.arrow_forward,color:AppColors.whiteColor,),
-                          icon:PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,),
+                          icon:PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
                           fontWeight:FontWeight.w700,
                           isFirstButton: true,
                           isButtonAlwaysExist: false,),
                       ),
                       Row(children: [
-                        PText(title:'لم تصل الرسالة؟  ',),
+                        PText(title:'msg_not_sent'.tr(),),
                         BlocListener<VerifyOtpBloc,BaseState>(listener: (context, state) {
                           if(state is LoadingState){
                             loadDialog();
                           }else if(state is LoadedState){
                             hideLoadingDialog();
-                            SafeToast.show(message:'تم اعادة الارسال بنجاح');
+                            SafeToast.show(message:'resent_success'.tr());
                           }else if(state is ErrorState){
                             hideLoadingDialog();
                           }
@@ -117,7 +118,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
                               child: PText(
-                                title:'إعادة الإرسال',fontColor:AppColors.primaryColor,
+                                title:'resend'.tr(),fontColor:AppColors.primaryColor,
                               ),
                             ),
                             Positioned(

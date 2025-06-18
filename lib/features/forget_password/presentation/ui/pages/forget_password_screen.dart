@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +12,7 @@ import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/forget_password/data/model/forget_password_request_model.dart';
@@ -51,16 +53,17 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top:60),
-                      child: PText(title:'هل نسيت كلمة المرور؟',fontColor:AppColors.primaryColor,
+                      child: PText(title:'password_question'.tr(),fontColor:AppColors.primaryColor,
                         size:PSize.text28,fontWeight:FontWeight.w700,),
                     ),
-                    PText(title:'من فضلك قم بادخال رقم الهاتف لاعادة تعيين كلمة المرور', size:PSize.text16,
+                    PText(title:'password_please_phone'.tr(), size:PSize.text16,
                         fontColor: AppColors.grayShade3),
                     const SizedBox(height:60,),
-                    PTextField(textInputType:TextInputType.number,controller:forgetPasswordBloc.phone,labelAbove:'رقم الجوال',
+                    PTextField(textInputType:TextInputType.number,controller:forgetPasswordBloc.phone,
+                      labelAbove:'phone_number'.tr(),
                       // prefixIcon: Icon(size:20,Icons.phone_in_talk_rounded,color:AppColors.primaryColor,),
                       prefixIcon:PImage(source:AppSvgIcons.call,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
-                      hintText: 'رقم الجوال', feedback:(value) {
+                      hintText: 'phone_number'.tr(), feedback:(value) {
                         forgetPasswordBloc.add(ValidationEvent());
                       }, validator:(value) => null,),
                     const SizedBox(height:14,),
@@ -70,8 +73,8 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       child: PButton<ForgetPasswordBloc,BaseState>(onPressed:() {
                         forgetPasswordBloc.add(ApplyForgetPasswordEvent(forgetPasswordRequestModel:
                         ForgetPasswordRequestModel(phone:forgetPasswordBloc.phone.text)));
-                      },title:'التالي',isFitWidth:true,size:PSize.text16,
-                        icon:PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,),
+                      },title:'next'.tr(),isFitWidth:true,size:PSize.text16,
+                        icon:PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
                         fontWeight:FontWeight.w700,
                         // icon:Icon(Icons.arrow_forward,color:AppColors.whiteColor,),
                         isFirstButton: true,hasBloc:true,

@@ -40,6 +40,9 @@ class DiagnosisWidget extends StatelessWidget {
       },child:Stack(fit: StackFit.expand,
         children: [
           PBlocBuilder(
+            emptyWidget:(state) {
+              return Center(child: PText(title: 'no_diagnosis'.tr()));
+            },
             init:() {
               showFileBloc.add(ApplyDiagnosis(id: id));
             },loadingWidget:Center(child:Center(child: CustomLoader(size:35,))),
@@ -81,7 +84,7 @@ class DiagnosisWidget extends StatelessWidget {
                   ),
                   const SizedBox(width:22),
                   PText(
-                    title: 'اضافة تشخيص'.tr(),
+                    title: 'add_diagnosis'.tr(),
                     fontColor: AppColors.whiteBackground,
                     fontWeight: FontWeight.w500,
                   ),
@@ -116,9 +119,9 @@ class DiagnosisWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height:8,),
-          PText(title:'تاريخ التشخيص: '.tr()+(item.date??''),fontColor:AppColors.grey200,size:PSize.text13,),
+          PText(title:'diagnosis_date'.tr()+(item.date??''),fontColor:AppColors.grey200,size:PSize.text13,),
           const SizedBox(height:8,),
-          PText(title:'الوصف :'.tr(),fontColor:Colors.black,size:PSize.text13,),
+          PText(title:'description'.tr(),fontColor:Colors.black,size:PSize.text13,),
           const SizedBox(height:8,),
           PText(title:(item.description??''),fontColor:AppColors.grayShade3,size:PSize.text13,
             fontWeight:FontWeight.w500,),

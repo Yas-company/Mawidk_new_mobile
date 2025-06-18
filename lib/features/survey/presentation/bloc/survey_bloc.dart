@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -122,7 +123,7 @@ class SurveyBloc extends Bloc<SurveyEvent, BaseState> {
             return Dialog(insetPadding:EdgeInsets.symmetric(horizontal:20),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                 child: InformationCompletedWidget(
-                  title:'$nameشكرًا لك يا ',
+                  title:'$name${'thank_you'.tr()}',
                   image:AppSvgIcons.patientSuccess,
                 ));
           },

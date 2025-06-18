@@ -11,6 +11,7 @@ import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/appointments/presentation/bloc/doctor_appointments_bloc.dart';
@@ -98,7 +99,7 @@ class AppointmentsScreenState extends State<AppointmentsScreen> {
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(100),
             child: Padding(
-              padding: const EdgeInsets.only(top: 24,right:30),
+              padding:  EdgeInsets.only(top: 24,right:isArabic()?30:50),
               child: appBar(
                 context: context,
                 backBtn: false, isCenter: true,
@@ -124,7 +125,7 @@ class AppointmentsScreenState extends State<AppointmentsScreen> {
                     // }else{
                     //   // SafeToast.show(message: 'message',type: MessageType.warning);
                     // }
-                  },child: Container(padding:EdgeInsets.only(top:14,bottom:14,left:20,right:20),
+                  },child: Container(padding:EdgeInsets.only(top:14,bottom:14,left:20,right:isArabic()?20:14),
                       decoration:BoxDecoration(
                           borderRadius:BorderRadius.circular(16),
                           color:AppColors.whiteColor
@@ -147,7 +148,9 @@ class AppointmentsScreenState extends State<AppointmentsScreen> {
                         const SizedBox(width:14,),
                         PText(title:'pending_requests'.tr(),size:PSize.text14,fontWeight:FontWeight.w500,),
                         Spacer(),
-                        PImage(source:AppSvgIcons.icArrow,color:AppColors.primaryColor,)
+                        isArabic()?
+                        PImage(source:AppSvgIcons.icArrow,color:AppColors.primaryColor,):
+                            Icon(Icons.arrow_forward_ios_sharp,color:AppColors.primaryColor,)
                       ],),),
                   );
                 },),

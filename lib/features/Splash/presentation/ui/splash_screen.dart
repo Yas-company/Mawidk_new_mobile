@@ -56,26 +56,28 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
 
   void _delayedNavigation() {
     Future.delayed(const Duration(seconds: 3), () async {
-      String userType = SharedPreferenceService().getString(SharPrefConstants.userType);
       if (!mounted) return;
-
-      if (userType.isEmpty) {
-        context.push(AppRouter.doctorOrPatientScreen);
-      } else {
-        bool isLoginKey = SharedPreferenceService().getBool(SharPrefConstants.isLoginKey);
-        if (!mounted) return;
-
-        if (isLoginKey) {
-          bool surveyStatus = SharedPreferenceService().getBool(SharPrefConstants.surveyStatus);
-          if (surveyStatus) {
-            context.goNamed(userType == 'doctor' ? AppRouter.doctorSurvey : AppRouter.patientSurvey);
-          } else {
-            context.goNamed(userType == 'doctor' ? AppRouter.homeDoctor : AppRouter.homePatient);
-          }
-        } else {
-          context.goNamed(AppRouter.login);
-        }
-      }
+      context.goNamed(AppRouter.languageSelectorScreen);
+      // String userType = SharedPreferenceService().getString(SharPrefConstants.userType);
+      // if (!mounted) return;
+      //
+      // if (userType.isEmpty) {
+      //   context.push(AppRouter.doctorOrPatientScreen);
+      // } else {
+      //   bool isLoginKey = SharedPreferenceService().getBool(SharPrefConstants.isLoginKey);
+      //   if (!mounted) return;
+      //
+      //   if (isLoginKey) {
+      //     bool surveyStatus = SharedPreferenceService().getBool(SharPrefConstants.surveyStatus);
+      //     if (surveyStatus) {
+      //       context.goNamed(userType == 'doctor' ? AppRouter.doctorSurvey : AppRouter.patientSurvey);
+      //     } else {
+      //       context.goNamed(userType == 'doctor' ? AppRouter.homeDoctor : AppRouter.homePatient);
+      //     }
+      //   } else {
+      //     context.goNamed(AppRouter.login);
+      //   }
+      // }
     });
   }
 

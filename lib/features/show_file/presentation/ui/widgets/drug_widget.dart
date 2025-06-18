@@ -40,6 +40,9 @@ class DrugWidget extends StatelessWidget {
       },child:Stack(fit: StackFit.expand,
         children: [
           PBlocBuilder(
+            emptyWidget:(state) {
+              return Center(child: PText(title: 'No Drugs'));
+            },
             init:() {
               showFileBloc.add(ApplyDrugs(id: id));
             },loadingWidget:Center(child:Center(child: CustomLoader(size:35,))),

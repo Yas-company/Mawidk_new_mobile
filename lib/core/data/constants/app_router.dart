@@ -37,4 +37,8 @@ class AppRouter {
   static const String patientAppointmentsScreen = '/patientAppointmentsScreen';
   static const String showFileScreen = '/showFileScreen';
   static const String consultationBottomSheet = '/consultationBottomSheet';
+  static const String consultationDetailsWidget = '/consultationDetailsWidget';
+  static const String privacyPolicyScreen = '/privacyPolicyScreen';
+  static const String languageSelectorScreen = '/languageSelectorScreen';
+  static const String completePatientProfile = '/completePatientProfile';
 }

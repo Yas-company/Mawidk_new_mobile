@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +11,7 @@ import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/doctor_or_patient/presentation/ui/widget/doctor_or_patient_widget.dart';
@@ -23,12 +25,12 @@ class DoctorOrPatientScreen extends StatefulWidget {
 }
 
 class DoctorOrPatientScreenState extends State<DoctorOrPatientScreen> {
-  final List<Map<String, dynamic>> items = const [
-    {'title': 'مركز طبي', 'image': AppIcons.healthCenter,'desc':'مستشفى او معمل تحاليل او مركز اشعه او مجمع عيادات'},
-    {'title': 'عيادة', 'image': AppIcons.clinic,},
-    {'title': 'مستشفى', 'image': AppIcons.hospital,},
-    {'title': 'طبيب', 'image': AppIcons.doctor,},
-    {'title': 'مريض', 'image': AppIcons.patient,},
+  final List<Map<String, dynamic>> items =  [
+    {'title': 'medical_center'.tr(), 'image': AppIcons.healthCenter,'desc':'مستشفى او معمل تحاليل او مركز اشعه او مجمع عيادات'},
+    {'title': 'clinic'.tr(), 'image': AppIcons.clinic,},
+    {'title': 'hospital'.tr(), 'image': AppIcons.hospital,},
+    {'title': 'doctor'.tr(), 'image': AppIcons.doctor,},
+    {'title': 'patient'.tr(), 'image': AppIcons.patient,},
   ];
   int type = 0;
   SurveyBloc surveyBloc = SurveyBloc(surveyUseCase: getIt());
@@ -44,10 +46,10 @@ class DoctorOrPatientScreenState extends State<DoctorOrPatientScreen> {
               child: Column(mainAxisSize:MainAxisSize.max,children: [
                 Padding(
                   padding: const EdgeInsets.only(top:80),
-                  child: PText(title:'طريقة التسجيل',fontColor:AppColors.primaryColor,
+                  child: PText(title:'register_way'.tr(),fontColor:AppColors.primaryColor,
                     size:PSize.text28,fontWeight:FontWeight.w700,),
                 ),
-                PText(title:'من فضلك اختر طريقة التسجيل', size:PSize.text16,
+                PText(title:'please_register_way'.tr(), size:PSize.text16,
                 fontColor:AppColors.grayShade3),
                 // OtpInputScreen(),
                 const SizedBox(height:90,),
@@ -106,7 +108,7 @@ class DoctorOrPatientScreenState extends State<DoctorOrPatientScreen> {
                         child: DoctorOrPatientWidget(title:items[4]['title'],color:type==5?AppColors.primaryColor200:null,
                           image:items[4]['image'],onChange:() async {
                             type = 5;
-                            print('type>>'+type.toString());
+                            // print('type>>'+type.toString());
                             setState(() {});
                             await SharedPreferenceService().setString(SharPrefConstants.userType,'patient');
                             await SharedPreferenceService().setBool(SharPrefConstants.isDoctor,false);
@@ -157,9 +159,9 @@ class DoctorOrPatientScreenState extends State<DoctorOrPatientScreen> {
                     context.push(AppRouter.login);
                     // context.push(AppRouter.patientSurvey);
                     // context.push(AppRouter.doctorSurvey);
-                  },title:'التالي',hasBloc:false,isFitWidth:true,size:PSize.text16,
+                  },title:'next'.tr(),hasBloc:false,isFitWidth:true,size:PSize.text16,
                       // icon:Icon(Icons.arrow_forward,color:type==0?AppColors.blackColor:AppColors.whiteColor,),
-                      icon:PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,),
+                      icon:PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
                       fontWeight:FontWeight.w700,
                       textColor:type==0?AppColors.whiteColor:AppColors.whiteColor,
                       borderColor:type==0?Colors.transparent:AppColors.primaryColor,

@@ -81,5 +81,6 @@ class AppSvgIcons {
   static const String icCancel = '${_svgIconPath}ic_cancel.svg';
   static const String icEdit2 = '${_svgIconPath}ic_edit2.svg';
   static const String icClose = '${_svgIconPath}ic_close.svg';
+  static const String slash = '${_svgIconPath}slash.svg';
 
 }

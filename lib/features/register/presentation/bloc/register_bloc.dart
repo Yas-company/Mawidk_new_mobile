@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/features/register/domain/use_case/register_use_case.dart';
 import 'package:mawidak/features/register/presentation/bloc/register_event.dart';
+import 'package:mawidak/features/survey/data/model/survey_response_model.dart';
 import '../../../../core/data/constants/global_obj.dart';
 import '../../../../core/data/constants/shared_preferences_constants.dart';
 import '../../../../core/services/local_storage/secure_storage/secure_storage_service.dart';
@@ -22,6 +24,9 @@ import '../../../../core/services/local_storage/shared_preference/shared_prefere
 
 class RegisterBloc extends Bloc<RegisterEvent, BaseState> {
   final RegisterUseCase registerUseCase;
+  bool isChecked = false;
+  String sex = '';
+  Option? selectedOption ;
   TextEditingController phone = TextEditingController();
   TextEditingController name =  TextEditingController();
   TextEditingController password =  TextEditingController();
@@ -44,11 +49,11 @@ class RegisterBloc extends Bloc<RegisterEvent, BaseState> {
 
     final isNameValid = name.text.isEmpty || name.text.length <= 50; // name is either empty or <= 50 chars
 
-    if (isPhoneValid &&
+    if (selectedOption!=null&&isPhoneValid &&
         isPasswordValid &&
         isConfirmPasswordValid &&
         isEmailValid &&
-        isNameValid) {
+        isNameValid && sex.isNotEmpty && isChecked) {
       emit(ButtonEnabledState());
     } else {
       emit(ButtonDisabledState());
@@ -61,6 +66,8 @@ class RegisterBloc extends Bloc<RegisterEvent, BaseState> {
     emit(const ButtonLoadingState());
     bool isDoctor = SharedPreferenceService().getBool(SharPrefConstants.isDoctor);
     event.registerRequestModel.type = isDoctor? UserType.doctor.index:UserType.patient.index;
+    String gender = (selectedOption?.optionText??'')=='male'.tr()?'male':'female';
+    event.registerRequestModel.gender = gender;
     log('message>>'+jsonEncode(event.registerRequestModel));
     final response = await registerUseCase.register(event.registerRequestModel,);
     await response.fold(

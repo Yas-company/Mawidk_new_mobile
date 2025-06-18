@@ -13,6 +13,7 @@ import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/radio_button_widget.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/single_choice.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/single_select_choice.dart';
+import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/text_with_check.dart';
 
 bool isTrue = false;
 List<Option> options = [];
@@ -92,6 +93,21 @@ Widget buildQuestionWidget(Question q, Function setStateCallback){
           validator: (value) => null,
         ),
       );
+
+    case 'text_with_check':
+      return TextWithCheck(isTrue:q.isTrue,
+        hint:q.hint??'',
+        title: q.questionText??'',
+        answer:q.answer,
+        onAnswer:(value) {
+          setStateCallback(() {
+            q.answer = value;
+            // q.isTrue = value;
+            // print('object>>'+q.isTrue.toString());
+          });
+        }
+      );
+
       case 'textarea':
       return Padding(
         padding: const EdgeInsets.only(top: 10,bottom:10),

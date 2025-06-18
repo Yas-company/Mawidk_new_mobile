@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +17,11 @@ import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/core/p_bloc_builder.dart';
 import 'package:mawidak/di.dart';
+import 'package:mawidak/features/show_file/data/model/consultation/add_consultation_request_model.dart';
 import 'package:mawidak/features/show_file/data/model/consultation/all_consultaions_response_model.dart';
 import 'package:mawidak/features/show_file/presentation/bloc/show_file_bloc.dart';
 import 'package:mawidak/features/show_file/presentation/bloc/show_file_event.dart';
-import 'package:mawidak/features/show_file/presentation/ui/widgets/consultation_bottom_sheet.dart';
+import 'package:path/path.dart';
 
 class ConsultationWidget extends StatelessWidget {
   final int id;
@@ -42,6 +46,9 @@ class ConsultationWidget extends StatelessWidget {
       },child:Stack(fit: StackFit.expand,
         children: [
           PBlocBuilder(
+            emptyWidget:(state) {
+              return Center(child: PText(title: 'no_consultations'.tr()));
+            },
             init:() {
               showFileBloc.add(ApplyConsultations(id: id));
             },loadingWidget:Center(child:Center(child: CustomLoader(size:35,))),
@@ -51,7 +58,7 @@ class ConsultationWidget extends StatelessWidget {
               padding: EdgeInsets.only(bottom:20),
               itemBuilder:(context, index) {
                 ConsultationData item = model[index];
-                return itemRow(showFileBloc,item);
+                return itemRow(context,showFileBloc,item);
               },shrinkWrap:true,itemCount:model.length,);
           },),
           Positioned(
@@ -69,6 +76,8 @@ class ConsultationWidget extends StatelessWidget {
                 context.push(AppRouter.consultationBottomSheet,extra:{
                   'isEdit':false,
                   'onSubmit':(model) {
+                    ((model as AddConsultationRequestModel)).patientId = id;
+                    print('model>>'+jsonEncode(model));
                     showFileBloc.add(ApplyAddingConsultation(addConsultationRequestModel: model));
                   },
                 });
@@ -86,7 +95,7 @@ class ConsultationWidget extends StatelessWidget {
                   ),
                   const SizedBox(width:22),
                   PText(
-                    title: 'استشارة جديدة'.tr(),
+                    title: 'new_consultation'.tr(),
                     fontColor: AppColors.whiteBackground,
                     fontWeight: FontWeight.w500,
                   ),
@@ -100,9 +109,9 @@ class ConsultationWidget extends StatelessWidget {
     );
   }
 
-  Widget itemRow(ShowFileBloc showFileBloc,ConsultationData item){
+  Widget itemRow(BuildContext context,ShowFileBloc showFileBloc,ConsultationData item){
     return Container(margin: EdgeInsets.only(top:20),
-      padding:EdgeInsets.only(left:0,right:14),
+      padding:EdgeInsets.only(left:isArabic()?0:14,right:isArabic()?14:0),
       decoration:BoxDecoration(
           color:AppColors.whiteColor,
           borderRadius: BorderRadius.circular(16)
@@ -116,31 +125,32 @@ class ConsultationWidget extends StatelessWidget {
               const SizedBox(height:8,),
               PText(title:(item.consultation_date??''),fontColor:AppColors.grey200,size:PSize.text13,),
               const SizedBox(height:8,),
-              PText(title:'الشكوى الرئيسية : '.tr(),fontColor:Colors.black,size:PSize.text13,),
+              PText(title:'main_complaint'.tr(),fontColor:Colors.black,size:PSize.text13,),
               const SizedBox(height:8,),
               PText(title:(item.main_complaint??''),fontColor:AppColors.grayShade3,size:PSize.text13,
                 fontWeight:FontWeight.w500,),
               const SizedBox(height:8,),
-              PText(title:'الملاحظات:'.tr(),fontColor:Colors.black,size:PSize.text13,),
+              PText(title:'${'notes'.tr()} : ',fontColor:Colors.black,size:PSize.text13,),
               const SizedBox(height:8,),
               PText(title:(item.notes??''),fontColor:AppColors.grayShade3,size:PSize.text13,
                 fontWeight:FontWeight.w500,),
               const SizedBox(height:20,),
             ],
           ),
-          Positioned(left:0,top:0,child:Container(margin:EdgeInsets.only(top:20,left:10,right:10),
+          Positioned(left:isArabic()?0:null,top:0,right:isArabic()?null:0,
+              child:Container(margin:EdgeInsets.only(top:20,left:10,right:10),
               padding:EdgeInsets.symmetric(vertical:6,horizontal:10),
               decoration:BoxDecoration(
                   color:Color(0xffD4EDDA),
                   borderRadius:BorderRadius.circular(16)
-              ),child:PText(title:'مكتملة',fontColor:Color(0xff61CF7B),fontWeight:FontWeight.w500,))),
+              ),child:PText(title:'complete'.tr(),fontColor:Color(0xff61CF7B),fontWeight:FontWeight.w500,))),
 
-          Positioned(left:0,bottom:0,child:GestureDetector(onTap:() {
-
+          Positioned(left:isArabic()?0:null,bottom:0,right:isArabic()?null:0,child:GestureDetector(onTap:() {
+            context.push(AppRouter.consultationDetailsWidget,extra: item.id??0);
           },child: Padding(
               padding: const EdgeInsets.only(bottom:14,left:14,right:14),
               child: PText(title:
-              'عرض التفاصيل',fontColor:AppColors.primaryColor,fontWeight:FontWeight.w500,),
+              'show_details'.tr(),fontColor:AppColors.primaryColor,fontWeight:FontWeight.w500,),
             ),
           ))
         ],

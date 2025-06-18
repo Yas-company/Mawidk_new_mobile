@@ -16,6 +16,7 @@ import 'package:mawidak/features/appointments/presentation/bloc/doctor_appointme
 import 'package:mawidak/features/appointments/presentation/ui/page/appointments_screen.dart';
 import 'package:mawidak/features/appointments/presentation/ui/page/doctor_pending_appointments_screen.dart';
 import 'package:mawidak/features/change_password/presentation/ui/page/change_password_screen.dart';
+import 'package:mawidak/features/complete_patinet_profile/presentation/ui/page/complete_patient_profile_screen.dart';
 import 'package:mawidak/features/confirm_password/presentation/ui/pages/confirm_password_screen.dart';
 import 'package:mawidak/features/contact_us/presentation/ui/page/contact_us_screen.dart';
 import 'package:mawidak/features/doctor_or_patient/presentation/ui/pages/doctor_or_patient_screen.dart';
@@ -26,6 +27,7 @@ import 'package:mawidak/features/edit_personal_info/presentation/ui/page/edit_pe
 import 'package:mawidak/features/forget_password/presentation/ui/pages/forget_password_screen.dart';
 import 'package:mawidak/features/home/presentation/ui/page/home_screen_doctor.dart';
 import 'package:mawidak/features/home/presentation/ui/page/home_screen_patient.dart';
+import 'package:mawidak/features/language_screen.dart';
 import 'package:mawidak/features/login/presentation/ui/pages/login_screen.dart';
 import 'package:mawidak/features/more/presentation/ui/page/more_screen.dart';
 import 'package:mawidak/features/notification/presentation/ui/page/notification_screen.dart';
@@ -33,12 +35,14 @@ import 'package:mawidak/features/onboarding/onboarding_screen.dart';
 import 'package:mawidak/features/parent_screen/parent_screen.dart';
 import 'package:mawidak/features/patient_appointments/presentation/ui/page/patient_appointments_screen.dart';
 import 'package:mawidak/features/patient_favourite/presentation/ui/page/patient_favourite_screen.dart';
+import 'package:mawidak/features/privacy_policy/presentation/ui/page/privacy_policy_screen.dart';
 import 'package:mawidak/features/register/presentation/ui/pages/register_screen.dart';
 import 'package:mawidak/features/search/presentation/ui/pages/search_screen.dart';
 import 'package:mawidak/features/search_results/presentation/ui/pages/search_results_screen.dart';
 import 'package:mawidak/features/search_results_for_doctor/presentation/ui/pages/search_for_doctors_screen.dart';
 import 'package:mawidak/features/show_file/presentation/ui/page/show_file_screen.dart';
 import 'package:mawidak/features/show_file/presentation/ui/widgets/consultation_bottom_sheet.dart';
+import 'package:mawidak/features/show_file/presentation/ui/widgets/consultation_details_widget.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_cubit.dart';
 import 'package:mawidak/features/survey/presentation/ui/pages/doctor_survey_screen.dart';
@@ -193,6 +197,38 @@ class RouterManager {
           ));
         },
       ),
+
+    GoRoute(
+            name: AppRouter.consultationDetailsWidget,
+            path: AppRouter.consultationDetailsWidget,
+            pageBuilder: (context, state) {
+              return createRoute(widget:  ConsultationDetailsWidget(id:state.extra as int ,));
+            },
+          ),
+       GoRoute(
+            name: AppRouter.completePatientProfile,
+            path: AppRouter.completePatientProfile,
+            pageBuilder: (context, state) {
+              return createRoute(widget:  CompletePatientProfileScreen());
+            },
+          ),
+
+      GoRoute(
+        name: AppRouter.privacyPolicyScreen,
+        path: AppRouter.privacyPolicyScreen,
+        pageBuilder: (context, state) {
+          return createRoute(widget:  PrivacyPolicyScreen(id:state.extra as int ,));
+        },
+      ),
+
+      GoRoute(
+        name: AppRouter.languageSelectorScreen,
+        path: AppRouter.languageSelectorScreen,
+        pageBuilder: (context, state) {
+          return createRoute(widget:  LanguageSelectorScreen());
+        },
+      ),
+
 
       GoRoute(
         name: AppRouter.onBoarding,

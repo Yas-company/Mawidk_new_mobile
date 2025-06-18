@@ -50,7 +50,7 @@ class HomeScreenPatient extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal:14),
               child: CustomScrollView(slivers:[
-                SliverToBoxAdapter(child:SearchWidget(hasFilter:false,isEnabled: false,onTap:() {
+                SliverToBoxAdapter(child:SearchWidget(hintFontSize:12.3,hasFilter:false,isEnabled: false,onTap:() {
                   context.push(AppRouter.search);
                   // context.push(AppRouter.searchResults,extra:'');
                 },onTapFilter:() {
@@ -132,12 +132,12 @@ class HomeScreenPatient extends StatelessWidget {
                   child: SpecializationCarousel(specializations: specializations),
                 )),
 
-                SliverToBoxAdapter(
-                  child: HeaderWidget(title: 'top_rated_doctors'.tr(), onClickMore: () {
-
-                  },),
-                ),
-                SliverToBoxAdapter(child: const SizedBox(height:14,)),
+                // SliverToBoxAdapter(
+                //   child: HeaderWidget(title: 'top_rated_doctors'.tr(), onClickMore: () {
+                //
+                //   },),
+                // ),
+                // SliverToBoxAdapter(child: const SizedBox(height:14,)),
 
                 // SliverToBoxAdapter(
                 //   child: PBlocBuilder(init:() {
@@ -178,11 +178,11 @@ class HomeScreenPatient extends StatelessWidget {
                 // ),
 
 
-                SliverToBoxAdapter(
-                  child: HeaderWidget(title: 'top_rated_hospitals'.tr(), onClickMore: () {
-
-                  },),
-                ),
+                // SliverToBoxAdapter(
+                //   child: HeaderWidget(title: 'top_rated_hospitals'.tr(), onClickMore: () {
+                //
+                //   },),
+                // ),
                 SliverToBoxAdapter(child: const SizedBox(height:14,)),
 
                 // SliverToBoxAdapter(

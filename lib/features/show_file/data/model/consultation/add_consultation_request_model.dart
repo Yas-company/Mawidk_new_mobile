@@ -2,11 +2,11 @@ class AddConsultationRequestModel {
   int? patientId;
   String? mainComplaint;
   String? consultationDate;
-  int? bloodPressureSystolic;
-  int? bloodPressureDiastolic;
-  int? pulseRate;
-  int? bloodSugarLevel;
-  double? temperature;
+  num? bloodPressureSystolic;
+  num? bloodPressureDiastolic;
+  num? pulseRate;
+  num? bloodSugarLevel;
+  num? temperature;
   String? clinicalExamination;
   String? nextFollowUpDate;
   String? notes;

@@ -1,18 +1,21 @@
 import 'dart:io';
-
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mawidak/core/bloc/upload_bloc.dart';
 import 'package:mawidak/core/bloc/upload_event.dart';
 import 'package:mawidak/core/bloc/upload_state.dart';
+import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
+import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/core/services/file_service_picker/file_service_picker.dart';
 import 'package:mawidak/core/services/local_storage/secure_storage/secure_storage_service.dart';
@@ -67,6 +70,25 @@ class MoreScreenState extends State<MoreScreen> {
                     },),
                   ),
                   const SizedBox(height:24,),
+                  InkWell(onTap:() {
+                    context.push(AppRouter.completePatientProfile);
+                  },child: Container(padding:EdgeInsets.symmetric(horizontal:20,vertical:12),decoration:BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: AppColors.primaryColor2200
+                    ),child:Row(children: [
+                      CirclePercentage(percentage: 0.7,backgroundStrokeWidth: 2.0,
+                        progressStrokeWidth: 5.0,),
+                      const SizedBox(width:14,),
+                      Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
+                        PText(title:'complete_info'.tr(),size:PSize.text14,),
+                        const SizedBox(height:4,),
+                        PText(title:'please_complete_info'.tr(),size:PSize.text13,fontColor:AppColors.grey200,)
+                      ],),
+                      Spacer(),
+                      PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,color:AppColors.blackColor,)
+                    ],),),
+                  ),
+                  const SizedBox(height:24,),
                   MoreItemWidget(
                     title: 'edit_personal_info'.tr(),
                     rightIcon:AppSvgIcons.user,
@@ -105,6 +127,7 @@ class MoreScreenState extends State<MoreScreen> {
                     rightIcon:AppSvgIcons.icPrivacy,
                     leftIcon:AppSvgIcons.icArrow,
                     onTap: () {
+                      context.push(AppRouter.privacyPolicyScreen,extra: 1);
                     },
                   ),
                   Padding(
@@ -118,6 +141,7 @@ class MoreScreenState extends State<MoreScreen> {
                     rightIcon:AppSvgIcons.icPrivacy,
                     leftIcon:AppSvgIcons.icArrow,
                     onTap: () {
+                      context.push(AppRouter.privacyPolicyScreen,extra: 2);
                     },
                   ),
 
@@ -264,4 +288,149 @@ class MoreScreenState extends State<MoreScreen> {
     );
   }
 
+}
+
+
+
+
+// class CirclePercentage extends StatelessWidget {
+//   final double percentage; // 0.0 to 1.0
+
+//   const CirclePercentage({super.key, required this.percentage});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return CustomPaint(
+//       foregroundPainter: CirclePainter(percentage),
+//       child: SizedBox(
+//         width:37, height: 37,
+//         child: Center(
+//           child: PText(title: '${(percentage * 100).toInt()}%',
+//               size:PSize.text13,fontColor:AppColors.primaryColor,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class CirclePainter extends CustomPainter {
+//   final double percentage;
+//
+//   CirclePainter(this.percentage);
+//
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final strokeWidth = 4.0;
+//     final rect = Offset.zero & size;
+//     final center = rect.center;
+//     final radius = min(size.width, size.height) / 2 - strokeWidth;
+//
+//     final backgroundPaint = Paint()
+//       ..color = Colors.white
+//       ..strokeWidth = strokeWidth
+//       ..style = PaintingStyle.stroke;
+//
+//     final progressPaint = Paint()
+//       ..color = AppColors.primaryColor
+//       ..strokeWidth = strokeWidth
+//       ..style = PaintingStyle.stroke
+//       ..strokeCap = StrokeCap.round;
+//
+//     // Draw background circle
+//     canvas.drawCircle(center, radius, backgroundPaint);
+//
+//     // Draw progress arc
+//     final startAngle = -pi / 2;
+//     final sweepAngle = 2 * pi * percentage;
+//     canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
+//         startAngle, sweepAngle, false, progressPaint);
+//   }
+//
+//   @override
+//   bool shouldRepaint(CustomPainter oldDelegate) => true;
+// }
+
+class CirclePercentage extends StatelessWidget {
+   double percentage; // value between 0.0 and 1.0
+  final double backgroundStrokeWidth;
+  final double progressStrokeWidth;
+
+   CirclePercentage({
+    super.key,
+     this.percentage=0,
+    this.backgroundStrokeWidth = 6.0,
+    this.progressStrokeWidth = 12.0,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    num value = num.parse(SharedPreferenceService().getString(SharPrefConstants.profileCompletionPercentage));
+    // mhmdajoor5@gmail.com
+    percentage = double.parse(value.toString()) / 100;
+    return CustomPaint(
+      foregroundPainter: CirclePainter(
+        // percentage: percentage,
+        percentage: percentage,
+        backgroundStrokeWidth: backgroundStrokeWidth,
+        progressStrokeWidth: progressStrokeWidth,
+      ),
+      child:SizedBox(
+        width:37, height: 37,
+        child: Center(
+          child: PText(title: '${(percentage * 100).toInt()}%',
+            size:PSize.text13,fontColor:AppColors.primaryColor,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CirclePainter extends CustomPainter {
+  final double percentage;
+  final double backgroundStrokeWidth;
+  final double progressStrokeWidth;
+
+  CirclePainter({
+    required this.percentage,
+    required this.backgroundStrokeWidth,
+    required this.progressStrokeWidth,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final minStroke = min(backgroundStrokeWidth, progressStrokeWidth);
+    final radius = (min(size.width, size.height) - minStroke) / 2;
+
+    final backgroundPaint = Paint()
+      ..color = AppColors.whiteBackground
+      ..strokeWidth = backgroundStrokeWidth
+      ..style = PaintingStyle.stroke;
+
+    final progressPaint = Paint()
+      ..color = AppColors.primaryColor
+      ..strokeWidth = progressStrokeWidth
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    // Background circle
+    canvas.drawCircle(center, radius, backgroundPaint);
+
+    // Progress arc
+    final startAngle = -pi / 2;
+    final sweepAngle = 2 * pi * percentage;
+
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      startAngle,
+      sweepAngle,
+      false,
+      progressPaint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }

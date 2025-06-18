@@ -58,6 +58,7 @@ class ApiEndpointsConstants {
   static String doctorAppointmentCancel(int doctorId) => 'appointment/$doctorId/cancel';
   static String doctorAppointmentAccept(int doctorId) => 'appointment/$doctorId/change-status';
   static const String doctorPendingAppointments = 'appointment/doctor/pending';
+  static const String privacyPolicy = 'pages/';
 
   // _________ drugs
   static const String getDrugs = 'user/drugs/';
@@ -73,5 +74,6 @@ class ApiEndpointsConstants {
 
   // _____________________ Consultation
   static const String getConsultations = 'user/consultations/';
+  static const String getConsultationById = 'user/consultation/';
   static const String addConsultation = 'user/add-consultation';
 }

@@ -50,10 +50,12 @@ class RegisterResponseModel {
 class RegisterModel {
   String? name;
   String? phone;
+  num? profileCompletionPercentage;
 
   RegisterModel({
     this.name,
     this.phone,
+    this.profileCompletionPercentage,
   });
 
   RegisterModel copyWith({
@@ -70,11 +72,13 @@ class RegisterModel {
     return <String, dynamic>{
       'name': name,
       'phone': phone,
+      'profile_completion_percentage': profileCompletionPercentage,
     };
   }
 
   factory RegisterModel.fromMap(Map<String, dynamic> map) {
     return RegisterModel(
+      profileCompletionPercentage: map['profile_completion_percentage'] != null ? map['profile_completion_percentage'] as num : null,
       name: map['name'] != null ? map['name'] as String : null,
       phone:map['phone'] != null ? map['phone'] as String : null,
     );

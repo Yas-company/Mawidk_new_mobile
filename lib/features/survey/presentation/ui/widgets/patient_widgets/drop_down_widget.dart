@@ -182,3 +182,164 @@ class _DropDownWidgetState extends State<DropDownWidget> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class DropDownWidgetOne extends StatefulWidget {
+  final List<Option> options;
+  final String title;
+  final String hint;
+  final bool showCheckbox;
+  final Option? selectedValue;
+  final ValueChanged<Option?> onChanged;
+
+  const DropDownWidgetOne({
+    super.key,
+    required this.title,
+    required this.hint,
+    required this.options,
+    this.showCheckbox = false,
+    required this.selectedValue,
+    required this.onChanged,
+  });
+
+  @override
+  State<DropDownWidgetOne> createState() => DropDownWidgetOneState();
+}
+
+class DropDownWidgetOneState extends State<DropDownWidgetOne> {
+  bool isEnabled = false;
+  List<Option> emptyOptions = [];
+
+  void _setEnabled(bool value) {
+    setState(() {
+      isEnabled = value;
+      if (!isEnabled) {
+        widget.onChanged(null);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.showCheckbox)
+            Row(
+              children: [
+                Expanded(
+                    child: SizedBox(
+                        width: MediaQuery.sizeOf(context).width * .80,
+                        child: PText(title: 'have_diseases'.tr()))),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: (isEnabled
+                        ? AppColors.primaryColor100
+                        : AppColors.grey100),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        color: (isEnabled
+                            ? AppColors.primaryColor
+                            : AppColors.grey100)),
+                  ),
+                  child: IconButton(
+                    highlightColor: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    onPressed: () => _setEnabled(true),
+                    icon: Icon(Icons.check,
+                        color: (isEnabled
+                            ? AppColors.primaryColor
+                            : AppColors.grey200)),
+                    tooltip: 'Yes',
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: (!isEnabled
+                        ? AppColors.dangerColor100
+                        : AppColors.grey100),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        color: (!isEnabled
+                            ? AppColors.dangerColor
+                            : AppColors.grey100)),
+                  ),
+                  child: IconButton(
+                    highlightColor: Colors.transparent,
+                    onPressed: () => _setEnabled(false),
+                    icon: Icon(Icons.clear,
+                        color: (!isEnabled
+                            ? AppColors.dangerColor
+                            : AppColors.grey200)),
+                    tooltip: 'No',
+                  ),
+                ),
+              ],
+            ),
+          if (widget.showCheckbox) const SizedBox(height: 10),
+          PText(
+            title: widget.title,
+            size: PSize.text14,
+            fontColor: AppColors.fontColor,
+          ),
+          const SizedBox(height: 10),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppColors.grey100,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.whiteColor),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<Option>(
+                menuMaxHeight: MediaQuery.sizeOf(context).height * 0.45,
+                isExpanded: true,
+                icon:Icon(Icons.keyboard_arrow_down,color:AppColors.grey200,),
+                dropdownColor: AppColors.whiteColor,
+                hint: PText(title: widget.hint,fontColor: AppColors.grey200,),
+                value: widget.selectedValue ,
+                onChanged: (Option? newValue) {
+                  // if (widget.showCheckbox && !isEnabled) return;
+                  widget.onChanged(newValue);
+                },
+                items: ((widget.showCheckbox && !isEnabled)
+                    ? emptyOptions
+                    : widget.options)
+                    .map((Option value) {
+                  return DropdownMenuItem<Option>(
+                    value: value,
+                    child: PText(
+                      title: value.optionText ?? '',
+                      fontColor: Colors.black,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

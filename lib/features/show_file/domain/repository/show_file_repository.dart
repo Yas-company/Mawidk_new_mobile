@@ -29,6 +29,7 @@ abstract class ShowFileRepository {
 
   // Consultation
   Future<Either<dynamic, dynamic>> getConsultations({required int id});
+  Future<Either<dynamic, dynamic>> getConsultationById({required int id});
   Future<Either<dynamic, dynamic>> addConsultation({required AddConsultationRequestModel model});
   // Future<Either<dynamic, dynamic>> updateConsultation({required UpdateNoteRequestModel model,required int id});
 }

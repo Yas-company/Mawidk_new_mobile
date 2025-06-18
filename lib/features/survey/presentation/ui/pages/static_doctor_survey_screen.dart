@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
@@ -32,12 +33,24 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
       title: "معلوماتك الأساسية",
       subtitle: "هذه المعلومات مطلوبة للمتابعة",
       questions: [
-        Question(
-          id: 1,isRequired:true,
-          questionText: "النوع",
-          type: "single_choice",
-          options: [Option(id:1,optionText:"ذكر"), Option(id:2,optionText:"انثي")],
+        // Question(
+        //   id: 1,isRequired:true,
+        //   questionText: "النوع",
+        //   type: "single_choice",
+        //   options: [Option(id:1,optionText:"ذكر"), Option(id:2,optionText:"انثي")],
+        // ),
+        Question(isRequired:true, id: 0,
+          questionText: "المرتبة",
+          type: "radio_button",
+          options: [Option(id:1,optionText:"consultant".tr()),
+            Option(id:2,optionText:"specialist".tr())],
         ),
+        // Question(isRequired:true, id: 0,
+        //   questionText: "المرتبة",
+        //   type: "single_choice",
+        //   options: [Option(id:1,optionText:"consultant".tr()),
+        //     Option(id:2,optionText:"specialist".tr())],
+        // ),
         Question(
           id: 1,isRequired:true,hint: 'اختر تخصصك',
           questionText: "اختر تخصصك",

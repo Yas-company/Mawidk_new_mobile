@@ -68,7 +68,7 @@ class SearchResultsState extends State<SearchResultsScreen> {
                     widget.searchKey = value??'';
                       searchBloc.add(ApplySearchForPatient(key:value??''));
                     },onTapFilter:() {
-                        filterBottomSheet(context,widget.lookupBloc,(location, specialization, selectedVisitIndex) {
+                        filterBottomSheet(context,widget.lookupBloc,(location, specialization, selectedVisitIndex,evaluate) {
                           widget.searchKey = specializations.firstWhere((e) => e.id == (specialization??0)).optionText??'';
                           setState(() {});
                           searchBloc.add(ApplyIsMapEvent(isMap: false));

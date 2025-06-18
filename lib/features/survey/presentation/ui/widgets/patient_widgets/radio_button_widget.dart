@@ -84,3 +84,73 @@ class RadioButtonWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+class CustomRadioButtonWidget extends StatelessWidget {
+  final List<Option> options;
+  final String label;
+  final dynamic selectedValue;
+  final Function(Option) onChanged;
+
+  const CustomRadioButtonWidget({
+    super.key,
+    required this.options,
+    required this.label,
+    required this.selectedValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top:14),
+      child: Column(crossAxisAlignment:CrossAxisAlignment.start,
+          children: [
+            PText(title: label, fontWeight: FontWeight.w500, size: PSize.text16,),
+            ...options.map((option) {
+              final isSelected = option.optionText == (selectedValue is Option
+                  ? (selectedValue as Option).optionText
+                  : selectedValue);
+              // final isSelected = selectedValue == option.optionText;
+              return GestureDetector(
+                // onTap: () => onChanged(option.optionText??''),
+                onTap: () => onChanged(option),
+                child: Container(
+                  margin:EdgeInsets.only(top:6),
+                  padding: const EdgeInsets.symmetric(vertical:12, horizontal:10),
+                  decoration: BoxDecoration(
+                    color: isSelected ? AppColors.primaryColor1100 : Colors.transparent,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Row(
+                    children: [
+                      // Circle radio shape
+                      Container(
+                        width: 16, height:16,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: isSelected?AppColors.primaryColor:AppColors.grey200,
+                            width:3,
+                          ),
+                        ),
+                        child:null,
+                      ),
+                      SizedBox(width: 12),
+                      // Text
+                      PText(title:option.optionText??'',fontWeight:FontWeight.w400,
+                        size:PSize.text14,
+                        fontColor:isSelected ?AppColors.blackColor:AppColors.grey200,),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ]
+      ),
+    );
+  }
+}

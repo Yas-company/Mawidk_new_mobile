@@ -5,6 +5,7 @@ import 'package:mawidak/core/base_network/network_repository.dart';
 import 'package:mawidak/features/show_file/data/model/add_diagnosis_request_model.dart';
 import 'package:mawidak/features/show_file/data/model/consultation/add_consultation_request_model.dart';
 import 'package:mawidak/features/show_file/data/model/consultation/all_consultaions_response_model.dart';
+import 'package:mawidak/features/show_file/data/model/consultation/consultation_data_response_model.dart';
 import 'package:mawidak/features/show_file/data/model/drug/add_drug_request_model.dart';
 import 'package:mawidak/features/show_file/data/model/add_note_request_model.dart';
 import 'package:mawidak/features/show_file/data/model/all_notes_response_model.dart';
@@ -295,6 +296,24 @@ class ShowFileRepositoryImpl extends MainRepository implements ShowFileRepositor
         path: ApiEndpointsConstants.getConsultations+id.toString(),
         headers: headers,
         model: GeneralResponseModel(model:AllConsultationsResponseModel()),
+      );
+      return result;
+    } catch (e) {
+      return Left(
+        ErrorExceptionModel(
+            message: e.toString(),
+            exceptionEnum: ExceptionEnum.unknownException),
+      );
+    }
+  }
+
+  @override
+  Future<Either> getConsultationById({required int id}) async {
+    try {
+      final result = await remoteData.get(
+        path: ApiEndpointsConstants.getConsultationById+id.toString(),
+        headers: headers,
+        model: GeneralResponseModel(model:ConsultationDataResponseModel()),
       );
       return result;
     } catch (e) {

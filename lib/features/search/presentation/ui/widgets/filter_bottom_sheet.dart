@@ -8,9 +8,10 @@ import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/features/lookups/lookup_bloc.dart';
 
-List<String> visitTypes = ['زيارة منزلية','حجز اونلاين','في العيادة'];
+// List<String> visitTypes = ['زيارة منزلية','حجز اونلاين','في العيادة'];
+List<String> userTypes = ['consultant'.tr(),'specialist'.tr(),'all'.tr()];
 
-typedef FilterCallback = void Function(int? location, int? specialization, int selectedVisitIndex);
+typedef FilterCallback = void Function(int? location, int? specialization, int selectedVisitIndex,double evaluate);
 void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCallback onApplyFilter) {
   showModalBottomSheet(
     context: context,isScrollControlled:true,
@@ -21,7 +22,9 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
     builder: (context) {
       String? location,specialization;
       int? cityId,specializationId;
-      int selectedVisitIndex = -1;
+      // int selectedVisitIndex = -1;
+      double? selectedEvaluation;
+      int selectedUserTypeIndex = -1;
       return StatefulBuilder(builder: (context, setState) {
         return Padding(
           padding: const EdgeInsets.all(20),
@@ -35,7 +38,7 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                 child: PText(title: 'filter'.tr(), size: PSize.text14, fontColor: AppColors.grey200),
               ),
               const SizedBox(height:14),
-              PDropDown(hintText:'المدينة',keyValue:'name'
+              PDropDown(hintText:isArabic()?'المدينة':'',keyValue:'name'
                 ,label:'location'.tr(),isSpecializations:true,
                 options: lookupBloc.itemList.map((option) => {
                   'id': option.id,
@@ -46,9 +49,9 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                   print('location>>'+location.toString());
                   setState(() {});
                 },),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               PDropDown(
-                hintText:'اختر التخصص',keyValue:'optionText',
+                hintText:isArabic()?'اختر التخصص':'',keyValue:'optionText',
                 label:'specialization'.tr(),isSpecializations:true,options: specializations.map((option) => {
                 'id': option.id,
                 'optionText': option.optionText,
@@ -59,22 +62,61 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                 specializationId = value?['id'];
                 setState(() {});
               },),
+              // Padding(
+              //   padding: const EdgeInsets.only(top:14,bottom:10),
+              //   child: PText(title:'الموعد',size:PSize.text14,),
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: visitTypes.asMap().entries.map((entry) {
+              //     int index = entry.key;
+              //     String item = entry.value;
+              //     bool isSelected = selectedVisitIndex == index;
+              //
+              //     return Expanded(
+              //       child: GestureDetector(
+              //         onTap: () {
+              //           setState(() {
+              //             selectedVisitIndex = index;
+              //           });
+              //         },
+              //         child: Container(
+              //           margin: const EdgeInsets.symmetric(horizontal: 4),
+              //           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              //           decoration: BoxDecoration(
+              //             borderRadius: const BorderRadius.all(Radius.circular(16)),
+              //             border:Border.all(color:isSelected?AppColors.primaryColor:Colors.transparent),
+              //             color: isSelected ? AppColors.primaryTransparent : AppColors.whiteColor,
+              //           ),
+              //           child: Center(
+              //             child: PText(
+              //               title: item,
+              //               fontColor: isSelected ? AppColors.blackColor : AppColors.grey200,
+              //               size: PSize.text14,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   }).toList(),
+              // ),
+
               Padding(
                 padding: const EdgeInsets.only(top:14,bottom:10),
-                child: PText(title:'الموعد',size:PSize.text14,),
+                child: PText(title:'rank'.tr(),size:PSize.text14,),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: visitTypes.asMap().entries.map((entry) {
+                children: userTypes.asMap().entries.map((entry) {
                   int index = entry.key;
                   String item = entry.value;
-                  bool isSelected = selectedVisitIndex == index;
+                  bool isSelected = selectedUserTypeIndex == index;
 
                   return Expanded(
                     child: GestureDetector(
                       onTap: () {
                         setState(() {
-                          selectedVisitIndex = index;
+                          selectedUserTypeIndex = index;
                         });
                       },
                       child: Container(
@@ -97,6 +139,31 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                   );
                 }).toList(),
               ),
+
+
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 10),
+                child: PText(title: 'evaluation'.tr(), size: PSize.text14),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(5, (index) {
+                  double starValue = index + 1.0;
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedEvaluation = starValue;
+                      });
+                    },
+                    child: Icon(
+                      Icons.star,size: 36,
+                      color: (selectedEvaluation ?? 0) >= starValue ? Colors.orange : AppColors.grey200,
+                    ),
+                  );
+                }),
+              ),
+
+
               const SizedBox(height:30),
               Row(
                 children: [
@@ -105,10 +172,12 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                       child: PButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          onApplyFilter(cityId,specializationId,selectedVisitIndex);
+                          // onApplyFilter(cityId,specializationId,selectedVisitIndex);
+                          onApplyFilter(cityId,specializationId,selectedUserTypeIndex,selectedEvaluation??0);
                         },
-                        title: 'تصفية'+ ' ('+
-                            getSelectedCount(location??'', specialization??'', selectedVisitIndex).toString()+')',
+                        title: 'filter'.tr()+ ' ('+
+                            getSelectedCount(location??'', specialization??'', selectedUserTypeIndex).toString()+')',
+                            // getSelectedCount(location??'', specialization??'', selectedVisitIndex).toString()+')',
                         hasBloc: false,
                       ),
                     ),
@@ -120,7 +189,7 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                         onPressed:() {
                           Navigator.pop(context);
                         },
-                        title: 'إلغاء',
+                        title: 'cancel'.tr(),
                         fillColor: AppColors.secondary,
                         hasBloc: false,
                       ),

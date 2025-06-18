@@ -77,6 +77,10 @@ class ShowFileUseCase {
     return await showFileRepository.getConsultations(id: id);
   }
 
+  Future<Either> getConsultationById({required int id}) async {
+    return await showFileRepository.getConsultationById(id: id);
+  }
+
   Future<Either> addConsultation({required AddConsultationRequestModel model}) async {
     return await showFileRepository.addConsultation(model: model);
   }

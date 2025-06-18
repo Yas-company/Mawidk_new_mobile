@@ -3,11 +3,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mawidak/core/component/appbar/p_appbar.dart';
 import 'package:mawidak/core/component/custom_loader/custom_loader.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/core/p_bloc_builder.dart';
 import 'package:mawidak/di.dart';
@@ -67,19 +69,25 @@ class PatientsScreenState extends State<PatientsScreen> with TickerProviderState
         backgroundColor: AppColors.primaryColor,
         color: AppColors.whiteColor,
         onRefresh: refreshData,
-        child: Scaffold(
-          backgroundColor: AppColors.whiteBackground,
-          body: SafeArea(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+        child: MediaQuery.removePadding(
+          context: context, removeTop: true,
+          child: Scaffold(
+            extendBodyBehindAppBar: false,
+            backgroundColor: AppColors.whiteBackground,
+            appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(100),
+              child: Padding(
+                padding:  EdgeInsets.only(top: 24,right:isArabic()?30:50),
+                child: appBar(
+                  context: context,
+                  backBtn: false, isCenter: true,
+                  text: 'patients_list_title'.tr(),
+                ),
+              ),
+            ),
+            body: Column(crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Align(alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30, bottom: 14),
-                    child: PText(title: 'patients_list_title'.tr()),
-                  ),
-                ),
-
                 Padding(
                   padding: const EdgeInsets.only(left:16,right:16,top:10,bottom:10),
                   child: SearchWidget(hint:'patient_list'.tr(),hasFilter:false,onFieldSubmitted:(p0) {

@@ -50,6 +50,7 @@ class LoginResponseModel {
 class LoginModel {
   String? name;
   String? phone;
+  num? profileCompletionPercentage;
   bool? surveyStatus;
   bool? isVerified;
   String? accessToken;
@@ -60,6 +61,7 @@ class LoginModel {
     this.phone,
     this.accessToken,
     this.refreshToken,
+    this.profileCompletionPercentage,
     this.isVerified,
     this.surveyStatus,
   });
@@ -87,6 +89,7 @@ class LoginModel {
       'name': name,
       'phone': phone,
       'refreshToken': refreshToken,
+      'profile_completion_percentage': profileCompletionPercentage,
       'accessToken': accessToken,
       'is_verified': isVerified,
       'survey_status': surveyStatus,
@@ -97,6 +100,8 @@ class LoginModel {
     return LoginModel(
       name: map['name'] != null ? map['name'] as String : null,
       phone:map['phone'] != null ? map['phone'] as String : null,
+      profileCompletionPercentage:map['profile_completion_percentage'] != null ?
+      map['profile_completion_percentage'] as num : null,
       accessToken:map['accessToken'] != null ? map['accessToken'] as String : null,
       refreshToken:map['refreshToken'] != null ? map['refreshToken'] as String : null,
       surveyStatus:map['survey_status'] != null ? map['survey_status'] as bool : null,

@@ -25,6 +25,7 @@ import '../../../../core/services/local_storage/shared_preference/shared_prefere
 
 class LoginBloc extends Bloc<LoginEvent, BaseState> {
   final LoginUseCase loginUseCase;
+  bool isChecked = false;
   TextEditingController phone = TextEditingController();
   TextEditingController password =  TextEditingController();
 
@@ -36,7 +37,8 @@ class LoginBloc extends Bloc<LoginEvent, BaseState> {
 
   void onValidateAllFields(LoginValidationEvent event, Emitter emit) {
     final isPhoneValid = !phone.text.isEmptyOrNull && isValidSaudiPhoneNumber(phone.text);
-    if (isPhoneValid && !phone.text.isEmptyOrNull && !password.text.isEmptyOrNull && password.text.length <= 50) {
+    if (isPhoneValid && !phone.text.isEmptyOrNull && !password.text.isEmptyOrNull && password.text.length <= 50
+    &&isChecked) {
       emit(ButtonEnabledState());
     } else {
       emit(ButtonDisabledState());
@@ -64,6 +66,9 @@ class LoginBloc extends Bloc<LoginEvent, BaseState> {
 
           if((r as GeneralResponseModel).model!=null){
             if(((r).model as LoginResponseModel).model?.isVerified??false){
+              await SharedPreferenceService().setString(
+                   SharPrefConstants.profileCompletionPercentage,
+                  (((r).model as LoginResponseModel).model?.profileCompletionPercentage ?? 0).toString());
               await SecureStorageService().write(
                   key: SharPrefConstants.accessToken,
                   value:((r).model as LoginResponseModel)

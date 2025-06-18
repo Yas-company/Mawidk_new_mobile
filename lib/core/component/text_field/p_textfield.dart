@@ -15,6 +15,8 @@ class PTextField extends StatefulWidget {
   final String? labelAbove;
   final bool isFieldRequired;
   final bool isEmail;
+  final double hintFontSize;
+  final double? textFormFieldHeight;
   final PSize? labelAboveFontSize;
   final FontWeight? labelAboveFontWeight;
   final Color? textColor,
@@ -59,6 +61,7 @@ class PTextField extends StatefulWidget {
     required this.hintText,
     this.isFieldRequired = false,
     this.inputFormatters,
+    this.textFormFieldHeight,
     this.textInputType = TextInputType.text,
     this.textColor,
     this.textInputAction,
@@ -79,6 +82,7 @@ class PTextField extends StatefulWidget {
     this.controller,
     this.isPassword = false,
     this.enabled,
+    this.hintFontSize=14,
     this.obscuringCharacter = '*',
     this.fontWeight,
     this.isDense = false,
@@ -161,7 +165,7 @@ class _PTextFieldState extends State<PTextField> {
               width: 2,
             ),
             widget.isOptional
-                ? PText(title:'(اختياري)',fontColor:AppColors.grey200)
+                ? PText(title:'optional_login'.tr(),fontColor:AppColors.grey200)
                 : Container(),
           ],
         )
@@ -173,134 +177,136 @@ class _PTextFieldState extends State<PTextField> {
             : const SizedBox.shrink(),
         Form(
           key: widget.formKey,
-          child: TextFormField(
-            focusNode: _focusNode,
-            // focusNode: widget.currentFocus,
-            textAlign:
-            AppLocalization.isArabic ? TextAlign.right : TextAlign.left,
-            enabled: widget.enabled,
-            textInputAction: widget.textInputAction ??
-                (widget.nextFocus != null
-                    ? TextInputAction.next
-                    : TextInputAction.done),
-            scrollController: scrollController,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: widget.controller ?? controller,
-            obscureText: isObscured,
-            cursorColor: AppColors.primaryColor,
-            keyboardType: widget.textInputType ?? TextInputType.text,
-            inputFormatters: widget.inputFormatters ?? [],
-            obscuringCharacter: widget.obscuringCharacter ?? '*',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(color: widget.textColor ?? AppColors.primaryColor,
-              fontFamily: 'Cairo',),
-            maxLines: !isObscured ? widget.maxLines : 1,
-            onFieldSubmitted:(value) {
-              if(widget.onFieldSubmitted!=null){
-                widget.onFieldSubmitted!(value);
-              }
-            },
-            onChanged: (value) {
-              widget.feedback(value);
-            },
-            validator: widget.validator,
-            textDirection: (widget.isHasSpecialCharcters &&
-                context.locale.languageCode == 'ar')
-                ? TextDirection.ltr
-                : context.locale.languageCode == 'ar'
-                ? TextDirection.rtl
-                : TextDirection.ltr,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: _isFocused ? AppColors.primaryColor100 : AppColors.whiteColor,
-              errorStyle: const TextStyle(color: AppColors.dangerColor,
+          child: SizedBox(height:widget.textFormFieldHeight,
+            child: TextFormField(
+              focusNode: _focusNode,
+              // focusNode: widget.currentFocus,
+              textAlign:
+              AppLocalization.isArabic ? TextAlign.right : TextAlign.left,
+              enabled: widget.enabled,
+              textInputAction: widget.textInputAction ??
+                  (widget.nextFocus != null
+                      ? TextInputAction.next
+                      : TextInputAction.done),
+              scrollController: scrollController,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              controller: widget.controller ?? controller,
+              obscureText: isObscured,
+              cursorColor: AppColors.primaryColor,
+              keyboardType: widget.textInputType ?? TextInputType.text,
+              inputFormatters: widget.inputFormatters ?? [],
+              obscuringCharacter: widget.obscuringCharacter ?? '*',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: widget.textColor ?? AppColors.primaryColor,
                 fontFamily: 'Cairo',),
-              isDense: widget.isDense ?? false,
-              // constraints: const BoxConstraints(maxHeight: 44),
-              alignLabelWithHint: true,
-              hintText: widget.hintText?.tr(),
-              contentPadding: widget.contentPadding ??
-                  const EdgeInsets.symmetric(horizontal: 16, vertical:16),
-              prefixIcon:widget.prefixIcon,
-              suffixIcon: widget.suffixIcon ?? (widget.isPassword
-                  ? IconButton(
-                  icon: isObscured
-                      ? SvgPicture.asset(AppSvgIcons.eyeColose)
-                      : SvgPicture.asset(AppSvgIcons.eyeOpen),
-                  onPressed: () {
-                    setState(() {
-                      isObscured = !isObscured;
-                    });
-                  })
-                  : null),
-              // prefixIcon: (widget.isHasSpecialCharcters &&
-              //         context.locale.languageCode == 'ar' &&
-              //         widget.isPassword)
-              //     ? IconButton(
-              //         icon: isObscured
-              //             ? SvgPicture.asset(AppSvgIcons.eyeColose)
-              //             : SvgPicture.asset(AppSvgIcons.eyeOpen),
-              //         onPressed: () {
-              //           setState(() {
-              //             isObscured = !isObscured;
-              //           });
-              //         })
-              //     : widget.prefixIcon,
-              hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: widget.hintColor ?? AppColors.grey200,fontFamily: 'Cairo',
-              fontSize:14),
-              focusColor:AppColors.primaryColor100,
-              focusedBorder: widget.focusInputBorder ??
-                  OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color:
-                      widget.focusedColor ?? AppColors.primaryColor,
+              maxLines: !isObscured ? widget.maxLines : 1,
+              onFieldSubmitted:(value) {
+                if(widget.onFieldSubmitted!=null){
+                  widget.onFieldSubmitted!(value);
+                }
+              },
+              onChanged: (value) {
+                widget.feedback(value);
+              },
+              validator: widget.validator,
+              textDirection: (widget.isHasSpecialCharcters &&
+                  context.locale.languageCode == 'ar')
+                  ? TextDirection.ltr
+                  : context.locale.languageCode == 'ar'
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: widget.fillColor ?? (_isFocused ? AppColors.primaryColor100 : AppColors.whiteColor),
+                errorStyle: const TextStyle(color: AppColors.dangerColor,
+                  fontFamily: 'Cairo',),
+                isDense: widget.isDense ?? false,
+                // constraints: const BoxConstraints(maxHeight: 44),
+                alignLabelWithHint: true,
+                hintText: widget.hintText?.tr(),
+                contentPadding: widget.contentPadding ??
+                    const EdgeInsets.symmetric(horizontal: 16, vertical:16),
+                prefixIcon:widget.prefixIcon,
+                suffixIcon: widget.suffixIcon ?? (widget.isPassword
+                    ? IconButton(
+                    icon: isObscured
+                        ? SvgPicture.asset(AppSvgIcons.eyeColose)
+                        : SvgPicture.asset(AppSvgIcons.eyeOpen),
+                    onPressed: () {
+                      setState(() {
+                        isObscured = !isObscured;
+                      });
+                    })
+                    : null),
+                // prefixIcon: (widget.isHasSpecialCharcters &&
+                //         context.locale.languageCode == 'ar' &&
+                //         widget.isPassword)
+                //     ? IconButton(
+                //         icon: isObscured
+                //             ? SvgPicture.asset(AppSvgIcons.eyeColose)
+                //             : SvgPicture.asset(AppSvgIcons.eyeOpen),
+                //         onPressed: () {
+                //           setState(() {
+                //             isObscured = !isObscured;
+                //           });
+                //         })
+                //     : widget.prefixIcon,
+                hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: widget.hintColor ?? AppColors.grey200,fontFamily: 'Cairo',
+                fontSize:widget.hintFontSize),
+                focusColor:AppColors.primaryColor100,
+                focusedBorder: widget.focusInputBorder ??
+                    OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color:
+                        widget.focusedColor ?? AppColors.primaryColor,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(widget.borderRadius ?? 16),
+                      ),
                     ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(widget.borderRadius ?? 16),
-                    ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: widget.errorBorderColor ?? AppColors.dangerColor,
                   ),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: widget.errorBorderColor ?? AppColors.dangerColor,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(widget.borderRadius ?? 16),
-                ),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: widget.errorBorderColor ?? AppColors.dangerColor,
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(widget.borderRadius ?? 16),
-                ),
-              ),
-              enabledBorder: widget.enabledInputBorder ??
-                  OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: widget.borderColor ?? AppColors.whiteColor,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(widget.borderRadius ?? 16),
-                    ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(widget.borderRadius ?? 16),
                   ),
-              disabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: widget.disabledBorderColor ?? AppColors.primaryColor,
                 ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(widget.borderRadius ?? 16),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: widget.errorBorderColor ?? AppColors.dangerColor,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(widget.borderRadius ?? 16),
+                  ),
                 ),
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: widget.borderColor ?? AppColors.whiteColor,
+                enabledBorder: widget.enabledInputBorder ??
+                    OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: widget.borderColor ?? AppColors.whiteColor,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(widget.borderRadius ?? 16),
+                      ),
+                    ),
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: widget.disabledBorderColor ?? AppColors.primaryColor,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(widget.borderRadius ?? 16),
+                  ),
                 ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(widget.borderRadius ?? 16),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: widget.borderColor ?? AppColors.whiteColor,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(widget.borderRadius ?? 16),
+                  ),
                 ),
               ),
             ),

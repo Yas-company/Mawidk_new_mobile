@@ -49,17 +49,18 @@ class LoginScreenState extends State<LoginScreen> {
                   child: Column(crossAxisAlignment:CrossAxisAlignment.start,children: [
                     Padding(
                       padding: const EdgeInsets.only(top:80),
-                      child: PText(title:'تسجيل الدخول',fontColor:AppColors.primaryColor,
+                      child: PText(title:'login'.tr(),fontColor:AppColors.primaryColor,
                       size:PSize.text28,fontWeight:FontWeight.w700,),
                     ),
-                    PText(title:'من فضلك قم بتسجيل الدخول', size:PSize.text16,
+                    PText(title:'please_login'.tr(), size:PSize.text16,
                     fontColor: AppColors.grayShade3,),
                     // OtpInputScreen(),
                     const SizedBox(height:60,),
-                    PTextField(textInputType: TextInputType.number,controller:loginBloc.phone,labelAbove:'رقم الجوال',
+                    PTextField(textInputType: TextInputType.number,controller:loginBloc.phone,
+                      labelAbove: 'phone_number'.tr(),
                       // prefixIcon: Icon(Icons.phone_in_talk_rounded,color:AppColors.primaryColor,size:20,),
                       prefixIcon:PImage(source:AppSvgIcons.call,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
-                      hintText: 'رقم الجوال', feedback:(value) {
+                      hintText: 'phone_number'.tr(), feedback:(value) {
                         loginBloc.add(LoginValidationEvent());
                       }, validator:(value) {
                         final saudiPhoneRegex = RegExp(r'^(009665|9665|\+9665|05)[0-9]{8}$');
@@ -72,18 +73,18 @@ class LoginScreenState extends State<LoginScreen> {
                       },),
                     const SizedBox(height:14,),
                     PTextField(textInputType: TextInputType.text,
-                      controller:loginBloc.password,labelAbove:'كلمة المرور',
+                      controller:loginBloc.password,labelAbove:'password'.tr(),
                       isPassword:true,
                       // prefixIcon: Icon(Icons.lock,color:AppColors.primaryColor,size:20),
                       prefixIcon:PImage(source:AppSvgIcons.lock,fit:BoxFit.scaleDown,color:AppColors.primaryColor,),
-                      hintText: 'كلمة المرور', feedback:(value) async {
+                      hintText:'password'.tr(), feedback:(value) async {
                         await SharedPreferenceService().setString(SharPrefConstants.passwordKey,value??'');
                         loginBloc.add(LoginValidationEvent());
                       }, validator:(value) {
                         if((value??'').isNotEmpty&&value!.length>=6){
                           return null;
                         }
-                        return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
+                        return 'password_error'.tr();
                       },),
 
                     Align(alignment:isArabic()?Alignment.centerLeft:Alignment.centerRight,
@@ -92,10 +93,19 @@ class LoginScreenState extends State<LoginScreen> {
                       },
                         child: Padding(
                           padding: const EdgeInsets.only(top:10),
-                          child: PText(title:'هل نسيت كلمة المرور؟',fontColor:
+                          child: PText(title:'password_question'.tr(),fontColor:
                           AppColors.danger,fontWeight:FontWeight.w700,),
                         ),
                       ),
+                    ),
+                    CustomCheckboxWithText(
+                      isChecked: loginBloc.isChecked,
+                      onChanged: (value) {
+                        setState(() {
+                          loginBloc.isChecked = value!;
+                        });
+                        loginBloc.add(LoginValidationEvent());
+                      },
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top:14,bottom:10),
@@ -105,15 +115,15 @@ class LoginScreenState extends State<LoginScreen> {
                             password:loginBloc.password.text,),
                         // surveyBloc:surveyBloc
                         ));
-                      },title:'تسجيل الدخول',hasBloc:true,isFitWidth:true,size:PSize.text16,
+                      },title:'login'.tr(),hasBloc:true,isFitWidth:true,size:PSize.text16,
                       // icon:Icon(Icons.arrow_forward,color:AppColors.whiteColor,),
-                        icon:PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,),
+                        icon:PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
                         fontWeight:FontWeight.w700,
                         isFirstButton: true,
                         isButtonAlwaysExist: false,),
                     ),
                     Row(mainAxisSize: MainAxisSize.min,children: [
-                      PText(title:'ليس لديك حساب ؟ ',),
+                      PText(title:'have_account'.tr(),),
                         GestureDetector(
                           onTap: () {
                             Get.context?.push(AppRouter.register);
@@ -123,7 +133,7 @@ class LoginScreenState extends State<LoginScreen> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
                               child: PText(
-                                title:'إنشاء حساب',fontColor:AppColors.primaryColor,
+                                title:'create_account'.tr(),fontColor:AppColors.primaryColor,
                               ),
                             ),
                             Positioned(
@@ -144,6 +154,17 @@ class LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top:20),
+                    //   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+                    //     TextButton(onPressed:() {
+                    //       context.push(AppRouter.privacyPolicyScreen,extra:1);
+                    //     }, child:PText(title:'privacy'.tr())),
+                    //     TextButton(onPressed:() {
+                    //       context.push(AppRouter.privacyPolicyScreen,extra:2);
+                    //     }, child:PText(title:'usage_conditions'.tr()))
+                    //   ],),
+                    // ),
                     const SizedBox(height: 20,)
                   ],),
                 ),
@@ -155,6 +176,78 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
+
+
+
+
+
+class CustomCheckboxWithText extends StatelessWidget {
+  final bool isChecked;
+  final ValueChanged<bool?> onChanged;
+
+  const CustomCheckboxWithText({
+    super.key,
+    required this.isChecked,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top:10,),
+      child: ListTileTheme(horizontalTitleGap: 4.0,
+        child: CheckboxListTile(
+          dense: true,
+          contentPadding: EdgeInsets.zero,
+          controlAffinity: ListTileControlAffinity.leading,
+          value: isChecked,
+          activeColor: AppColors.primaryColor,
+          onChanged: onChanged,
+          title: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              _plainText('usage'.tr()),
+              _linkText('usage1'.tr(), onTap: () => Get.context?.push(AppRouter.privacyPolicyScreen,extra:1)),
+              _plainText('usage2'.tr()),
+              _linkText('usage3'.tr(), onTap: () => Get.context?.push(AppRouter.privacyPolicyScreen,extra:2)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _plainText(String text) {
+    return PText(title: text,size:PSize.text16,);
+  }
+
+  Widget _linkText(String text, {required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child:Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
+            child: PText(
+              title:text,fontColor:AppColors.primaryColor,
+              size:PSize.text16,
+            ),
+          ),
+          Positioned(
+            bottom:5, left: 0,
+            right: 0,
+            child: Container(
+              height: 1,
+              color:AppColors.primaryColor,
+            ),
+          ),
+        ],
+      )
+    );
+  }
+}
+
 
 
 

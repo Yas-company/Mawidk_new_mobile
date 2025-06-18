@@ -9,6 +9,7 @@ class SearchWidget extends StatelessWidget {
   final bool hasFilter;
   final bool isEnabled;
   final String? hint;
+  final double? hintFontSize;
   final TextEditingController? controller;
   final TextInputAction? textInputAction;
   final void Function(String?)? onFieldSubmitted;
@@ -16,12 +17,13 @@ class SearchWidget extends StatelessWidget {
   final VoidCallback? onTapFilter;
   final Function(String)? onChanged;
   const SearchWidget({super.key,this.hasFilter=true,this.hint,this.onTap,this.isEnabled=true,
-    this.controller,this.onChanged,this.textInputAction,this.onFieldSubmitted,this.onTapFilter});
+    this.controller,this.onChanged,this.hintFontSize=14,this.textInputAction,this.onFieldSubmitted,this.onTapFilter});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(onTap:onTap,
       child: PTextField(controller:controller,enabled: isEnabled,
+        hintFontSize:hintFontSize??14,
         onFieldSubmitted:onFieldSubmitted,
         borderRadius:20,textInputAction:textInputAction,
         contentPadding:EdgeInsets.symmetric(vertical:15),
@@ -37,7 +39,7 @@ class SearchWidget extends StatelessWidget {
                 child: PImage(source:AppSvgIcons.icFilter,height:24,width:20,fit:BoxFit.contain,)),
           ),
         ):null,
-        fillColor:Colors.white,hintText:hint ?? 'search_by_name'.tr(), feedback:(value) {
+        fillColor:Colors.white,hintText:hint ?? 'search_by_name2'.tr(), feedback:(value) {
         if(onChanged!=null){onChanged!(value??'');}
       },),
     );

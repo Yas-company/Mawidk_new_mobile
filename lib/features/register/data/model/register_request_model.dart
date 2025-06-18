@@ -3,6 +3,7 @@ class RegisterRequestModel {
   String? countryCode;
   String? phone;
   String? password;
+  String? gender;
   int? type;
 
   RegisterRequestModel(
@@ -13,6 +14,7 @@ class RegisterRequestModel {
     countryCode = json['country_code'];
     phone = json['phone'];
     password = json['password'];
+    gender = json['gender'];
     type = json['type'];
   }
 
@@ -22,6 +24,7 @@ class RegisterRequestModel {
     data['country_code'] = this.countryCode;
     data['phone'] = this.phone;
     data['password'] = this.password;
+    data['gender'] = this.gender;
     data['type'] = this.type;
     return data;
   }
