@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
+import 'package:mawidak/core/data/constants/app_router.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
 
@@ -21,7 +24,29 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return isDoctor()? Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        imageUrl.isEmpty?CircleAvatar(radius:40,
+          backgroundColor: AppColors.whiteColor,
+          child:Icon(Icons.person),):
+        CircleAvatar(
+          radius: 40,backgroundColor:Colors.transparent,
+          backgroundImage: NetworkImage(imageUrl,),
+        ),
+        PText(title: userName),
+        PText(title: phoneNumber,size:PSize.text14,fontColor:AppColors.grey200),
+        const SizedBox(height:6),
+        GestureDetector(onTap:() {
+          context.push(AppRouter.doctorProfileDetailsScreen,extra:18);
+        },child: Container(padding:EdgeInsets.symmetric(horizontal:8,vertical:2),decoration:BoxDecoration(
+            borderRadius:BorderRadius.circular(25),
+            border:Border.all(color:AppColors.primaryColor),
+            color:AppColors.shade3.withOpacity(0.6)
+          ),child:PText(title:'profile'.tr(),fontColor:AppColors.grayShade3,size:PSize.text13,),),
+        )
+      ],
+    ): Row(
       children: [
         Stack(
           children: [
