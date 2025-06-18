@@ -24,6 +24,7 @@ class AppRouter {
   static const String searchResults = '/searchResults';
   static const String searchResultsForDoctor = '/searchResultsForDoctor';
   static const String doctorProfileScreen = '/doctorProfileScreen';
+  static const String doctorProfileDetailsScreen = '/doctorProfileDetailsScreen';
   static const String doctorRatingsScreen = '/doctorRatingsScreen';
   static const String appointmentBookingScreen = '/appointmentBookingScreen';
   static const String notificationScreen = '/notificationScreen';

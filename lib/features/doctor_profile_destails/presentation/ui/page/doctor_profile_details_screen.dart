@@ -23,16 +23,14 @@ import 'package:mawidak/features/doctor_profile/presentation/bloc/doctor_profile
 import 'package:mawidak/features/doctor_profile/presentation/bloc/doctor_profile_event.dart';
 import 'package:mawidak/features/doctor_profile/presentation/ui/widgets/doctor_rating_by_patient.dart';
 
-class DoctorProfileScreen extends StatefulWidget {
+class DoctorProfileDetailsScreen extends StatefulWidget {
   final int id;
-  final String name;
-  final String specialization;
-  const DoctorProfileScreen({super.key,required this.id,required this.name,required this.specialization});
+  const DoctorProfileDetailsScreen({super.key,required this.id});
   @override
-  State<DoctorProfileScreen> createState() => DoctorProfileScreenState();
+  State<DoctorProfileDetailsScreen> createState() => DoctorProfileDetailsScreenState();
 }
 
-class DoctorProfileScreenState extends State<DoctorProfileScreen> {
+class DoctorProfileDetailsScreenState extends State<DoctorProfileDetailsScreen> {
   DoctorProfileBloc doctorProfileBloc = DoctorProfileBloc(doctorProfileUseCase: getIt());
   @override
   Widget build(BuildContext context) {
@@ -49,12 +47,12 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 child: appBar(context: context,backBtn: true,text:'doctor_details'.tr(),isCenter:true,actions:[
                   GestureDetector(onTap:() {
                     SafeToast.show(message: 'Coming soon while publish the app',
-                    type: MessageType.warning);
+                        type: MessageType.warning);
                   },child: Container(margin:EdgeInsets.only(top:20),
-                        padding:EdgeInsets.all(9.5),
-                        decoration:BoxDecoration(shape:BoxShape.circle,
-                            border: Border.all(color:AppColors.grey100)),
-                        child:PImage(source:AppSvgIcons.share,width:16,height:16)),
+                      padding:EdgeInsets.all(9.5),
+                      decoration:BoxDecoration(shape:BoxShape.circle,
+                          border: Border.all(color:AppColors.grey100)),
+                      child:PImage(source:AppSvgIcons.share,width:16,height:16)),
                   ),
                   const SizedBox(width:8,),
                   BlocConsumer<DoctorProfileBloc,BaseState>(listener:(context, state) {
@@ -105,28 +103,28 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
                           Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
                             (item.photo??'').isEmpty?CircleAvatar(radius:35,
-                            backgroundColor: AppColors.whiteColor,
-                            child:Icon(Icons.person),):PImage(
+                              backgroundColor: AppColors.whiteColor,
+                              child:Icon(Icons.person),):PImage(
                               source:ApiEndpointsConstants.baseImageUrl+(item.photo??''),
                               isCircle:true,width:60,height:60,),
                             const SizedBox(width:14,),
                             Padding(
                               padding: const EdgeInsets.only(top:10),
                               child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,children: [
-                                PText(title:item.name??''),const SizedBox(height:6,),
-                                PText(title:item.specialization??'',fontColor:AppColors.grey200,),
-                                // const SizedBox(height:6,),
-                                // Row(
-                                //   children: [
-                                //     const Icon(Icons.my_location, size: 20, color:AppColors.primaryColor),
-                                //     const SizedBox(width: 4),
-                                //     PText(title:'location',fontColor:AppColors.grayShade3,
-                                //       overflow: TextOverflow.ellipsis,
-                                //     ),
-                                //   ],
-                                // )
-                              ],),
+                                mainAxisAlignment: MainAxisAlignment.center,children: [
+                                  PText(title:item.name??''),const SizedBox(height:6,),
+                                  PText(title:item.specialization??'',fontColor:AppColors.grey200,),
+                                  // const SizedBox(height:6,),
+                                  // Row(
+                                  //   children: [
+                                  //     const Icon(Icons.my_location, size: 20, color:AppColors.primaryColor),
+                                  //     const SizedBox(width: 4),
+                                  //     PText(title:'location',fontColor:AppColors.grayShade3,
+                                  //       overflow: TextOverflow.ellipsis,
+                                  //     ),
+                                  //   ],
+                                  // )
+                                ],),
                             )
                           ],),
                           Padding(
@@ -192,34 +190,29 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                 'name':item.name??'',
                               });
                             },child: Stack(children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
-                                  child: PText(fontWeight:FontWeight.w500,size:PSize.text13,
-                                    title:'evaluations'.tr(),fontColor:AppColors.grey200,
-                                  ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
+                                child: PText(fontWeight:FontWeight.w500,size:PSize.text13,
+                                  title:'evaluations'.tr(),fontColor:AppColors.grey200,
                                 ),
-                                Positioned(bottom:5, left: 0, right: 0,
-                                  child: Container(height: 1,
-                                    color:AppColors.grey200,),
-                                ),
-                              ],
                               ),
+                              Positioned(bottom:5, left: 0, right: 0,
+                                child: Container(height: 1,
+                                  color:AppColors.grey200,),
+                              ),
+                            ],
+                            ),
                             )
                           ],),const SizedBox(height:14,),
                           if((item.ratings??[]).isNotEmpty)
                             DoctorRatingByPatient(ratings:(item.ratings??[]).first,
-                            rate:item.averageRating??0.0,)
+                              rate:item.averageRating??0.0,)
                         ],),
                       ),
                     ),
                     PButton(
                       isFitWidth: true,
                       onPressed: () {
-                        context.push(AppRouter.appointmentBookingScreen,extra:{
-                          'id':widget.id,
-                          'name':widget.name,
-                          'specialization':widget.name
-                        });
                       },
                       hasBloc: false,
                       title: 'book_appointment'.tr(),

@@ -69,8 +69,8 @@ class MoreScreenState extends State<MoreScreen> {
                       },);
                     },),
                   ),
-                  const SizedBox(height:24,),
-                  InkWell(onTap:() {
+                   SizedBox(height:isDoctor()?10:24,),
+                  if(!isDoctor())InkWell(onTap:() {
                     context.push(AppRouter.completePatientProfile);
                   },child: Container(padding:EdgeInsets.symmetric(horizontal:20,vertical:12),decoration:BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
