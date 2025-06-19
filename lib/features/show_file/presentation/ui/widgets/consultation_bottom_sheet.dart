@@ -8,6 +8,7 @@ import 'package:mawidak/core/component/text_field/p_textfield.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/features/show_file/data/model/consultation/add_consultation_request_model.dart';
 
 class ConsultationBottomSheet extends StatefulWidget {
@@ -63,8 +64,8 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(100),
           child: Padding(
-            padding: const EdgeInsets.only(top:24),
-            child: appBar(context: context,backBtn: true,text:'patient_file'.tr(),isCenter:true),
+            padding:EdgeInsets.only(top:24),
+            child: appBar(context: context,backBtn: true,text:'patient_file'.tr(),isCenter:true,),
           ),
         ),
         body: Padding(
@@ -87,17 +88,18 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
                     consultationDateController.text = DateFormat('yyyy-MM-dd').format(date);
                   }
                 },child: PTextField(enabled:false,
-                  controller: consultationDateController,labelAbove:'تاريخ الاستشارة',hintText:'تاريخ الاستشارة', feedback:(value) {
+                  controller: consultationDateController,labelAbove:'consultation_date'.tr(),
+                  hintText:'consultation_date'.tr(), feedback:(value) {
             
                   },disabledBorderColor:Colors.transparent,suffixIcon:Icon(Icons.calendar_month_rounded),),
                 ),
                 const SizedBox(height: 16),
-                PTextField(controller: mainComplaintController,labelAbove:'الشكوى الرئيسية',
-                  hintText:'ادخل الشكوى الرئيسية', feedback:(value) {
+                PTextField(controller: mainComplaintController,labelAbove:'main_complaint2'.tr(),
+                  hintText:'enter_main_complaint'.tr(), feedback:(value) {
             
                   },),
                 const SizedBox(height: 16),
-                PText(title:'العلامات الحيوية'.tr(),size:PSize.text18,),
+                PText(title:'vital_signs'.tr(),size:PSize.text18,),
                 const SizedBox(height:9),
                 Container(padding:EdgeInsets.only(left:8,right:8,top:10,bottom:10),decoration:BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
@@ -109,7 +111,7 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
                         Expanded(
                           child:Column(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              PText(title: 'ضغط الدم'.tr(),size:PSize.text14,),
+                              PText(title: 'blood_pressure'.tr(),size:PSize.text14,),
                               Container(
                                 padding:EdgeInsets.only(top:4),
                                 height: 35,
@@ -178,7 +180,7 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
                     const SizedBox(width:10,),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  PText(title: 'النبض'.tr(),size:PSize.text14,),
+                                  PText(title: 'pulse'.tr(),size:PSize.text14,),
                                   Container(
                                     padding:EdgeInsets.only(top:4),
                                     height: 35,
@@ -211,7 +213,7 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
                   Row(children: [
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PText(title: 'درجة الحرار'.tr(),size:PSize.text14,),
+                          PText(title: 'temperature'.tr(),size:PSize.text14,),
                           Container(
                             padding:EdgeInsets.only(top:4),
                             height: 35,
@@ -242,7 +244,7 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
                     const SizedBox(width:10,),
                     Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PText(title: 'مستوى السكر'.tr(),size:PSize.text14,),
+                          PText(title: 'blood_sugar_level'.tr(),size:PSize.text14,),
                           Container(
                             padding:EdgeInsets.only(top:4),
                             height: 35,
@@ -275,8 +277,8 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
             
                 const SizedBox(height: 16),
             
-                PTextField(controller: examinationController,labelAbove:'الفحص السريري',
-                  hintText:'وصف الاعراض التي يعاني منها المريض', feedback:(value) {
+                PTextField(controller: examinationController,labelAbove:'bed_examination'.tr(),
+                  hintText:'describe_suffer'.tr(), feedback:(value) {
             
                   },),
             
@@ -294,13 +296,14 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
                     nextDateController.text = DateFormat('yyyy-MM-dd').format(date);
                   }
                 },child: PTextField(enabled:false,
-                  controller: nextDateController,labelAbove:'موعد المتابعة القادم',hintText:'تاريخ الاستشارة', feedback:(value) {
+                  controller: nextDateController,labelAbove:'follow_date'.tr(),
+                  hintText:'consultation_date'.tr(), feedback:(value) {
             
                   },disabledBorderColor:Colors.transparent,suffixIcon:Icon(Icons.calendar_month_rounded),),
                 ),
             
                 const SizedBox(height: 16),
-                PTextField(controller: notesController,labelAbove:'ملاحظات',hintText:'اي ملاحظات اضافية',
+                PTextField(controller: notesController,labelAbove:'notes'.tr(),hintText:'any_notes'.tr(),
                   feedback:(value) {
             
                   },),
@@ -344,7 +347,7 @@ class ConsultationBottomSheetState extends State<ConsultationBottomSheet> {
                             Navigator.pop(context);
                           },);
                         },fillColor:AppColors.primaryColor,
-                        title: 'حفظ الاستشارة'.tr(),
+                        title: 'consultation_save'.tr(),
                         hasBloc: false,
                       ),
                     ),

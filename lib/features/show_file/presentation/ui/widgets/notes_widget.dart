@@ -43,7 +43,7 @@ class NotesWidget extends StatelessWidget {
           Align(alignment:Alignment.topRight,child:
           Padding(
             padding: const EdgeInsets.only(top:9),
-            child: PText(title:'ملاحظات الطبيب'.tr(),fontWeight:FontWeight.w700,),
+            child: PText(title:'doctor_notes'.tr(),fontWeight:FontWeight.w700,),
           )),
           Positioned(top:24,left:0,right:0,bottom:0,
             child: PBlocBuilder(
@@ -92,7 +92,7 @@ class NotesWidget extends StatelessWidget {
                   ),
                   const SizedBox(width:22),
                   PText(
-                    title: 'إضافة ملاحظة'.tr(),
+                    title: 'add_notes'.tr(),
                     fontColor: AppColors.whiteBackground,
                     fontWeight: FontWeight.w500,
                   ),

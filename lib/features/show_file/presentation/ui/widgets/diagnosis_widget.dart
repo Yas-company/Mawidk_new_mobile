@@ -126,7 +126,7 @@ class DiagnosisWidget extends StatelessWidget {
           PText(title:(item.description??''),fontColor:AppColors.grayShade3,size:PSize.text13,
             fontWeight:FontWeight.w500,),
           const SizedBox(height:8,),
-          PText(title:'الحالة:'.tr(),fontColor:Colors.black,size:PSize.text13,),
+          PText(title:'status'.tr(),fontColor:Colors.black,size:PSize.text13,),
           const SizedBox(height:8,),
           PText(title:(item.status??''),fontColor:AppColors.grayShade3,size:PSize.text13,
             fontWeight:FontWeight.w500,),

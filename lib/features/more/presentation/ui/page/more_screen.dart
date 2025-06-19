@@ -48,180 +48,182 @@ class MoreScreenState extends State<MoreScreen> {
         child: Scaffold(backgroundColor:AppColors.whiteBackground,
           body: Padding(
               padding: const EdgeInsets.symmetric(horizontal:20),
-              child:Column(
-                children: [
-                  const SizedBox(height:35,),
-
-                  BlocProvider(create: (context) => uploadBloc,
-                    child: BlocConsumer<UploadBloc,UploadState>(listener:(context, state) {
-                      if (state is FilesPicked || state is FileRemoved) {
-                        selectedFile = ((state as dynamic).pickedFiles ?? []).first;
-                        logoutBloc.add(UpdatePhotoEvent(file:selectedFile));
-                      }
-                    },builder:(context, state) {
-                      return BlocBuilder<LogoutBloc,BaseState>(builder:(context, state) {
-                        return ProfileHeader(onTap: () {
-                          _showPickerDialog(context);
-                        },imageUrl:logoutBloc.imageUrl,
-                          userName: SharedPreferenceService().getString(SharPrefConstants.userName),
-                          phoneNumber:SharedPreferenceService().getString(SharPrefConstants.phone),
-                        );
-                      },);
-                    },),
-                  ),
-                   SizedBox(height:isDoctor()?10:24,),
-                  if(!isDoctor())InkWell(onTap:() {
-                    context.push(AppRouter.completePatientProfile);
-                  },child: Container(padding:EdgeInsets.symmetric(horizontal:20,vertical:12),decoration:BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: AppColors.primaryColor2200
-                    ),child:Row(children: [
-                      CirclePercentage(percentage: 0.7,backgroundStrokeWidth: 2.0,
-                        progressStrokeWidth: 5.0,),
-                      const SizedBox(width:14,),
-                      Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                        PText(title:'complete_info'.tr(),size:PSize.text14,),
-                        const SizedBox(height:4,),
-                        PText(title:'please_complete_info'.tr(),size:PSize.text13,fontColor:AppColors.grey200,)
-                      ],),
-                      Spacer(),
-                      PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,color:AppColors.blackColor,)
-                    ],),),
-                  ),
-                  const SizedBox(height:24,),
-                  MoreItemWidget(
-                    title: 'edit_personal_info'.tr(),
-                    rightIcon:AppSvgIcons.user,
-                    leftIcon:AppSvgIcons.icArrow,
-                    onTap: () {
-                      context.push(AppRouter.editPersonalInfo,
-                          extra:{
-                        'phone':SharedPreferenceService().getString(SharPrefConstants.phone),
-                        'name':SharedPreferenceService().getString(SharPrefConstants.userName),
-                          }).then((value) {
-                            setState(() {});
-                          },);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(
-                    title: 'change_password'.tr(),
-                    rightIcon:AppSvgIcons.lock,
-                    leftIcon:AppSvgIcons.icArrow,
-                    onTap: () async {
-                      String phone = await SecureStorageService().read(key: SharPrefConstants.phone) ?? '';
-                      context.push(AppRouter.changePassword,extra:phone);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(
-                    padding: EdgeInsets.only(right:4,),
-                    title: 'privacy'.tr(),
-                    width:19,height:19,
-                    rightIcon:AppSvgIcons.icPrivacy,
-                    leftIcon:AppSvgIcons.icArrow,
-                    onTap: () {
-                      context.push(AppRouter.privacyPolicyScreen,extra: 1);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(
-                    padding: EdgeInsets.only(right:4,),
-                    width:19,height:19,
-                    title: 'usage_conditions'.tr(),
-                    rightIcon:AppSvgIcons.icPrivacy,
-                    leftIcon:AppSvgIcons.icArrow,
-                    onTap: () {
-                      context.push(AppRouter.privacyPolicyScreen,extra: 2);
-                    },
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(padding: EdgeInsets.only(right:4,),
-                    title: 'language'.tr(),
-                    rightIcon:AppSvgIcons.icLanguage,
-                    leftIcon:AppSvgIcons.icArrow,
-                    onTap: () {
-                      showLanguageBottomSheet(navigatorKey.currentState?.context??context);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(padding: EdgeInsets.only(right:1,),
-                    title: 'contact_us'.tr(),
-                    width:24,height:24,
-                    rightIcon:AppSvgIcons.mail,
-                    leftIcon:AppSvgIcons.icArrow,
-                    onTap: () {
-                    context.push(AppRouter.contactUsScreen);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(padding: EdgeInsets.only(right:4,),
-                    title: 'notifications'.tr(),isNotification:true,
-                    rightIcon:AppSvgIcons.icNotificationMore,
-                    leftIcon:AppSvgIcons.icArrow,
-                    onTap: () {
-                    setState(() {});
-                    },
-                  ),
-                  // Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(padding: EdgeInsets.only(right:4,),
-                    title: 'delete_account'.tr(),
-                    // rightIconColor:AppColors.grayShade3,
-                    leftIcon:AppSvgIcons.icArrow,
-                    rightIcon:AppSvgIcons.icDelete,
-                    onTap: () {
-                      showDeleteAccountBottomSheet(navigatorKey.currentState?.context??context,() {
-                        Navigator.pop(navigatorKey.currentState?.context??context);
-                        logoutBloc.add(MakeDeleteAccount());
-                      },);
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:4),
-                    child: Divider(color:AppColors.grey100,),
-                  ),
-                  MoreItemWidget(padding: EdgeInsets.only(right:4,),
-                    title: 'logout'.tr(),width:20,
-                    height:20,
-                    // rightIconColor:AppColors.grayShade3,
-                    leftIcon:AppSvgIcons.icArrow,
-                    rightIcon:AppSvgIcons.icLogout,
-                    onTap: () {
-                      logoutBottomSheet(navigatorKey.currentState?.context??context,() {
-                        Navigator.pop(navigatorKey.currentState?.context??context);
-                        logoutBloc.add(MakeLogoutEvent());
-                      },);
-                    },
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(vertical:4),
-                  //   child: Divider(color:AppColors.grey100,),
-                  // ),
-                  const SizedBox(height: 0),
-                ],
+              child:SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height:35,),
+                
+                    BlocProvider(create: (context) => uploadBloc,
+                      child: BlocConsumer<UploadBloc,UploadState>(listener:(context, state) {
+                        if (state is FilesPicked || state is FileRemoved) {
+                          selectedFile = ((state as dynamic).pickedFiles ?? []).first;
+                          logoutBloc.add(UpdatePhotoEvent(file:selectedFile));
+                        }
+                      },builder:(context, state) {
+                        return BlocBuilder<LogoutBloc,BaseState>(builder:(context, state) {
+                          return ProfileHeader(onTap: () {
+                            _showPickerDialog(context);
+                          },imageUrl:logoutBloc.imageUrl,
+                            userName: SharedPreferenceService().getString(SharPrefConstants.userName),
+                            phoneNumber:SharedPreferenceService().getString(SharPrefConstants.phone),
+                          );
+                        },);
+                      },),
+                    ),
+                     SizedBox(height:isDoctor()?10:24,),
+                    if(!isDoctor())InkWell(onTap:() {
+                      context.push(AppRouter.completePatientProfile);
+                    },child: Container(padding:EdgeInsets.symmetric(horizontal:20,vertical:12),decoration:BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: AppColors.primaryColor2200
+                      ),child:Row(children: [
+                        CirclePercentage(percentage: 0.7,backgroundStrokeWidth: 2.0,
+                          progressStrokeWidth: 5.0,),
+                        const SizedBox(width:14,),
+                        Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
+                          PText(title:'complete_info'.tr(),size:PSize.text14,),
+                          const SizedBox(height:4,),
+                          PText(title:'please_complete_info'.tr(),size:PSize.text13,fontColor:AppColors.grey200,)
+                        ],),
+                        Spacer(),
+                        PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,color:AppColors.blackColor,)
+                      ],),),
+                    ),
+                    const SizedBox(height:24,),
+                    MoreItemWidget(
+                      title: 'edit_personal_info'.tr(),
+                      rightIcon:AppSvgIcons.user,
+                      leftIcon:AppSvgIcons.icArrow,
+                      onTap: () {
+                        context.push(AppRouter.editPersonalInfo,
+                            extra:{
+                          'phone':SharedPreferenceService().getString(SharPrefConstants.phone),
+                          'name':SharedPreferenceService().getString(SharPrefConstants.userName),
+                            }).then((value) {
+                              setState(() {});
+                            },);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(
+                      title: 'change_password'.tr(),
+                      rightIcon:AppSvgIcons.lock,
+                      leftIcon:AppSvgIcons.icArrow,
+                      onTap: () async {
+                        String phone = await SecureStorageService().read(key: SharPrefConstants.phone) ?? '';
+                        context.push(AppRouter.changePassword,extra:phone);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(
+                      padding: EdgeInsets.only(right:4,),
+                      title: 'privacy'.tr(),
+                      width:19,height:19,
+                      rightIcon:AppSvgIcons.icPrivacy,
+                      leftIcon:AppSvgIcons.icArrow,
+                      onTap: () {
+                        context.push(AppRouter.privacyPolicyScreen,extra: 1);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(
+                      padding: EdgeInsets.only(right:4,),
+                      width:19,height:19,
+                      title: 'usage_conditions'.tr(),
+                      rightIcon:AppSvgIcons.icPrivacy,
+                      leftIcon:AppSvgIcons.icArrow,
+                      onTap: () {
+                        context.push(AppRouter.privacyPolicyScreen,extra: 2);
+                      },
+                    ),
+                
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(padding: EdgeInsets.only(right:4,),
+                      title: 'language'.tr(),
+                      rightIcon:AppSvgIcons.icLanguage,
+                      leftIcon:AppSvgIcons.icArrow,
+                      onTap: () {
+                        showLanguageBottomSheet(navigatorKey.currentState?.context??context);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(padding: EdgeInsets.only(right:1,),
+                      title: 'contact_us'.tr(),
+                      width:24,height:24,
+                      rightIcon:AppSvgIcons.mail,
+                      leftIcon:AppSvgIcons.icArrow,
+                      onTap: () {
+                      context.push(AppRouter.contactUsScreen);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(padding: EdgeInsets.only(right:4,),
+                      title: 'notifications'.tr(),isNotification:true,
+                      rightIcon:AppSvgIcons.icNotificationMore,
+                      leftIcon:AppSvgIcons.icArrow,
+                      onTap: () {
+                      setState(() {});
+                      },
+                    ),
+                    // Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(padding: EdgeInsets.only(right:4,),
+                      title: 'delete_account'.tr(),
+                      // rightIconColor:AppColors.grayShade3,
+                      leftIcon:AppSvgIcons.icArrow,
+                      rightIcon:AppSvgIcons.icDelete,
+                      onTap: () {
+                        showDeleteAccountBottomSheet(navigatorKey.currentState?.context??context,() {
+                          Navigator.pop(navigatorKey.currentState?.context??context);
+                          logoutBloc.add(MakeDeleteAccount());
+                        },);
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical:4),
+                      child: Divider(color:AppColors.grey100,),
+                    ),
+                    MoreItemWidget(padding: EdgeInsets.only(right:4,),
+                      title: 'logout'.tr(),width:20,
+                      height:20,
+                      // rightIconColor:AppColors.grayShade3,
+                      leftIcon:AppSvgIcons.icArrow,
+                      rightIcon:AppSvgIcons.icLogout,
+                      onTap: () {
+                        logoutBottomSheet(navigatorKey.currentState?.context??context,() {
+                          Navigator.pop(navigatorKey.currentState?.context??context);
+                          logoutBloc.add(MakeLogoutEvent());
+                        },);
+                      },
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical:4),
+                    //   child: Divider(color:AppColors.grey100,),
+                    // ),
+                    const SizedBox(height: 0),
+                  ],
+                ),
               )
           ),),
       ),

@@ -90,7 +90,8 @@ class PatientsScreenState extends State<PatientsScreen> with TickerProviderState
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left:16,right:16,top:10,bottom:10),
-                  child: SearchWidget(hint:'patient_list'.tr(),hasFilter:false,onFieldSubmitted:(p0) {
+                  child: SearchWidget(fillColor:AppColors.whiteColor,
+                    hint:'patient_list'.tr(),hasFilter:false,onFieldSubmitted:(p0) {
                     context.push(AppRouter.searchResultsForDoctor,extra:p0);
                   },),
                 ),

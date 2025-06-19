@@ -9,6 +9,8 @@ class TagInputWidget extends StatefulWidget {
   final String hint;
   final String title;
   final bool? isTrue;
+  final bool showTrueFalse;
+  final bool showDivider;
   final List<String>? selectedValues;
   final ValueChanged<List<String>> onChanged;
   final ValueChanged<bool> onAnswer;
@@ -17,6 +19,8 @@ class TagInputWidget extends StatefulWidget {
     super.key,this.selectedValues,
     required this.title,
     required this.hint,
+    this.showTrueFalse = true,
+    this.showDivider = true,
     required this.onChanged,
     required this.isTrue,
     required this.onAnswer,
@@ -80,7 +84,7 @@ class _TagInputWidgetState extends State<TagInputWidget> {
             children: [
               Expanded(child: SizedBox(width:MediaQuery.sizeOf(context).width*.80,
                   child: PText(title: widget.title))),
-              Container(width: 40, height: 40,
+              if(widget.showTrueFalse)Container(width: 40, height: 40,
                 decoration:  BoxDecoration(
                   color:widget.isTrue==null? AppColors.grey100 :(isEnabled ? AppColors.primaryColor100 : AppColors.grey100),
                   shape: BoxShape.circle,
@@ -96,8 +100,8 @@ class _TagInputWidgetState extends State<TagInputWidget> {
                   tooltip: 'Yes',
                 ),
               ),
-              const SizedBox(width: 10),
-              Container(width: 40, height: 40,
+              if(widget.showTrueFalse)const SizedBox(width: 10),
+              if(widget.showTrueFalse)Container(width: 40, height: 40,
                 decoration: BoxDecoration(
                   color: widget.isTrue==null? AppColors.grey100 : (!isEnabled ? AppColors.dangerColor100 : AppColors.grey100),
                   shape: BoxShape.circle,
@@ -154,7 +158,7 @@ class _TagInputWidgetState extends State<TagInputWidget> {
                 );
               }).toList(),
             ),
-          Divider(color:AppColors.grey100,)
+          if(widget.showDivider)Divider(color:AppColors.grey100,)
         ],
       ),
     );

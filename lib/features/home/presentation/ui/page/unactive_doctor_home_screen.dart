@@ -62,7 +62,7 @@ class UnActiveDoctorHomeScreen extends StatelessWidget {
                         const SizedBox(height:20,),
                         PText(title: 'good_morning'.tr(),fontColor:AppColors.grey200),
                         const SizedBox(height:5,),
-                        PText(title: 'دكتور . '.tr() +
+                        PText(title: 'doctor.'.tr() +
                             SharedPreferenceService().getString(SharPrefConstants.userName)
                           ,size:PSize.text20,),
                         const SizedBox(height:24,),

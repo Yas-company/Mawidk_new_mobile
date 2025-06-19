@@ -22,6 +22,7 @@ import 'package:mawidak/features/doctor_profile/data/model/favourite_request_mod
 import 'package:mawidak/features/doctor_profile/presentation/bloc/doctor_profile_bloc.dart';
 import 'package:mawidak/features/doctor_profile/presentation/bloc/doctor_profile_event.dart';
 import 'package:mawidak/features/doctor_profile/presentation/ui/widgets/doctor_rating_by_patient.dart';
+import 'package:mawidak/features/appointments/presentation/ui/widgets/price_card_widget.dart';
 
 class DoctorProfileScreen extends StatefulWidget {
   final int id;

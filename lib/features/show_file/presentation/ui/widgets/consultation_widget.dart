@@ -77,7 +77,7 @@ class ConsultationWidget extends StatelessWidget {
                   'isEdit':false,
                   'onSubmit':(model) {
                     ((model as AddConsultationRequestModel)).patientId = id;
-                    print('model>>'+jsonEncode(model));
+                    // print('model>>'+jsonEncode(model));
                     showFileBloc.add(ApplyAddingConsultation(addConsultationRequestModel: model));
                   },
                 });

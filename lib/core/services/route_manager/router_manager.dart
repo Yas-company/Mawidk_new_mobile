@@ -20,10 +20,12 @@ import 'package:mawidak/features/complete_patinet_profile/presentation/ui/page/c
 import 'package:mawidak/features/confirm_password/presentation/ui/pages/confirm_password_screen.dart';
 import 'package:mawidak/features/contact_us/presentation/ui/page/contact_us_screen.dart';
 import 'package:mawidak/features/doctor_or_patient/presentation/ui/pages/doctor_or_patient_screen.dart';
+import 'package:mawidak/features/doctor_profile/data/model/doctor_profile_response_model.dart';
 import 'package:mawidak/features/doctor_profile/presentation/ui/page/doctor_profile_screen.dart';
 import 'package:mawidak/features/doctor_profile_destails/presentation/ui/page/doctor_profile_details_screen.dart';
 import 'package:mawidak/features/doctor_ratings/presentation/ui/page/doctor_ratings_screen.dart';
 import 'package:mawidak/features/doctors_of_speciality/presentation/ui/page/doctors_of_speciality_screen.dart';
+import 'package:mawidak/features/edit_doctor_profile/presentation/ui/page/update_doctor_profile_screen.dart';
 import 'package:mawidak/features/edit_personal_info/presentation/ui/page/edit_personal_info_screen.dart';
 import 'package:mawidak/features/forget_password/presentation/ui/pages/forget_password_screen.dart';
 import 'package:mawidak/features/home/presentation/ui/page/home_screen_doctor.dart';
@@ -255,6 +257,13 @@ class RouterManager {
         path: AppRouter.doctorProfileDetailsScreen,
         pageBuilder: (context, state) {
           return createRoute(widget:  DoctorProfileDetailsScreen(id:state.extra as int));
+        },
+      ),
+      GoRoute(
+        name: AppRouter.updateDoctorProfileScreen,
+        path: AppRouter.updateDoctorProfileScreen,
+        pageBuilder: (context, state) {
+          return createRoute(widget:  UpdateDoctorProfileScreen(model:state.extra as DoctorModel));
         },
       ),
       GoRoute(

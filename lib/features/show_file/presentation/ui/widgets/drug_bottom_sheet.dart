@@ -68,7 +68,7 @@ class DrugBottomSheetState extends State<DrugBottomSheet> {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               PText(
-                title: widget.isEdit ? 'تعديل المعلومات' : 'اضافة دواء جديد',
+                title: widget.isEdit ? 'edit_info'.tr() : 'add_new_drug'.tr(),
                 fontWeight: FontWeight.w700,
                 size: PSize.text18,
               ),
@@ -79,14 +79,14 @@ class DrugBottomSheetState extends State<DrugBottomSheet> {
               ))
             ]),
             const SizedBox(height: 16),
-            PTextField(controller: _nameController,labelAbove:'اسم الدواء',hintText:'اسم الدواء',
+            PTextField(controller: _nameController,labelAbove:'medicine_name'.tr(),hintText:'medicine_name'.tr(),
               feedback:(value) {
 
               },),
 
             const SizedBox(height: 16),
             PTextField(textInputType:TextInputType.number,
-              controller: _dosageController,labelAbove:'الجرعة',hintText:'مثال : ٥٠ ملغ',
+              controller: _dosageController,labelAbove:'dosage'.tr(),hintText:'dosage_hint'.tr(),
               feedback:(value) {
 
               },),
@@ -94,7 +94,7 @@ class DrugBottomSheetState extends State<DrugBottomSheet> {
             if(!widget.isEdit)...[
               const SizedBox(height: 16),
               PTextField(textInputType:TextInputType.number,
-                controller: _frequencyController,labelAbove:'تكرار الاستخدام',hintText:'مرة واحدة يوميا',
+                controller: _frequencyController,labelAbove:'repeat_usage'.tr(),hintText:'repeat_usage_hint'.tr(),
                 feedback:(value) {
 
                 },)
@@ -112,12 +112,12 @@ class DrugBottomSheetState extends State<DrugBottomSheet> {
                 _dateController.text = DateFormat('yyyy-MM-dd').format(date);
               }
             },child: PTextField(enabled:false,
-              controller: _dateController,labelAbove:'تاريخ البدء',hintText:'ضع التاريخ', feedback:(value) {
+              controller: _dateController,labelAbove:'start_date'.tr(),hintText:'start_date_hint'.tr(), feedback:(value) {
 
               },disabledBorderColor:Colors.transparent,),
             ),
             const SizedBox(height: 16),
-            PTextField(controller: _descriptionController,labelAbove:'تعليمات الاستخدام',hintText:'',
+            PTextField(controller: _descriptionController,labelAbove:'usage_info'.tr(),hintText:'',
               maxLines: 2,
               feedback:(value) {
 

@@ -10,6 +10,7 @@ import 'package:mawidak/core/component/text_field/p_textfield.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/core/p_bloc_builder.dart';
 import 'package:mawidak/di.dart';
@@ -37,8 +38,8 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(100),
             child: Padding(
-              padding: const EdgeInsets.only(top:24),
-              child: appBar(context: context,backBtn: true,text:'تفاصيل الاستشارة'.tr(),isCenter:true),
+              padding:EdgeInsets.only(top:24),
+              child: appBar(context: context,backBtn: true,text:'consultation_desc'.tr(),isCenter:true),
             ),
           ),
           body:PBlocBuilder(bloc: showFileBloc,
@@ -76,7 +77,7 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
                                       decoration:BoxDecoration(
                                           color:Color(0xffD4EDDA),
                                           borderRadius:BorderRadius.circular(16)
-                                      ),child:PText(title:'مكتملة',fontColor:Color(0xff61CF7B),
+                                      ),child:PText(title:'complete'.tr(),fontColor:Color(0xff61CF7B),
                                         fontWeight:FontWeight.w500,)),
                                 ],
                               ),
@@ -94,7 +95,7 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
                           ),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              PText(title:'الشكوى الرئيسية',fontWeight:FontWeight.w700,),
+                              PText(title:'main_complaint2'.tr(),fontWeight:FontWeight.w700,),
                               const SizedBox(height:10,),
                               PText(title:(item.main_complaint??''),fontColor:AppColors.grayShade3,size:PSize.text13,
                                 fontWeight:FontWeight.w500,),
@@ -110,23 +111,24 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
                           ),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              PText(title:'العلامات الحيوية',fontWeight:FontWeight.w700,),
+                              PText(title:'vital_signs'.tr(),fontWeight:FontWeight.w700,),
                               const SizedBox(height:10,),
                               Row(children: [
-                                Expanded(child: itemSign(title:'ضغط الدم',
+                                Expanded(child: itemSign(title:'blood_pressure'.tr(),
                                     value:'${item.blood_pressure_systolic}/${item.blood_pressure_diastolic}' ,
-                                    degree:'ملم زئبق')),
+                                    degree:'mm_hg'.tr())),
                                 const SizedBox(width:14,),
-                                Expanded(child: itemSign(title:'النبض', value:item.pulse_rate.toString(),
-                                    degree:'نبضة / دقيقة')),
+                                Expanded(child: itemSign(title:'pulse'.tr(), value:item.pulse_rate.toString(),
+                                    degree:'pulse/minute'.tr())),
                               ],),
                               const SizedBox(height:14,),
                               Row(children: [
-                                Expanded(child: itemSign(title:'درجة الحرارة', value:item.temperature.toString(),
-                                    degree:'درجة مئوية')),
+                                Expanded(child: itemSign(title:'temperature'.tr(), value:item.temperature.toString(),
+                                    degree:'degrees_celsius'.tr())),
                                 const SizedBox(width:14,),
-                                Expanded(child: itemSign(title:'مستوى السكر', value:item.blood_sugar_level.toString(),
-                                    degree:'ملغم / ديسيلتر')),
+                                Expanded(child: itemSign(title:'blood_sugar_level'.tr(),
+                                    value:item.blood_sugar_level.toString(),
+                                    degree:'mg_dl'.tr())),
                               ],),
                             ],
                           ),
@@ -140,7 +142,7 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
                           ),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              PText(title:'الفحص السريري',fontWeight:FontWeight.w700,),
+                              PText(title:'bed_examination'.tr(),fontWeight:FontWeight.w700,),
                               const SizedBox(height:10,),
                               PText(title:(item.clinical_examination??''),fontColor:AppColors.grayShade3,size:PSize.text13,
                                 fontWeight:FontWeight.w500,),
@@ -157,7 +159,7 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
                           ),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              PText(title:'موعد المتابعة القادم',fontWeight:FontWeight.w700,),
+                              PText(title:'follow_date'.tr(),fontWeight:FontWeight.w700,),
                               const SizedBox(height:10,),
                               Row(
                                 children: [
@@ -185,7 +187,7 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
                           ),
                           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              PText(title:'ملاحظات الطبيب',fontWeight:FontWeight.w700,),
+                              PText(title:'doctor_notes'.tr(),fontWeight:FontWeight.w700,),
                               const SizedBox(height:10,),
                               PText(title:(item.notes??''),fontColor:AppColors.grayShade3,size:PSize.text13,
                                 fontWeight:FontWeight.w500,),
@@ -195,7 +197,7 @@ class ConsultationDetailsWidgetState extends State<ConsultationDetailsWidget> {
 
                         const SizedBox(height:20,),
                     
-                        PButton(title:'العودة الى ملف المريض'.tr(),isFitWidth:true,onPressed:() {
+                        PButton(title:'back_to_patient_file'.tr(),isFitWidth:true,onPressed:() {
                           Navigator.pop(context);
                         },hasBloc:false,fillColor: AppColors.whiteColor,textColor:AppColors.primaryColor,
                         borderColor:AppColors.primaryColor,),

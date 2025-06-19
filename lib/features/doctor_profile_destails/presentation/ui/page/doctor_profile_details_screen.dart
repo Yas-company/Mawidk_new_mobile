@@ -44,184 +44,177 @@ class DoctorProfileDetailsScreenState extends State<DoctorProfileDetailsScreen> 
               preferredSize: Size.fromHeight(100),
               child: Padding(
                 padding: const EdgeInsets.only(top:24),
-                child: appBar(context: context,backBtn: true,text:'doctor_details'.tr(),isCenter:true,actions:[
-                  GestureDetector(onTap:() {
-                    SafeToast.show(message: 'Coming soon while publish the app',
-                        type: MessageType.warning);
-                  },child: Container(margin:EdgeInsets.only(top:20),
-                      padding:EdgeInsets.all(9.5),
-                      decoration:BoxDecoration(shape:BoxShape.circle,
-                          border: Border.all(color:AppColors.grey100)),
-                      child:PImage(source:AppSvgIcons.share,width:16,height:16)),
-                  ),
-                  const SizedBox(width:8,),
-                  BlocConsumer<DoctorProfileBloc,BaseState>(listener:(context, state) {
-                    if(state is FavouriteLoadingState){
-                      loadDialog();
-                    }else if (state is FavouriteLoadedState){
-                      hideLoadingDialog();
-                      doctorProfileBloc.isFavourite=false;
-                      SafeToast.show(message:state.data?.message ?? '');
-                    }
-                  },builder:(context, state) {
-                    if(state is LoadedState){
-                      isFavourite = ((state).data).model?.model.isFavorite ?? false;
-                    }else if(state is FavouriteLoadedState){
-                      isFavourite = ((state).data).model?.model.isFavorite ?? false;
-                    }
-                    doctorProfileBloc.isFavourite = isFavourite ?? false;
-                    return GestureDetector(onTap:() {
-                      doctorProfileBloc.add(AddToFavouriteEvent(model:FavouriteRequestModel(
-                          doctorId: widget.id,isFavorite:!doctorProfileBloc.isFavourite
-                      )));
-                    },child: Container(margin:EdgeInsets.only(top:20),
-                        padding:EdgeInsets.all(9.5),
-                        decoration:BoxDecoration(shape:BoxShape.circle,
-                            border:Border.all(color:AppColors.grey100)),
-                        child:PImage(source: AppSvgIcons.love,width:16,height:16,
-                            color:doctorProfileBloc.isFavourite?Colors.red:AppColors.grayColor200)),
-                    );
-                  },),
-                  const SizedBox(width:10,),
-                ]),
+                child: appBar(context: context,backBtn: true,text:'profile'.tr(),isCenter:true,
+                backgroundColor:AppColors.primaryTransparent),
               ),
             ),
-            body:Padding(
-              padding: const EdgeInsets.symmetric(horizontal:20),
-              child: PBlocBuilder(bloc:doctorProfileBloc,init:() {
-                doctorProfileBloc.add(ApplyDoctorProfileEvent(id: widget.id));
-              },loadedWidget:(state) {
-                DoctorModel item = ((state as LoadedState).data).model?.model ?? DoctorModel();
-                // print('fe>${(state).data.model}');
-                if((state).data.model==null){
-                  return Center(child: PText(title: 'no_doctor_details'.tr()));
-                }
-                return Column(
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                          Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
-                            (item.photo??'').isEmpty?CircleAvatar(radius:35,
-                              backgroundColor: AppColors.whiteColor,
-                              child:Icon(Icons.person),):PImage(
-                              source:ApiEndpointsConstants.baseImageUrl+(item.photo??''),
-                              isCircle:true,width:60,height:60,),
-                            const SizedBox(width:14,),
-                            Padding(
-                              padding: const EdgeInsets.only(top:10),
-                              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,children: [
-                                  PText(title:item.name??''),const SizedBox(height:6,),
-                                  PText(title:item.specialization??'',fontColor:AppColors.grey200,),
-                                  // const SizedBox(height:6,),
-                                  // Row(
-                                  //   children: [
-                                  //     const Icon(Icons.my_location, size: 20, color:AppColors.primaryColor),
-                                  //     const SizedBox(width: 4),
-                                  //     PText(title:'location',fontColor:AppColors.grayShade3,
-                                  //       overflow: TextOverflow.ellipsis,
-                                  //     ),
-                                  //   ],
-                                  // )
-                                ],),
-                            )
-                          ],),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical:4,horizontal:8),
-                            child: Divider(color:AppColors.grey100,),
-                          ),
-                          const SizedBox(height:8,),
-                          Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly,children: [
-                            infoItem(title: 'patient'.tr(), image: AppSvgIcons.icPatient, value:
-                            (item.countOfPatients??0).toString()),
-                            infoItem(title: 'years_experience'.tr(), image: AppSvgIcons.icExperience, value:
-                            (item.yearsOfExperience??0).toString()),
-                            infoItem(title: 'evaluations'.tr(), image: AppSvgIcons.icRatings, value:
-                            (item.ratingsCount??0).toString(),onTap:() {
-                              context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
-                                'id':item.id??0,'isRating':true,
-                                'name':item.name??'',
-                              });
-                            },),
-                            infoItem(title: 'comments'.tr(), image: AppSvgIcons.icComments, value:
-                            (item.commentsCount??0).toString(),onTap:() {
-                              context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
-                                'id':item.id??0,'isRating':false,
-                                'name':item.name??'',
-                              });
-                            },),
-                          ],),
-                          const SizedBox(height:14,),
-                          PText(title: 'about_doctor'.tr(),fontWeight:FontWeight.w700,),
-                          const SizedBox(height:6,),
-                          PText(title:item.aboutDoctor??'غير متاح',size:PSize.text14,
-                            fontColor: AppColors.grey200,),
-                          const SizedBox(height:14,),
-                          PText(title: 'sub_specialties'.tr(),fontWeight:FontWeight.w700,),
-                          const SizedBox(height:10,),
-                          Wrap(
-                            spacing: 6, runSpacing: 6,
-                            children: List.generate((item.subspecialities??[]).length, (index) {
-                              final model = (item.subspecialities??[])[index];
-                              return SizedBox(child: Container(
-                                padding: const EdgeInsets.symmetric(vertical:8,horizontal:10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor2200,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: PText(
-                                  title: model.name??'',
-                                  // title: item??'',
-                                  fontWeight:FontWeight.w400,
-                                  size: PSize.text14,
-                                  fontColor:AppColors.primaryColor,
-                                ),
-                              ),
-                              );
-                            }),
-                          ),
-                          const SizedBox(height:14,),
-                          Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
-                            PText(title: 'evaluations_el'.tr(),fontWeight:FontWeight.w700,),
-                            GestureDetector(onTap:() {
-                              context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
-                                'id':item.id??0,'isRating':true,
-                                'name':item.name??'',
-                              });
-                            },child: Stack(children: [
+            body:PBlocBuilder(bloc:doctorProfileBloc,init:() {
+              doctorProfileBloc.add(ApplyDoctorProfileEvent(id: widget.id));
+            },loadedWidget:(state) {
+              DoctorModel item = ((state as LoadedState).data).model?.model ?? DoctorModel();
+              // print('fe>${(state).data.model}');
+              if((state).data.model==null){
+                return Center(child: PText(title: 'no_doctor_details'.tr()));
+              }
+              return Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
+                        Container(padding: EdgeInsets.symmetric(horizontal:24),
+                          color: AppColors.primaryTransparent,
+                          child: Stack(clipBehavior: Clip.none,
+                            children: [
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
-                                child: PText(fontWeight:FontWeight.w500,size:PSize.text13,
-                                  title:'evaluations'.tr(),fontColor:AppColors.grey200,
+                                padding: const EdgeInsets.symmetric(horizontal:14),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    (item.photo ?? '').isEmpty
+                                        ? CircleAvatar(
+                                      radius: 35,
+                                      backgroundColor: AppColors.whiteColor,
+                                      child: Icon(Icons.person),
+                                    )
+                                        : PImage(
+                                      source: ApiEndpointsConstants.baseImageUrl + (item.photo ?? ''),
+                                      isCircle: true,
+                                      width: 60, height: 60,
+                                    ),
+                                    const SizedBox(width: 14),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          PText(title: item.name ?? ''),
+                                          const SizedBox(height: 6),
+                                          PText(
+                                            title: item.specialization ?? '',
+                                            fontColor: AppColors.grey200,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Positioned(bottom:5, left: 0, right: 0,
-                                child: Container(height: 1,
-                                  color:AppColors.grey200,),
+                              SizedBox(height:110,),
+                              Positioned(
+                                bottom:-8, right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // context.push(AppRouter.doctorProfileDetailsScreen, extra: 110);
+                                    context.push(AppRouter.updateDoctorProfileScreen, extra: item);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      border: Border.all(color: AppColors.primaryColor),
+                                      color: AppColors.shade3.withOpacity(0.6),
+                                    ),
+                                    child: PText(
+                                      title: 'edit_profile'.tr(),
+                                      fontColor: AppColors.grayShade3,
+                                      size: PSize.text13,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
-                            ),
-                            )
-                          ],),const SizedBox(height:14,),
-                          if((item.ratings??[]).isNotEmpty)
-                            DoctorRatingByPatient(ratings:(item.ratings??[]).first,
-                              rate:item.averageRating??0.0,)
+                          ),
+                        ),
+                        const SizedBox(height:30,),
+                        Row(mainAxisAlignment:MainAxisAlignment.spaceEvenly,children: [
+                          infoItem(title: 'patient'.tr(), image: AppSvgIcons.icPatient, value:
+                          (item.countOfPatients??0).toString()),
+                          infoItem(title: 'years_experience'.tr(), image: AppSvgIcons.icExperience, value:
+                          (item.yearsOfExperience??0).toString()),
+                          infoItem(title: 'evaluations'.tr(), image: AppSvgIcons.icRatings, value:
+                          (item.ratingsCount??0).toString(),onTap:() {
+                            context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
+                              'id':item.id??0,'isRating':true,
+                              'name':item.name??'',
+                            });
+                          },),
+                          infoItem(title: 'comments'.tr(), image: AppSvgIcons.icComments, value:
+                          (item.commentsCount??0).toString(),onTap:() {
+                            context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
+                              'id':item.id??0,'isRating':false,
+                              'name':item.name??'',
+                            });
+                          },),
                         ],),
-                      ),
+                        const SizedBox(height:14,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal:24),
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,children: [
+                            PText(title: 'about_doctor'.tr(),fontWeight:FontWeight.w700,),
+                            const SizedBox(height:6,),
+                            PText(title:item.aboutDoctor??'غير متاح',size:PSize.text14,
+                              fontColor: AppColors.grey200,),
+                            const SizedBox(height:14,),
+                            PText(title: 'sub_specialties'.tr(),fontWeight:FontWeight.w700,),
+                            const SizedBox(height:10,),
+                            Wrap(
+                              spacing: 6, runSpacing: 6,
+                              children: List.generate((item.subspecialities??[]).length, (index) {
+                                final model = (item.subspecialities??[])[index];
+                                return SizedBox(child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical:8,horizontal:10),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primaryColor2200,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: PText(
+                                    title: model.name??'',
+                                    // title: item??'',
+                                    fontWeight:FontWeight.w400,
+                                    size: PSize.text14,
+                                    fontColor:AppColors.primaryColor,
+                                  ),
+                                ),
+                                );
+                              }),
+                            ),
+                            const SizedBox(height:14,),
+                            Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [
+                              PText(title: 'evaluations_el'.tr(),fontWeight:FontWeight.w700,),
+                              GestureDetector(onTap:() {
+                                context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
+                                  'id':item.id??0,'isRating':true,
+                                  'name':item.name??'',
+                                });
+                              },child: Stack(children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 3), // Adjust this value for spacing
+                                  child: PText(fontWeight:FontWeight.w500,size:PSize.text13,
+                                    title:'evaluations'.tr(),fontColor:AppColors.grey200,
+                                  ),
+                                ),
+                                Positioned(bottom:5, left: 0, right: 0,
+                                  child: Container(height: 1,
+                                    color:AppColors.grey200,),
+                                ),
+                              ],
+                              ),
+                              )
+                            ],),const SizedBox(height:14,),
+                            if((item.ratings??[]).isNotEmpty)
+                              DoctorRatingByPatient(ratings:(item.ratings??[]).first,
+                                rate:item.averageRating??0.0,)
+                          ],),
+                        )
+                      ],),
                     ),
-                    PButton(
-                      isFitWidth: true,
-                      onPressed: () {
-                      },
-                      hasBloc: false,
-                      title: 'book_appointment'.tr(),
-                    ),
-                    const SizedBox(height:14,),
-                  ],
-                );
-              },loadingWidget:Center(child:CustomLoader(size:35,))),
-            )),
+                  ),
+                  const SizedBox(height:14,),
+                ],
+              );
+            },loadingWidget:Center(child:CustomLoader(size:35,)))),
       ),
     );
   }

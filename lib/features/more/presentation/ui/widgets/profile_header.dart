@@ -38,7 +38,7 @@ class ProfileHeader extends StatelessWidget {
         PText(title: phoneNumber,size:PSize.text14,fontColor:AppColors.grey200),
         const SizedBox(height:6),
         GestureDetector(onTap:() {
-          context.push(AppRouter.doctorProfileDetailsScreen,extra:18);
+          context.push(AppRouter.doctorProfileDetailsScreen,extra:110);
         },child: Container(padding:EdgeInsets.symmetric(horizontal:8,vertical:2),decoration:BoxDecoration(
             borderRadius:BorderRadius.circular(25),
             border:Border.all(color:AppColors.primaryColor),

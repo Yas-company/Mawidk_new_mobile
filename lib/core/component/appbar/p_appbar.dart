@@ -61,7 +61,7 @@ AppBar appBar({
             if (text != null)
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 4),
+                  padding:EdgeInsets.only(top: 4,right:isArabic()?0:80),
                   child: PText(
                         title: text,
                         size: PSize.text18,
@@ -89,7 +89,7 @@ AppBar appBar({
     },child: Container(margin:EdgeInsets.only(top:20,right:isArabic()?10:0,left:!isArabic()?10:0),
           width:40,height: 40,
           child:Center(
-            child: PImage(source:isArabic()?AppSvgIcons.icBack:AppSvgIcons.icNotification,
+            child: PImage(source:isArabic()?AppSvgIcons.icBack:AppSvgIcons.icNext,
             color:AppColors.grayShade3),
           )),
     ):null,

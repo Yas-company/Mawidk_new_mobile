@@ -61,7 +61,7 @@ class NotesBottomSheetState extends State<NotesBottomSheet> {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               PText(
-                title: widget.isEdit ? 'تعديل الملاحظة' : 'إضافة ملاحظة',
+                title: widget.isEdit ? 'edit_note'.tr() : 'add_notes'.tr(),
                 fontWeight: FontWeight.w700,
                 size: PSize.text18,
               ),
@@ -72,7 +72,7 @@ class NotesBottomSheetState extends State<NotesBottomSheet> {
               ))
             ]),
             const SizedBox(height: 16),
-            PTextField(controller: _addressController,labelAbove:'العنوان',hintText:'عنوان الملاحظة',
+            PTextField(controller: _addressController,labelAbove:'address'.tr(),hintText:'note_address'.tr(),
               feedback:(value) {
 
               },),
@@ -90,12 +90,12 @@ class NotesBottomSheetState extends State<NotesBottomSheet> {
                 _dateController.text = DateFormat('yyyy-MM-dd').format(date);
               }
             },child: PTextField(enabled:false,
-              controller: _dateController,labelAbove:'التاريخ',hintText:'ضع التاريخ', feedback:(value) {
+              controller: _dateController,labelAbove:'date'.tr(),hintText:'start_date_hint'.tr(), feedback:(value) {
 
               },disabledBorderColor:Colors.transparent,),
             ),
             const SizedBox(height: 16),
-            PTextField(controller: _descriptionController,labelAbove:'الوصف',hintText:'',
+            PTextField(controller: _descriptionController,labelAbove:'description2'.tr(),hintText:'',
               maxLines: 2,
               feedback:(value) {
 

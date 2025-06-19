@@ -13,11 +13,14 @@ class PDropDown extends StatefulWidget {
   final String? dropdownLabel;
   final String? hintText;
   final Color? dropdownLabelColor;
+  final Color? borderColor ;
+  final Color? fillColor ;
   final bool? isOptional;
   final bool isSpecializations;
   final bool enableSearch;
   final double? width;
   final double? height;
+  final double? borderRadius;
   final bool isEnabled;
   final ValueChanged<Map<String, dynamic>?>? onChange;
   final FocusNode? focusNode;
@@ -28,7 +31,10 @@ class PDropDown extends StatefulWidget {
     super.key,
     required this.options,
     this.controller,
+    this.fillColor,
     this.initialValue,
+    this.borderRadius,
+    this.borderColor,
     this.isSpecializations = false,
     this.dropdownLabel,
     this.dropdownLabelColor,
@@ -97,8 +103,9 @@ class _MyCustomDropDownState extends State<PDropDown> {
           },
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.circular(0),
+              color:widget.fillColor ?? AppColors.whiteColor,
+              borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
+              border:Border.all(color: widget.borderColor ??  Colors.transparent),
             ),
             child: DropdownButtonFormField<Map<String, dynamic>>(
               value:widget.initialValue,style:TextStyle(fontFamily:'Cairo',
@@ -125,16 +132,16 @@ class _MyCustomDropDownState extends State<PDropDown> {
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(0),
+                  borderRadius: BorderRadius.circular(widget.borderRadius ?? 0),
                   borderSide: BorderSide(
-                    color: AppColors.whiteColor, width: 1,
+                    color: widget.borderColor ?? AppColors.whiteColor, width: 1,
                   ),
                 ),
                 contentPadding: const EdgeInsets.only(left:12,right:12,top:10,bottom:22),
               ),
               menuMaxHeight:MediaQuery.sizeOf(context).height*0.45,
               dropdownColor: AppColors.whiteBackground,
-              icon:Icon(Icons.keyboard_arrow_down_rounded),
+              icon:Icon(Icons.keyboard_arrow_down_rounded,color:widget.borderColor!=null?Colors.black:null),
               selectedItemBuilder: (context) {
                 return options.map((option) {
                   final title = widget.translate

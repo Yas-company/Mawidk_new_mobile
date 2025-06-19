@@ -14,6 +14,7 @@ import 'package:mawidak/di.dart';
 import 'package:mawidak/features/appointment/presentation/bloc/appointment_booking_bloc.dart';
 import 'package:mawidak/features/appointment/presentation/ui/widgets/day_picker_widget.dart';
 import 'package:mawidak/features/appointment/presentation/ui/widgets/time_picker_widget.dart';
+import 'package:mawidak/features/appointments/presentation/ui/widgets/price_card_widget.dart';
 import '../../../../../core/data/assets_helper/app_svg_icon.dart';
 
 class AppointmentBookingScreen extends StatefulWidget {
@@ -63,6 +64,7 @@ class AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  PriceSelectionWidget(),
                   // Row(crossAxisAlignment: CrossAxisAlignment.start,children: [
                   //   PImage(source:'https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg',
                   //     isCircle:true,width:60,height:60,),
@@ -129,6 +131,90 @@ class AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
 
 
 
+class PriceSelectionWidget extends StatefulWidget {
+  const PriceSelectionWidget({super.key});
+
+  @override
+  State<PriceSelectionWidget> createState() => _PriceSelectionWidgetState();
+}
+
+class _PriceSelectionWidgetState extends State<PriceSelectionWidget> {
+  String selectedTitle = '';
+
+  void onSelect(String title) {
+    setState(() {
+      selectedTitle = title;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: AppColors.primaryColor550,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PText(title: 'prices'.tr()),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: PriceCardWidget(
+                  title: 'follow',
+                  image: AppSvgIcons.icFollow,
+                  value: 0,
+                  isSelected: selectedTitle == 'follow',
+                  onTap: () => onSelect('follow'),
+                ),
+              ),
+              const SizedBox(width: 3),
+              Expanded(
+                child: PriceCardWidget(
+                  title: 'book_online',
+                  image: AppSvgIcons.icBookOnline,
+                  value: 100,
+                  isSelected: selectedTitle == 'book_online',
+                  onTap: () => onSelect('book_online'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 3),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Expanded(
+                child: PriceCardWidget(
+                  title: 'home_visit',
+                  image: AppSvgIcons.icHomeVisit,
+                  value: 400,
+                  isSelected: selectedTitle == 'home_visit',
+                  onTap: () => onSelect('home_visit'),
+                ),
+              ),
+              const SizedBox(width: 3),
+              Expanded(
+                child: PriceCardWidget(
+                  title: 'attendance',
+                  image: AppSvgIcons.icAttendance,
+                  value: 150,
+                  isSelected: selectedTitle == 'attendance',
+                  onTap: () => onSelect('attendance'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 
 

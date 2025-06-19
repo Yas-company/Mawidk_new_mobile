@@ -5,6 +5,7 @@ import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 
 
 void showDeleteDrugOrNoteBottomSheet({required final VoidCallback onTap,required String name,
@@ -24,7 +25,7 @@ bool isDrug = true}) {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                PText(title:'تأكيد الحذف'.tr(), fontWeight: FontWeight.w700,size:PSize.text16,),
+                PText(title:'confirm_delete'.tr(), fontWeight: FontWeight.w700,size:PSize.text16,),
                 InkWell(onTap:() {
                   Navigator.pop(context);
                 }, child:Icon(Icons.close,color:AppColors.grey200,))
@@ -32,12 +33,12 @@ bool isDrug = true}) {
             ),
             const SizedBox(height: 10),
             isDrug?
-            PText(title:'هل أنت متأكد من رغبتك في حذف دواء '+'"'+name+'"'+'  ؟  ',size:PSize.text14,
+            PText(title:'${'delete_drug_question'.tr()}"$name"${isArabic()?'  ؟  ':'  ?  '}',size:PSize.text14,
               fontColor:AppColors.grayShade3,):
-            PText(title:'هل أنت متأكد من رغبتك في حذف '+'"'+name+'"'+'  ؟  ',size:PSize.text14,
+            PText(title:'${'confirm_deletion'.tr()}"$name"${isArabic()?'  ؟  ':'  ?  '}',size:PSize.text14,
               fontColor:AppColors.grayShade3,),
             const SizedBox(height: 20),
-            Directionality(textDirection:TextDirection.rtl,
+            Directionality(textDirection:isArabic()?TextDirection.rtl:TextDirection.ltr,
               child: Container(
                   padding:EdgeInsets.symmetric(horizontal:24,vertical:3),
                   decoration:BoxDecoration(borderRadius:BorderRadius.circular(4),
@@ -50,8 +51,7 @@ bool isDrug = true}) {
                           color:AppColors.primaryColor,
                         ),padding:EdgeInsets.all(8),child:PText(title: '!',fontColor:AppColors.whiteColor,),),
                       const SizedBox(width:10,),
-                      PText(title:'في حالة التأكيد  لا يمكن التراجع عن هذا الاجراء',
-                        size:PSize.text13,),
+                      PText(title:'not_review'.tr(), size:PSize.text13,),
                     ],
                   )),
             ),
@@ -62,7 +62,7 @@ bool isDrug = true}) {
                   child:PButton(onPressed:() {
                     Navigator.pop(context);
                     onTap();
-                  },title:'تأكيد الحذف',fillColor:AppColors.danger,hasBloc:false,),
+                  },title:'confirm_delete'.tr(),fillColor:AppColors.danger,hasBloc:false,),
                 ),
                 const SizedBox(width: 10),
                 Expanded(

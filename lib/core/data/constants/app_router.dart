@@ -42,4 +42,5 @@ class AppRouter {
   static const String privacyPolicyScreen = '/privacyPolicyScreen';
   static const String languageSelectorScreen = '/languageSelectorScreen';
   static const String completePatientProfile = '/completePatientProfile';
+  static const String updateDoctorProfileScreen = '/updateDoctorProfileScreen';
 }

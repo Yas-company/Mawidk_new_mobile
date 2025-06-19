@@ -69,7 +69,7 @@ class _DiagnosisBottomSheetState extends State<DiagnosisBottomSheet> {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               PText(
-                title: widget.isEdit ? 'تعديل المعلومات' : 'اضافة تشخيص جديد',
+                title: widget.isEdit ? 'edit_info'.tr() : 'add_new_diagnosis'.tr(),
                 fontWeight: FontWeight.w700,
                 size: PSize.text18,
               ),
@@ -80,8 +80,8 @@ class _DiagnosisBottomSheetState extends State<DiagnosisBottomSheet> {
               ))
             ]),
             const SizedBox(height: 16),
-            PTextField(controller: _nameController,labelAbove:'التشخيص',
-              hintText:widget.isEdit?'':'ضع اسم التشخيص', feedback:(value) {
+            PTextField(controller: _nameController,labelAbove:'diagnosis'.tr(),
+              hintText:widget.isEdit?'':'add_diagnosis_name'.tr(), feedback:(value) {
 
               },),
             const SizedBox(height: 16),
@@ -97,12 +97,14 @@ class _DiagnosisBottomSheetState extends State<DiagnosisBottomSheet> {
                 _dateController.text = DateFormat('yyyy-MM-dd').format(date);
               }
             },child: PTextField(enabled:false,
-              controller: _dateController,labelAbove:'تاريخ التشخيص',hintText:'اختر التاريخ', feedback:(value) {
+              controller: _dateController,labelAbove:'diagnosis_date2'.tr(),hintText:'choose_date'.tr(),
+              feedback:(value) {
 
               },disabledBorderColor:Colors.transparent,),
             ),
             const SizedBox(height: 16),
-            PTextField(controller: _descriptionController,labelAbove:'وصف التشخيص',hintText:'ضع وصف التشخيص',
+            PTextField(controller: _descriptionController,labelAbove:'diagnosis_desc'.tr(),
+              hintText:'put_diagnosis_desc'.tr(),
               feedback:(value) {
 
               },),

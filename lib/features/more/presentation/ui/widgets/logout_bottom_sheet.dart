@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart' as locale;
 import 'package:flutter/material.dart';
 import 'package:mawidak/core/base_network/client/dio_client.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 
 
 void logoutBottomSheet(BuildContext context,final VoidCallback onTap) {
@@ -15,23 +17,23 @@ void logoutBottomSheet(BuildContext context,final VoidCallback onTap) {
     backgroundColor: Colors.white,
     builder: (context) {
       return Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: isArabic()?TextDirection.ltr:TextDirection.rtl,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              PText(title: 'تسجيل الخروج', size: PSize.text18, fontWeight: FontWeight.w700),
+              PText(title: 'logout'.tr(), size: PSize.text18, fontWeight: FontWeight.w700),
               const SizedBox(height: 10),
-              PText(title: 'هل انت متأكد من تسجيل الخروج ؟', size: PSize.text14, fontColor: AppColors.grey200),
+              PText(title: 'logout_question'.tr(), size: PSize.text14, fontColor: AppColors.grey200),
               const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
                     child: PButton(
                       onPressed: () => Navigator.pop(context),
-                      title: 'إلغاء',
+                      title: 'cancel'.tr(),
                       fillColor: AppColors.secondary,
                       hasBloc: false,
                     ),
@@ -40,7 +42,7 @@ void logoutBottomSheet(BuildContext context,final VoidCallback onTap) {
                   Expanded(
                     child: PButton(
                       onPressed: onTap,
-                      title: 'تسجيل الخروج',
+                      title:'logout'.tr(),
                       hasBloc: false,
                     ),
                   ),

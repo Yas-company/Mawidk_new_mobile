@@ -5,6 +5,7 @@ import 'package:mawidak/core/component/appbar/p_appbar.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/features/all_patients/data/model/patients_response_model.dart';
 import 'package:mawidak/features/show_file/presentation/ui/widgets/basic_information_widget.dart';
 import 'package:mawidak/features/show_file/presentation/ui/widgets/consultation_widget.dart';
@@ -112,11 +113,9 @@ class ShowFileScreenState extends State<ShowFileScreen> {
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(100),
           child: Padding(
-            padding: const EdgeInsets.only(top: 24),
-            child: appBar(
-              context: context,
-              backBtn: true,
-              isCenter: true,
+            padding:EdgeInsets.only(top:24),
+            child: appBar(context: context,
+              backBtn: true, isCenter: true,
               text: 'patient_file'.tr(),
             ),
           ),

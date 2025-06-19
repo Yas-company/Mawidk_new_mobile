@@ -132,98 +132,98 @@ class HomeScreenPatient extends StatelessWidget {
                   child: SpecializationCarousel(specializations: specializations),
                 )),
 
-                // SliverToBoxAdapter(
-                //   child: HeaderWidget(title: 'top_rated_doctors'.tr(), onClickMore: () {
-                //
-                //   },),
-                // ),
-                // SliverToBoxAdapter(child: const SizedBox(height:14,)),
+                SliverToBoxAdapter(
+                  child: HeaderWidget(title: 'top_rated_doctors'.tr(), onClickMore: () {
 
-                // SliverToBoxAdapter(
-                //   child: PBlocBuilder(init:() {
-                //     homePatientBloc.add(DoctorsOfPatientEvent());
-                //   },bloc:homePatientBloc,loadedWidget:(state) {
-                //     List<DoctorModel> itemList = ((state as LoadedState).data).model?.model ?? [];
-                //     return SizedBox(height:170,
-                //       child: ListView.separated(scrollDirection:Axis.horizontal,
-                //         shrinkWrap: true,padding:EdgeInsets.only(bottom:20),
-                //         // physics: NeverScrollableScrollPhysics(),
-                //         itemBuilder: (context, index) {
-                //           DoctorModel item = itemList[index];
-                //           return SizedBox(width: 164,
-                //             child: TopRatedDoctorCard(
-                //               imageUrl: item.image??'',
-                //               doctorName: item.name??'',
-                //               rating: 4.8,
-                //               specialization: item.specialization??'',
-                //               location: 'New York, USA',
-                //               onTap: () {
-                //                 // context.push(AppRouter.doctorRatingsScreen,extra:item.id??0);
-                //                 context.pushNamed(AppRouter.doctorProfileScreen,extra: {
-                //                   // 'id':110,
-                //                   'id':item.id??0,
-                //                   'name':item.name??'',
-                //                   'specialization':item.specialization??''
-                //                 });
-                //                 // context.push(AppRouter.doctorProfileScreen,extra:item.id??0);
-                //               },
-                //             ),
-                //           );
-                //         },
-                //         separatorBuilder: (context, index) => SizedBox(height: 12,width:4,),
-                //         itemCount:itemList.length,
-                //       ),
-                //     );
-                //   },),
-                // ),
-
-
-                // SliverToBoxAdapter(
-                //   child: HeaderWidget(title: 'top_rated_hospitals'.tr(), onClickMore: () {
-                //
-                //   },),
-                // ),
+                  },),
+                ),
                 SliverToBoxAdapter(child: const SizedBox(height:14,)),
 
-                // SliverToBoxAdapter(
-                //   child: PBlocBuilder(init:() {
-                //     homePatientBloc.add(DoctorsOfPatientEvent());
-                //   },bloc:homePatientBloc,loadedWidget:(state) {
-                //     List<DoctorModel> itemList = [
-                //       DoctorModel(id: 1,name: 'السعودي الالماني'),
-                //       DoctorModel(id: 2,name: 'السعودي الالماني'),
-                //       DoctorModel(id: 3,name: 'السعودي الالماني'),
-                //     ];
-                //     return SizedBox(height:165,
-                //       child: ListView.separated(scrollDirection:Axis.horizontal,
-                //         shrinkWrap: true,padding:EdgeInsets.only(bottom:20),
-                //         // physics: NeverScrollableScrollPhysics(),
-                //         itemBuilder: (context, index) {
-                //           DoctorModel item = itemList[index];
-                //           return SizedBox(width: 164,
-                //             child: TopRatedDoctorCard(showRating:true,
-                //               imageUrl:item.image??'',
-                //               doctorName: item.name??'',
-                //               rating: 4.8,
-                //               specialization: item.specialization??'',
-                //               location: 'New York, USA',
-                //               onTap: () {
-                //                 // context.push(AppRouter.doctorRatingsScreen,extra:item.id??0);
-                //                 // context.pushNamed(AppRouter.doctorProfileScreen,extra: {
-                //                 //   'id':110,
-                //                 //   'name':item.name??'',
-                //                 // });
-                //                 // context.push(AppRouter.doctorProfileScreen,extra:item.id??0);
-                //               },
-                //             ),
-                //           );
-                //         },
-                //         separatorBuilder: (context, index) => SizedBox(height: 12,width:4,),
-                //         itemCount:itemList.length,
-                //       ),
-                //     );
-                //   },),
-                // )
+                SliverToBoxAdapter(
+                  child: PBlocBuilder(init:() {
+                    homePatientBloc.add(DoctorsOfPatientEvent());
+                  },bloc:homePatientBloc,loadedWidget:(state) {
+                    List<DoctorModel> itemList = ((state as LoadedState).data).model?.model ?? [];
+                    return SizedBox(height:170,
+                      child: ListView.separated(scrollDirection:Axis.horizontal,
+                        shrinkWrap: true,padding:EdgeInsets.only(bottom:20),
+                        // physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          DoctorModel item = itemList[index];
+                          return SizedBox(width: 164,
+                            child: TopRatedDoctorCard(
+                              imageUrl: item.image??'',
+                              doctorName: item.name??'',
+                              rating: 4.8,
+                              specialization: item.specialization??'',
+                              location: 'New York, USA',
+                              onTap: () {
+                                // context.push(AppRouter.doctorRatingsScreen,extra:item.id??0);
+                                context.pushNamed(AppRouter.doctorProfileScreen,extra: {
+                                  // 'id':110,
+                                  'id':item.id??0,
+                                  'name':item.name??'',
+                                  'specialization':item.specialization??''
+                                });
+                                // context.push(AppRouter.doctorProfileScreen,extra:item.id??0);
+                              },
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => SizedBox(height: 12,width:4,),
+                        itemCount:itemList.length,
+                      ),
+                    );
+                  },),
+                ),
+
+
+                SliverToBoxAdapter(
+                  child: HeaderWidget(title: 'top_rated_hospitals'.tr(), onClickMore: () {
+
+                  },),
+                ),
+                SliverToBoxAdapter(child: const SizedBox(height:14,)),
+
+                SliverToBoxAdapter(
+                  child: PBlocBuilder(init:() {
+                    homePatientBloc.add(DoctorsOfPatientEvent());
+                  },bloc:homePatientBloc,loadedWidget:(state) {
+                    List<DoctorModel> itemList = [
+                      DoctorModel(id: 1,name: 'السعودي الالماني'),
+                      DoctorModel(id: 2,name: 'السعودي الالماني'),
+                      DoctorModel(id: 3,name: 'السعودي الالماني'),
+                    ];
+                    return SizedBox(height:165,
+                      child: ListView.separated(scrollDirection:Axis.horizontal,
+                        shrinkWrap: true,padding:EdgeInsets.only(bottom:20),
+                        // physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          DoctorModel item = itemList[index];
+                          return SizedBox(width: 164,
+                            child: TopRatedDoctorCard(showRating:true,
+                              imageUrl:item.image??'',
+                              doctorName: item.name??'',
+                              rating: 4.8,
+                              specialization: item.specialization??'',
+                              location: 'New York, USA',
+                              onTap: () {
+                                // context.push(AppRouter.doctorRatingsScreen,extra:item.id??0);
+                                // context.pushNamed(AppRouter.doctorProfileScreen,extra: {
+                                //   'id':110,
+                                //   'name':item.name??'',
+                                // });
+                                // context.push(AppRouter.doctorProfileScreen,extra:item.id??0);
+                              },
+                            ),
+                          );
+                        },
+                        separatorBuilder: (context, index) => SizedBox(height: 12,width:4,),
+                        itemCount:itemList.length,
+                      ),
+                    );
+                  },),
+                )
 
                 // PBlocBuilder<BannerBloc, BaseState>(
                 //   height: 160,
