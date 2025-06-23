@@ -42,7 +42,7 @@ class SearchScreenState extends State<SearchScreen> {
           child: SingleChildScrollView(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SearchWidget(hint:'ابحث باسم الدكتور او التخصص',textInputAction: TextInputAction.send,
+                SearchWidget(fillColor:AppColors.whiteColor,hint:'ابحث باسم الدكتور او التخصص',textInputAction: TextInputAction.send,
                   // isEnabled: false,
                   onChanged:(value) {
                 },onFieldSubmitted:(value) {
@@ -51,13 +51,17 @@ class SearchScreenState extends State<SearchScreen> {
                       'isFilterClicked':false,'specializationId':0
                         });
                 },onTapFilter:() {
-                        filterBottomSheet(context,lookupBloc,(location, specialization, selectedVisitIndex,evaluate) {
+                        filterBottomSheet(context,lookupBloc,(location, specialization, selectedVisitIndex,evaluate,
+                            type) {
+                          print('specialization>>'+specialization.toString());
                           context.push(AppRouter.searchResults, extra:{
-                            'searchKey':specializations.firstWhere((e) => e.id== (specialization??0)).optionText,
+                            'searchKey':specialization==null?'':
+                            specializations.firstWhere((e) => e.id== (specialization??0)).optionText,
                             'lookupBloc':lookupBloc,
                             'isFilterClicked':true,'specializationId':specialization??0,
                             'filterRequestModel':
-                          FilterRequestModel(specializationId:specialization??0,cityId:location??0)
+                          FilterRequestModel(specializationId:specialization??0,cityId:location??0,
+                          rating: evaluate,typeOfDoctor: type)
                           });
                         },);
                       // context.push(AppRouter.searchResults,extra:'');

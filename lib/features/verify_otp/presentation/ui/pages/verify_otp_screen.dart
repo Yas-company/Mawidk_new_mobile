@@ -88,7 +88,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           isLogin:widget.isLogin,
                           // surveyBloc: surveyBloc
                           ));
-                        },title:'',hasBloc:true,isFitWidth:true,size:PSize.text16,
+                        },title:'verify'.tr(),hasBloc:true,isFitWidth:true,size:PSize.text16,
                           // icon:Icon(Icons.arrow_forward,color:AppColors.whiteColor,),
                           icon:PImage(source:isArabic()?AppSvgIcons.icNext:AppSvgIcons.icBack,height:14,fit:BoxFit.scaleDown,),
                           fontWeight:FontWeight.w700,

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class SurveyModel {
   Model? model;
 
@@ -108,8 +110,11 @@ class Question {
   String? type;
   bool? isTrue;
   bool? showCheckBoc;
+  bool? showOtherFiled;
   bool? isRequired;
   int? order;
+  int? line;
+  EdgeInsetsGeometry? padding;
   dynamic answer;
   List<Option>? options;
   List<LogicRules>? logicRules;
@@ -121,6 +126,9 @@ class Question {
         this.isRequired,
         this.order,
         this.hint,
+        this.line,
+        this.showOtherFiled,
+        this.padding,
         this.answer,
         this.isTrue,
         this.showCheckBoc,
@@ -134,7 +142,10 @@ class Question {
     isRequired = json['is_required'];
     isTrue = json['isTrue'];
     showCheckBoc = json['showCheckBoc'];
+    showOtherFiled = json['showOtherFiled'];
+    padding = json['padding'];
     order = json['order'];
+    line = json['line'];
     answer = json['answer'];
     if (json['options'] != null) {
       options = <Option>[];
@@ -159,6 +170,9 @@ class Question {
     data['type'] = this.type;
     data['isTrue'] = this.isTrue;
     data['showCheckBoc'] = this.showCheckBoc;
+    data['showOtherFiled'] = this.showOtherFiled;
+    data['line'] = this.line;
+    data['padding'] = this.padding;
     data['answer'] = this.answer;
     data['is_required'] = this.isRequired;
     data['order'] = order;

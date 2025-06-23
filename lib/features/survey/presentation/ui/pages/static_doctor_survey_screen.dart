@@ -33,25 +33,30 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
       title: "معلوماتك الأساسية",
       subtitle: "هذه المعلومات مطلوبة للمتابعة",
       questions: [
+        Question(padding:EdgeInsets.only(top:40),
+          id: 1,isRequired:true,line:4,
+          questionText: "نبذة عن الدكتور",
+          type: "textarea",
+        ),
         // Question(
         //   id: 1,isRequired:true,
         //   questionText: "النوع",
         //   type: "single_choice",
         //   options: [Option(id:1,optionText:"ذكر"), Option(id:2,optionText:"انثي")],
         // ),
-        Question(isRequired:true, id: 0,
-          questionText: "المرتبة",
-          type: "radio_button",
-          options: [Option(id:1,optionText:"consultant".tr()),
-            Option(id:2,optionText:"specialist".tr())],
-        ),
+        // Question(padding: EdgeInsets.only(top:0,bottom: 0),isRequired:true, id: 0,
+        //   questionText: "المرتبة",
+        //   type: "radio_button",
+        //   options: [Option(id:1,optionText:'doctor2'.tr()),
+        //     Option(id:2,optionText:"specialist2".tr()),Option(id:3,optionText:"consultant".tr())],
+        // ),
         // Question(isRequired:true, id: 0,
         //   questionText: "المرتبة",
         //   type: "single_choice",
         //   options: [Option(id:1,optionText:"consultant".tr()),
         //     Option(id:2,optionText:"specialist".tr())],
         // ),
-        Question(
+        Question(padding:EdgeInsets.zero,
           id: 1,isRequired:true,hint: 'اختر تخصصك',
           questionText: "اختر تخصصك",
           // type: "multi_select",
@@ -70,18 +75,24 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
       title: "المعلومات المهنية ",
       subtitle: "من فضلك اجب على الاسئلة التالية ",
       questions: [
-        Question(
-          id: 1,isRequired:true,
-          questionText: "ما عدد سنوات الخبرة الطبية لديك ؟",
+        Question(id:0,padding: EdgeInsets.only(top:30,bottom: 0),isRequired:true,
+          questionText: "المرتبة",
           type: "radio_button",
-          options: [
-            Option(id:1,optionText:"اقل من سنة"),
-            Option(id:2,optionText:"-٣ سنوات"),
-            Option(id:3,optionText:"من ٤-٦ سنوات"),
-            Option(id:4,optionText:"اكثر من ٥ سنوات"),
-            ],
+          options: [Option(id:1,optionText:'doctor2'.tr()),
+            Option(id:2,optionText:"specialist2".tr()),Option(id:3,optionText:"consultant".tr())],
         ),
-        Question(id: 2,isRequired:true,hint:'رقم الترخيص',
+        // Question(
+        //   id: 1,isRequired:true,
+        //   questionText: "ما عدد سنوات الخبرة الطبية لديك ؟",
+        //   type: "radio_button",
+        //   options: [
+        //     Option(id:1,optionText:"اقل من سنة"),
+        //     Option(id:2,optionText:"-٣ سنوات"),
+        //     Option(id:3,optionText:"من ٤-٦ سنوات"),
+        //     Option(id:4,optionText:"اكثر من ٥ سنوات"),
+        //     ],
+        // ),
+        Question(id: 1,isRequired:true,hint:'رقم الترخيص',
             questionText: "أدخل رقم الترخيص الطبي الخاص بك", type: "number"),
       ],
     ),
@@ -226,7 +237,7 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
                                     SizedBox(height: 20),
                                     if (page.questions != null && page.questions!.isNotEmpty)
                                       ...page.questions!.map((q) => Padding(
-                                        padding: const EdgeInsets.symmetric(vertical:30),
+                                        padding: const EdgeInsets.symmetric(vertical:10),
                                         child: buildQuestionWidget(q, (callback) {
                                           setState(callback);
                                           surveyBloc.add(ValidateSurveyEvent());

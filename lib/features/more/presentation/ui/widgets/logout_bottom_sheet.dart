@@ -26,7 +26,7 @@ void logoutBottomSheet(BuildContext context,final VoidCallback onTap) {
             children: [
               PText(title: 'logout'.tr(), size: PSize.text18, fontWeight: FontWeight.w700),
               const SizedBox(height: 10),
-              PText(title: 'logout_question'.tr(), size: PSize.text14, fontColor: AppColors.grey200),
+              PText(title: 'logout_question'.tr(), size: PSize.text14, fontColor: AppColors.grey200,),
               const SizedBox(height: 20),
               Row(
                 children: [

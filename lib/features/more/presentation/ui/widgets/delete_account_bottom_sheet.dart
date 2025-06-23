@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart'as locale;
 import 'package:flutter/material.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 
 
 void showDeleteAccountBottomSheet(BuildContext context,final VoidCallback onTap) {
@@ -13,18 +15,18 @@ void showDeleteAccountBottomSheet(BuildContext context,final VoidCallback onTap)
     ),
     backgroundColor: Colors.white,
     builder: (context) {
-      return Directionality(textDirection:TextDirection.ltr,
+      return Directionality(textDirection:isArabic()?TextDirection.ltr:TextDirection.rtl,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              PText(title:'حذف الحساب',size:PSize.text18,fontWeight:FontWeight.w700,),
+              PText(title:'delete_account'.tr(),size:PSize.text18,fontWeight:FontWeight.w700,),
               const SizedBox(height: 10),
-              PText(title:'هل انت متأكد من حذف الحساب ؟',size:PSize.text14,fontColor:AppColors.grey200,),
+              PText(title:'sure_delete_account'.tr(),size:PSize.text14,fontColor:AppColors.grey200,),
               const SizedBox(height: 20),
-              Directionality(textDirection:TextDirection.rtl,
+              Directionality(textDirection:!isArabic()?TextDirection.ltr:TextDirection.rtl,
                 child: Container(
                     padding:EdgeInsets.symmetric(horizontal:24,vertical:3),
                     decoration:BoxDecoration(borderRadius:BorderRadius.circular(4),
@@ -37,7 +39,7 @@ void showDeleteAccountBottomSheet(BuildContext context,final VoidCallback onTap)
                             color:AppColors.primaryColor,
                           ),padding:EdgeInsets.all(8),child:PText(title: '!',fontColor:AppColors.whiteColor,),),
                         const SizedBox(width:10,),
-                        PText(title:'في حالة حذف الحساب لا يمكن استرجاع بياناتك',
+                        PText(title:'delete_account_info'.tr(),
                           size:PSize.text13,),
                       ],
                     )),
@@ -48,12 +50,12 @@ void showDeleteAccountBottomSheet(BuildContext context,final VoidCallback onTap)
                   Expanded(
                     child:PButton(onPressed:() {
                       Navigator.pop(context);
-                    },title:'إلغاء',fillColor:AppColors.secondary,hasBloc:false,),
+                    },title:'cancel'.tr(),fillColor:AppColors.secondary,hasBloc:false,),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
                     child:PButton(onPressed:onTap,
-                      title:'حذف',fillColor:AppColors.danger,hasBloc:false,),
+                      title:'delete'.tr(),fillColor:AppColors.danger,hasBloc:false,),
                   ),
                 ],
               ),

@@ -43,7 +43,8 @@ class SearchResultsState extends State<SearchResultsScreen> {
     if(widget.isFilterClicked){
       searchBloc.add(ApplyIsMapEvent(isMap: false));
       searchBloc.add(ApplyFilterEvent(filterRequestModel:widget.filterRequestModel??
-          FilterRequestModel(specializationId:widget.specializationId??-1, cityId:0)));
+          FilterRequestModel(specializationId:widget.specializationId??-1, cityId:0,rating:0,
+          typeOfDoctor:0)));
     }
   }
   @override
@@ -68,14 +69,16 @@ class SearchResultsState extends State<SearchResultsScreen> {
                     widget.searchKey = value??'';
                       searchBloc.add(ApplySearchForPatient(key:value??''));
                     },onTapFilter:() {
-                        filterBottomSheet(context,widget.lookupBloc,(location, specialization, selectedVisitIndex,evaluate) {
+                        filterBottomSheet(context,widget.lookupBloc,(location, specialization, selectedVisitIndex,evaluate,
+                            type) {
                           widget.searchKey = specializations.firstWhere((e) => e.id == (specialization??0)).optionText??'';
                           setState(() {});
                           searchBloc.add(ApplyIsMapEvent(isMap: false));
                           // setState(() {});
                           searchBloc.add(ApplyFilterEvent(filterRequestModel:FilterRequestModel(
-                              specializationId:specialization??0, cityId:location??0
-                              // specializationId:1, cityId:11
+                              specializationId:specialization??0, cityId:location??0,
+                              rating:evaluate,typeOfDoctor:type
+                            // specializationId:1, cityId:11
                           )));
                         },);
                       }),

@@ -59,6 +59,9 @@ import 'package:mawidak/features/notification/domain/use_case/notification_use_c
 import 'package:mawidak/features/patient_appointments/data/repository/patient_appointments_repository_impl.dart';
 import 'package:mawidak/features/patient_appointments/domain/repository/patient_appointments_repository.dart';
 import 'package:mawidak/features/patient_appointments/domain/use_case/patient_appointments_use_case.dart';
+import 'package:mawidak/features/patient_evaluation/data/repository/patient_evaluation_impl.dart';
+import 'package:mawidak/features/patient_evaluation/domain/repository/patient_evaluation_repository.dart';
+import 'package:mawidak/features/patient_evaluation/domain/use_case/patient_evaluation_use_case.dart';
 import 'package:mawidak/features/patient_favourite/data/domain/repository/favourite_repository.dart';
 import 'package:mawidak/features/patient_favourite/data/domain/use_case/favourite_use_case.dart';
 import 'package:mawidak/features/patient_favourite/data/repository/favourite_repository_iml.dart';
@@ -183,6 +186,8 @@ getIt.registerLazySingleton<NotificationUseCase>(() => NotificationUseCase(
       patientAppointmentsRepository: getIt(),));
    getIt.registerLazySingleton<PrivacyPolicyUseCase>(() => PrivacyPolicyUseCase(
       privacyPolicyRepository: getIt(),));
+  getIt.registerLazySingleton<PatientEvaluationUseCase>(() => PatientEvaluationUseCase(
+      patientEvaluationRepository: getIt(),));
 
 
     // Repositories
@@ -251,6 +256,8 @@ getIt.registerLazySingleton<NotificationUseCase>(() => NotificationUseCase(
             () => PatientAppointmentsRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
    getIt.registerLazySingleton<PrivacyPolicyRepository>(
             () => PrivacyPolicyRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
+  getIt.registerLazySingleton<PatientEvaluationRepository>(
+            () => PatientEvaluationRepositoryImpl(networkInfo: getIt(), remoteData: getIt()));
 
     await DioClient().updateHeader();
 

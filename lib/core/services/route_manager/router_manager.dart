@@ -37,6 +37,7 @@ import 'package:mawidak/features/notification/presentation/ui/page/notification_
 import 'package:mawidak/features/onboarding/onboarding_screen.dart';
 import 'package:mawidak/features/parent_screen/parent_screen.dart';
 import 'package:mawidak/features/patient_appointments/presentation/ui/page/patient_appointments_screen.dart';
+import 'package:mawidak/features/patient_evaluation/presentation/ui/page/patient_evaluation_screen.dart';
 import 'package:mawidak/features/patient_favourite/presentation/ui/page/patient_favourite_screen.dart';
 import 'package:mawidak/features/privacy_policy/presentation/ui/page/privacy_policy_screen.dart';
 import 'package:mawidak/features/register/presentation/ui/pages/register_screen.dart';
@@ -241,6 +242,19 @@ class RouterManager {
         },
       ),
       GoRoute(
+        name: AppRouter.patientEvaluationScreen,
+        path: AppRouter.patientEvaluationScreen,
+        pageBuilder: (context, state) {
+          final params = state.extra as Map<String, dynamic>;
+          return createRoute(widget:  PatientEvaluationScreen(
+            imageUrl:params['image'], userName:params['name'],
+            specialization:params['specialization'],
+            id:params['id'],
+          ));
+          // return createRoute(widget:DoctorProfileScreen(id:state.extra as int));
+        },
+      ),
+      GoRoute(
         name: AppRouter.doctorProfileScreen,
         path: AppRouter.doctorProfileScreen,
         pageBuilder: (context, state) {
@@ -274,6 +288,8 @@ class RouterManager {
           return createRoute(widget:  DoctorRatingsScreen(
             id:params['id'], name:params['name'],
             isRating:params['isRating']??false,
+            specialization:params['specialization'],
+            image:params['image'],
           ));
           // return createRoute(widget:DoctorRatingsScreen(id:state.extra as int));
         },

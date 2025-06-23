@@ -9,9 +9,10 @@ import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/features/lookups/lookup_bloc.dart';
 
 // List<String> visitTypes = ['زيارة منزلية','حجز اونلاين','في العيادة'];
-List<String> userTypes = ['consultant'.tr(),'specialist'.tr(),'all'.tr()];
+List<String> userTypes = ['doctor2'.tr(),'specialist2'.tr(),'consultant'.tr()];
 
-typedef FilterCallback = void Function(int? location, int? specialization, int selectedVisitIndex,double evaluate);
+typedef FilterCallback = void Function(int? location, int? specialization, int selectedVisitIndex,num evaluate,
+    int type);
 void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCallback onApplyFilter) {
   showModalBottomSheet(
     context: context,isScrollControlled:true,
@@ -23,7 +24,7 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
       String? location,specialization;
       int? cityId,specializationId;
       // int selectedVisitIndex = -1;
-      double? selectedEvaluation;
+      int? selectedEvaluation;
       int selectedUserTypeIndex = -1;
       return StatefulBuilder(builder: (context, setState) {
         return Padding(
@@ -117,6 +118,7 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                       onTap: () {
                         setState(() {
                           selectedUserTypeIndex = index;
+                          // print('selectedUserTypeIndex>>'+selectedUserTypeIndex.toString());
                         });
                       },
                       child: Container(
@@ -145,23 +147,38 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                 padding: const EdgeInsets.only(top: 20, bottom: 10),
                 child: PText(title: 'evaluation'.tr(), size: PSize.text14),
               ),
+              // Center(
+              //   child: AccurateHalfStarRating(
+              //     rating:selectedEvaluation??0,
+              //     onRatingChanged: (value) {
+              //       setState(() {
+              //         selectedEvaluation = value;
+              //       });
+              //     },
+              //   ),
+              // ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(5, (index) {
-                  double starValue = index + 1.0;
+                  int starValue = index + 1;
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        selectedEvaluation = starValue;
+                        selectedEvaluation = starValue; // selectedEvaluation should be int
                       });
                     },
                     child: Icon(
-                      Icons.star,size: 36,
-                      color: (selectedEvaluation ?? 0) >= starValue ? Colors.orange : AppColors.grey200,
+                      Icons.star,
+                      size: 36,
+                      color: (selectedEvaluation ?? 0) >= starValue
+                          ? Colors.orange
+                          : AppColors.grey200,
                     ),
                   );
                 }),
               ),
+
 
 
               const SizedBox(height:30),
@@ -173,7 +190,8 @@ void filterBottomSheet(BuildContext context,LookupBloc lookupBloc,final FilterCa
                         onPressed: () {
                           Navigator.pop(context);
                           // onApplyFilter(cityId,specializationId,selectedVisitIndex);
-                          onApplyFilter(cityId,specializationId,selectedUserTypeIndex,selectedEvaluation??0);
+                          onApplyFilter(cityId,specializationId,selectedUserTypeIndex,selectedEvaluation??0,
+                          selectedUserTypeIndex+1);
                         },
                         title: 'filter'.tr()+ ' ('+
                             getSelectedCount(location??'', specialization??'', selectedUserTypeIndex).toString()+')',
@@ -214,3 +232,79 @@ int getSelectedCount(String location,String specialization,int selectedVisitInde
   if (selectedVisitIndex != -1) count++;
   return count;
 }
+
+
+
+
+
+
+class AccurateHalfStarRating extends StatefulWidget {
+  final double rating;
+  final int starCount;
+  final double starSize;
+  final ValueChanged<double> onRatingChanged;
+
+  const AccurateHalfStarRating({
+    super.key,
+    required this.rating,
+    required this.onRatingChanged,
+    this.starCount = 5,
+    this.starSize = 40.0,
+  });
+
+  @override
+  State<AccurateHalfStarRating> createState() => _AccurateHalfStarRatingState();
+}
+
+class _AccurateHalfStarRatingState extends State<AccurateHalfStarRating> {
+  late double _currentRating;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentRating = widget.rating;
+  }
+
+  void _handleTap(TapDownDetails details, BoxConstraints constraints) {
+    double starWidth = constraints.maxWidth / widget.starCount;
+    double tapX = details.localPosition.dx;
+
+    // Convert tap X position into a double rating value
+    double rawRating = (tapX / starWidth);
+    double newRating = (rawRating * 2).round() / 2;
+
+    setState(() {
+      _currentRating = newRating;
+    });
+    widget.onRatingChanged(_currentRating);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) => GestureDetector(
+        onTapDown: (details) => _handleTap(details, constraints),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(widget.starCount, (index) {
+            IconData icon;
+            if (_currentRating >= index + 1) {
+              icon = Icons.star;
+            } else if (_currentRating >= index + 0.5) {
+              icon = Icons.star_half;
+            } else {
+              icon = Icons.star_border;
+            }
+
+            return Icon(
+              icon,
+              color: Colors.amber,
+              size: widget.starSize,
+            );
+          }),
+        ),
+      ),
+    );
+  }
+}
+

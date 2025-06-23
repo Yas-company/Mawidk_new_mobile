@@ -58,6 +58,9 @@ class VerifyOtpBloc extends Bloc<VerifyOtpEvent,BaseState> {
             await SharedPreferenceService().setString(SharPrefConstants.userName,
                 ((r).model as LoginResponseModel)
                     .model?.name ?? '');
+            await SharedPreferenceService().setInt(SharPrefConstants.userId,
+                ((r).model as LoginResponseModel)
+                    .model?.id ?? 0);
             await SharedPreferenceService().setString(SharPrefConstants.phone,
                 ((r).model as LoginResponseModel)
                     .model?.phone ?? '');

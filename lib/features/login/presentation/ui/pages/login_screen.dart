@@ -34,6 +34,7 @@ class LoginScreenState extends State<LoginScreen> {
   SurveyBloc surveyBloc = SurveyBloc(surveyUseCase: getIt());
   @override
   Widget build(BuildContext context) {
+    loginBloc.allowLocation();
     return BlocProvider(
       create:(context) => surveyBloc,
       child: BlocProvider(create:(context) => loginBloc,

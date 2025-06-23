@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:mawidak/features/login/data/model/loction_request_model.dart';
 import '../../data/model/login_request_model.dart';
 import '../repository/login_repo.dart';
 
@@ -9,5 +10,8 @@ class LoginUseCase {
 
   Future<Either> login(LoginRequestModel params) async {
     return await loginRepository.login(model: params);
+  }
+  Future<Either> updateLocation(LocationRequestModel params) async {
+    return await loginRepository.updateLocation(model: params);
   }
 }

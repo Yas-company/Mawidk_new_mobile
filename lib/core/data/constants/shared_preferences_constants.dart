@@ -8,6 +8,7 @@ class SharPrefConstants {
   static const String emailKey = 'emailKey';
   static const String phone = 'phone';
   static const String userName = 'userName';
+  static const String userId = 'userId';
   static const String passwordKey = 'passwordKey';
   static const String accessToken = 'accessToken';
   static const String refreshToken = 'refreshToken';

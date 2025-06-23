@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mawidak/core/component/appbar/p_appbar.dart';
@@ -19,7 +20,7 @@ class ChangePasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     ChangePasswordBloc changePasswordBloc = ChangePasswordBloc(changePasswordUseCase:getIt());
     return Scaffold(backgroundColor: AppColors.whiteBackground,
-      appBar: appBar(context: context,text: 'تغيير كلمة المرور',backBtn:true,height:50,
+      appBar: appBar(context: context,text: 'change_password'.tr(),backBtn:true,height:50,
       isCenter: true),
       body: BlocProvider(create: (context) => changePasswordBloc,
         child: Padding(
@@ -39,30 +40,30 @@ class ChangePasswordScreen extends StatelessWidget {
                   return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
                 },),
               const SizedBox(height:16,),
-              PTextField(controller:changePasswordBloc.newPass,labelAbove:'كلمة المرور الجديدة',isPassword:true,
+              PTextField(controller:changePasswordBloc.newPass,labelAbove:'new_password'.tr(),isPassword:true,
                 prefixIcon:PImage(source:AppSvgIcons.lock,fit:BoxFit.scaleDown,color:AppColors.primaryColor,),
-                hintText: 'كلمة المرور', feedback:(value) {
+                hintText: 'password'.tr(), feedback:(value) {
                   changePasswordBloc.add(ApplyValidationEvent());
                 }, validator:(value) {
                   if((value??'').isNotEmpty&&value!.length>=6){
                     return null;
                   }
-                  return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
+                  return 'password_error'.tr();
                 },),
               const SizedBox(height:16,),
-              PTextField(controller:changePasswordBloc.confirmNewPass,labelAbove:'تأكيد كلمة المرور',isPassword:true,
+              PTextField(controller:changePasswordBloc.confirmNewPass,labelAbove:'confirm_password'.tr(),isPassword:true,
                 prefixIcon:PImage(source:AppSvgIcons.lock,fit:BoxFit.scaleDown,color:AppColors.primaryColor,),
-                hintText: 'كلمة المرور', feedback:(value) {
+                hintText: 'password'.tr(), feedback:(value) {
                   changePasswordBloc.add(ApplyValidationEvent());
                 }, validator:(value) {
                   if((value??'').isNotEmpty&&value!.length>=6){
                     if(changePasswordBloc.newPass.text == changePasswordBloc.confirmNewPass.text){
                       return null;
                     }else{
-                      return 'يجب أن تساوي كلمة المرور تأكيد كلمة المرور';
+                      return 'password_equal'.tr();
                     }
                   }
-                  return 'يجب أن تتكون كلمة المرور من 6 خانات على الأقل.';
+                  return 'password_error'.tr();
                 },),
             ],),
 
@@ -73,7 +74,7 @@ class ChangePasswordScreen extends StatelessWidget {
                   newPassword:changePasswordBloc.newPass.text,
                   newPasswordConfirmation:changePasswordBloc.confirmNewPass.text,
                 )));
-              },title:'حفظ التغييرات',isFitWidth:true,isFirstButton: true,hasBloc:true,
+              },title:'save_changes'.tr(),isFitWidth:true,isFirstButton: true,hasBloc:true,
                 isButtonAlwaysExist: false,),
             )
           ],),

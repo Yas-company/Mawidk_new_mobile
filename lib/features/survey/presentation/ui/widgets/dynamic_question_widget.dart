@@ -110,8 +110,8 @@ Widget buildQuestionWidget(Question q, Function setStateCallback){
 
       case 'textarea':
       return Padding(
-        padding: const EdgeInsets.only(top: 10,bottom:10),
-        child: PTextField(maxLines:5,
+        padding: q.padding ?? const EdgeInsets.only(top: 10,bottom:10),
+        child: PTextField(maxLines:q.line ?? 5,
           controller: TextEditingController(text: q.answer)
             ..selection = TextSelection.collapsed(offset: q.answer?.length ?? 0),
           labelAbove: q.questionText,
@@ -127,13 +127,14 @@ Widget buildQuestionWidget(Question q, Function setStateCallback){
     case 'radio':
     case 'radio_button':
       return RadioButtonWidget(
+        padding:q.padding,
         label: q.questionText??'',
         options: q.options??[],
         selectedValue: q.answer ?? '',
         onChanged: (val) {
           setStateCallback(() {
             q.answer = val;
-            log('q.answer>>'+q.answer.toString());
+            // log('q.answer>>'+q.answer.toString());
           });
         },
       );
@@ -252,15 +253,29 @@ Widget buildQuestionWidget(Question q, Function setStateCallback){
         },
       );
     case 'drop_down':
-      return DropDownWidget(hint:q.hint??'اختر',
+      return DropDownWidget(
+        isTrue: q.isTrue,
+        padding:q.padding,hint:q.hint??'اختر',
         title: q.questionText??'',
+        showOtherFiled: q.showOtherFiled??false,
         showCheckbox: q.showCheckBoc??false,
         options: q.options??[],
         selectedValues: (q.answer as List?)?.cast<Option>() ?? [],
         // selectedValues: q.answer ?? [],
+        onAnswer:(value) {
+          setStateCallback(() {
+            q.isTrue = value;
+            // print('object>>'+q.isTrue.toString());
+          });
+        },
         onChanged: (value) {
           setStateCallback(() {
             q.answer = List<Option>.from(value);
+            // print('q.answer>>'+q.answer.toString());
+            // print('q.answer>>'+q.answer[0].id.toString());
+            // print('q.answer>>'+q.answer[1].id.toString());
+            // print('q.answer>>'+q.answer[2].id.toString());
+            // print('q.answer>>'+q.answer[3].id.toString());
             // q.answer ??= [];
             // q.answer.clear();
             // q.answer.addAll(value);

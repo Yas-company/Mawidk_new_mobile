@@ -70,6 +70,7 @@ class SearchResultWidget extends StatelessWidget {
                 });
               },imageUrl:item.image??'',
                 doctorName:item.name??'',
+                doctorType: item.typeOfDoctor??'',
                 rating: 4.8,
                 specialization:item.specialization??'',
                 location: 'New York, USA',

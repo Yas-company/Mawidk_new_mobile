@@ -76,4 +76,6 @@ class ApiEndpointsConstants {
   static const String getConsultations = 'user/consultations/';
   static const String getConsultationById = 'user/consultation/';
   static const String addConsultation = 'user/add-consultation';
+  static const String userLocation = 'user/user-location';
+  static const String addRate = 'ratings';
 }

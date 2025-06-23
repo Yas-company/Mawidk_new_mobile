@@ -8,6 +8,7 @@ import 'package:mawidak/features/survey/data/model/survey_response_model.dart';
 class RadioButtonWidget extends StatelessWidget {
   final List<Option> options;
   final String label;
+  final EdgeInsetsGeometry? padding;
   final dynamic selectedValue;
   // final Function(String) onChanged;
   final Function(Option) onChanged;
@@ -15,6 +16,7 @@ class RadioButtonWidget extends StatelessWidget {
   const RadioButtonWidget({
     super.key,
     required this.options,
+    this.padding,
     required this.label,
     required this.selectedValue,
     required this.onChanged,
@@ -23,7 +25,8 @@ class RadioButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top:14),
+      // padding: padding ?? const EdgeInsets.only(top:14),
+      padding: padding ?? const EdgeInsets.only(top:14),
       child: Column(crossAxisAlignment:CrossAxisAlignment.start,
           children: [
             PText(title: label, fontWeight: FontWeight.w500, size: PSize.text16,),

@@ -53,11 +53,11 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
       title: "كيف تصف حالتك الصحية العامة؟",
       subtitle: "اختر من الاختيارات التالية",
       questions: [
-        Question(
-          id: 0,
-          questionText: "هل لديك تأمين؟",
-          type: "text_with_check",isRequired:true,
-        ),
+        // Question(
+        //   id: 0,
+        //   questionText: "هل لديك تأمين؟",
+        //   type: "text_with_check",isRequired:true,
+        // ),
         Question(
           id: 1,
           questionText: "",
@@ -67,27 +67,27 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
         ),
       ],
     ),
-    // ScreenModel(
-    //   id: 2,
-    //   title: "الامراض المزمنة",
-    //   subtitle: "هل تعاني من اي امراض مزمنة ؟",
-    //   questions: [
-    //     Question(showCheckBoc:true,
-    //       id: 1,
-    //       questionText: "اختر الامراض المزمنة",
-    //       // type: "multi_select",isRequired:true,
-    //       type: "drop_down",isRequired:false,
-    //       options: allDiseases
-    //       // [
-    //       //   Option(id:1,optionText:"السكري"), Option(id:2,optionText:"الضغط"),
-    //       //   Option(id:3,optionText:"الربو"), Option(id:4,optionText:"امراض القلب"),
-    //       //   Option(id:5,optionText:"لا شئ مما سبق"),
-    //       //   ],
-    //     ),
-    //   ],
-    // ),
     ScreenModel(
       id: 2,
+      title: "الامراض المزمنة",
+      subtitle: "هل تعاني من اي امراض مزمنة ؟",
+      questions: [
+        Question(showCheckBoc:true,
+          id: 1,showOtherFiled:true,
+          questionText: "اختر الامراض المزمنة",
+          // type: "multi_select",isRequired:true,
+          type: "drop_down",isRequired:false,
+          options: allDiseases
+          // [
+          //   Option(id:1,optionText:"السكري"), Option(id:2,optionText:"الضغط"),
+          //   Option(id:3,optionText:"الربو"), Option(id:4,optionText:"امراض القلب"),
+          //   Option(id:5,optionText:"لا شئ مما سبق"),
+          //   ],
+        ),
+      ],
+    ),
+    ScreenModel(
+      id: 3,
       title: "معلومات صحية اساسية",
       subtitle: "من فضلك قم باستكمال البيانات",
       questions: [
@@ -109,7 +109,7 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
       ],
     ),
     ScreenModel(
-      id: 3,
+      id: 4,
       title: "هل تمارس الرياضة بانتظام ؟",
       subtitle: "اختر من الاختيارات التالية",
       questions: [
@@ -126,7 +126,7 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
       ],
     ),
     ScreenModel(
-      id: 4,
+      id: 5,
       title: "نمط حياتك",
       subtitle: "من فضلك قم باستكمال البيانات",
       questions: [
@@ -146,15 +146,15 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
       ],
     ),
     ScreenModel(
-      id: 5,
+      id: 6,
       title: "التاريخ الطبي و العائلي",
       subtitle: "من فضلك قم باستكمال البيانات",
       questions: [
-        Question(isRequired:true,hint:'اسم المرض',
-          questionText:"هل تعاني من اي امراض مزمنة ؟",
-          id: 0,
-          type: "tapped_text_field",
-        ),
+        // Question(isRequired:true,hint:'اسم المرض',
+        //   questionText:"هل تعاني من اي امراض مزمنة ؟",
+        //   id: 0,
+        //   type: "tapped_text_field",
+        // ),
         Question(isRequired:true,hint:'اسم المرض',
           questionText:"هل لديك تاريخ لامراض وراثية في عائلتك ؟",
           id: 1,

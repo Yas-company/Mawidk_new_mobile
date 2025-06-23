@@ -145,6 +145,8 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
                                 'id':item.id??0,'isRating':true,
                                 'name':item.name??'',
+                                'image':item.photo??'',
+                                'specialization':item.specialization??'',
                               });
                             },),
                             infoItem(title: 'comments'.tr(), image: AppSvgIcons.icComments, value:
@@ -152,6 +154,8 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
                                 'id':item.id??0,'isRating':false,
                                 'name':item.name??'',
+                                'image':item.photo??'',
+                                'specialization':item.specialization??'',
                               });
                             },),
                           ],),
@@ -191,6 +195,8 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               context.pushNamed(AppRouter.doctorRatingsScreen,extra:{
                                 'id':item.id??0,'isRating':true,
                                 'name':item.name??'',
+                                'image':item.photo??'',
+                                'specialization':item.specialization??'',
                               });
                             },child: Stack(children: [
                                 Padding(

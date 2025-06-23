@@ -155,15 +155,21 @@ class StaticSurveyBloc extends Bloc<SurveyEvent, BaseState> {
     bool isDoctor = SharedPreferenceService().getBool(SharPrefConstants.isDoctor);
     if(isDoctor){
       SurveyDoctorRequestModel model = SurveyDoctorRequestModel(
-          gender:(surveyList[0].questions?[0].answer??Option(id: 0)).id,
-          // specializationId:(surveyList[0].questions?[1].answer??Option(id: 0)).id,
+          gender:1,
+
+          about_doctor:(surveyList[0].questions?[0].answer??''),
           specializationId:((surveyList[0].questions?[1].answer)??[]).first.id,
-          experience:(surveyList[1].questions?[0].answer??Option(id: 0)).id,
+
+          type_of_doctor:(surveyList[1].questions?[0].answer??Option(id: 0)).id,
           licenseNumber:int.parse(surveyList[1].questions?[1].answer??'0'),
+
+          experience:10,
+
+          // experience:(surveyList[1].questions?[0].answer??Option(id: 0)).id,
         certificates: selectedFiles,
         certificateNames: selectedFiles.map((file) => basename(file.path)).toList()
     );
-      // log('modelIS>>>>'+jsonEncode(model));
+      log('modelIS>>>>'+jsonEncode(model));
       add(SubmitSurveyDoctorEvent(model:model));
     }else{
       // add(SubmitSurveyEvent(model: generateSurveySubmitRequest(surveyList)));
@@ -214,27 +220,39 @@ class StaticSurveyBloc extends Bloc<SurveyEvent, BaseState> {
 
 PatientSurveyRequestModel generatePatientSurvey(List<ScreenModel> surveyList) {
   // bool isDoctor = SharedPreferenceService().getBool(SharPrefConstants.isDoctor);
-  // print('kk>>'+(surveyList[2].questions?[0].answer??[]).toString());
+  // print('kk>>'+(surveyList[3].questions![0].questionText.toString()).toString());
   return PatientSurveyRequestModel(
-      gender:(surveyList[0].questions?[0].answer??Option(id: 0)).id,
-      age:int.parse(surveyList[0].questions?[1].answer??'0'),
-      weight:int.parse(surveyList[0].questions?[2].answer??'0'),
-      height:int.parse(surveyList[0].questions?[3].answer??'0'),
+      // gender:1,
+      // gender:(surveyList[0].questions?[0].answer??Option(id: 0)).id,
+      age:int.parse(surveyList[0].questions?[0].answer??'0'),
+      weight:int.parse(surveyList[0].questions?[1].answer??'0'),
+      height:int.parse(surveyList[0].questions?[2].answer??'0'),
+
       generalHealth:(surveyList[1].questions?[0].answer??Option(id: 0)).id,
+
     chronicDiseaseIds:List<Option>.from(surveyList[2].questions?[0].answer ?? []).map((e) => e.id!).toList(),
+
     dailyMedications:(surveyList[3].questions?[0].answer??[]),
     allergies:(surveyList[3].questions?[1].answer??[]),
     infectiousDiseases:(surveyList[3].questions?[2].answer??[]),
+
     exerciseFrequency:(surveyList[4].questions?[0].answer??Option(id: 0)).id,
+
     smokingStatus:((surveyList[5].questions?[0].answer??Option(id: 0)).id)==1?1:0,
     sleepProblems:((surveyList[5].questions?[1].answer??Option(id: 0)).id)==1?true:false,
+
+    // chronicDiseaseIds:surveyList[5].questions?[0].answer??[],
     familyDiseases:(surveyList[6].questions?[0].answer??[]),
     seriousHealthIssues:(surveyList[6].questions?[1].answer??[]),
     medicalCheckups:(surveyList[6].questions?[2].answer??[]),
-    consultationPreference:(surveyList[7].questions?[0].answer??Option(id: 0)).id,
-    doctorLocationPreference:(surveyList[7].questions?[1].answer??Option(id: 0)).id,
-    wantsNotifications: ((surveyList[7].questions?[2].answer??Option(id: 0)).id)==1?true:false,
-    wantsFollowUp: ((surveyList[7].questions?[3].answer??Option(id: 0)).id)==1?true:false,
+    wantsFollowUp:true,
+    wantsNotifications:true,
+    consultationPreference:1,
+    doctorLocationPreference: 2
+    // consultationPreference:(surveyList[7].questions?[0].answer??Option(id: 0)).id,
+    // doctorLocationPreference:(surveyList[7].questions?[1].answer??Option(id: 0)).id,
+    // wantsNotifications: ((surveyList[7].questions?[2].answer??Option(id: 0)).id)==1?true:false,
+    // wantsFollowUp: ((surveyList[7].questions?[3].answer??Option(id: 0)).id)==1?true:false,
   );
 }
 

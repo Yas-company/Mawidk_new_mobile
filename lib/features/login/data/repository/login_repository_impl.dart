@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:mawidak/core/base_network/api_endpoints_constants.dart';
 import 'package:mawidak/core/base_network/general_response_model.dart';
 import 'package:mawidak/core/base_network/network_repository.dart';
+import 'package:mawidak/features/login/data/model/loction_request_model.dart';
 import 'package:mawidak/features/login/data/model/login_request_model.dart';
 import 'package:mawidak/features/login/data/model/login_response_model.dart';
 import 'package:mawidak/features/login/domain/repository/login_repo.dart';
@@ -22,6 +23,26 @@ class LoginRepositoryImpl extends MainRepository implements LoginRepository {
         path: ApiEndpointsConstants.login,
         headers: headers,
         model: GeneralResponseModel(model: LoginResponseModel()),
+      );
+      return result;
+    } catch (e) {
+      // If an error occurs, return the error wrapped in Left
+      return Left(
+        ErrorExceptionModel(
+            message: e.toString(),
+            exceptionEnum: ExceptionEnum.unknownException),
+      );
+    }
+  }
+
+  @override
+  Future<Either> updateLocation({required LocationRequestModel model}) async{
+    try {
+      final result = await remoteData.post(
+        body: model.toJson(),
+        path: ApiEndpointsConstants.userLocation,
+        headers: headers,
+        model: GeneralResponseModel(),
       );
       return result;
     } catch (e) {

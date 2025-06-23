@@ -11,10 +11,12 @@ class DoctorsListWidget extends StatelessWidget {
   final String imageUrl;
   final String doctorName;
   final String specialization;
+  final String doctorType;
   final double rating;
   final String location;
   final bool showRate;
   final String salary;
+  final num averageRating;
   final Color? backgroundColor;
   final Color? imageColor;
   final VoidCallback? onTap;
@@ -24,8 +26,10 @@ class DoctorsListWidget extends StatelessWidget {
     super.key,
     required this.imageUrl,
     required this.doctorName,
+    required this.doctorType,
     this.salary='0',
     this.backgroundColor,
+    this.averageRating = 0,
     this.imageColor,
     required this.onClickCard,
     required this.rating,
@@ -72,9 +76,9 @@ class DoctorsListWidget extends StatelessWidget {
                           // Rating
                           Row(
                             children: [
-                              // const Icon(Icons.star, color: Colors.amber, size: 20),
-                              // const SizedBox(width: 4),
-                              // PText(title:'$rating - ',fontColor:AppColors.grey200,),
+                              const Icon(Icons.star, color: Colors.amber, size: 20),
+                              const SizedBox(width: 4),
+                              PText(title:'$averageRating - ',fontColor:AppColors.grey200,),
                               PText(title:specialization,fontColor:AppColors.grey200,)
                             ],
                           ),
@@ -87,6 +91,18 @@ class DoctorsListWidget extends StatelessWidget {
                 Divider(color:AppColors.grey200.withOpacity(0.3),),
                 Row(
                   children: [
+                    const Icon(Icons.person, size: 20, color:AppColors.primaryColor),
+                    const SizedBox(width: 4),
+                    Expanded(
+                        child:PText(title:doctorType,fontColor:AppColors.grayShade3,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                    ),
+                  ],
+                ),
+                const SizedBox(height:10,),
+                Row(
+                  children: [
                     const Icon(Icons.my_location, size: 20, color:AppColors.primaryColor),
                     const SizedBox(width: 4),
                     Expanded(
@@ -95,7 +111,8 @@ class DoctorsListWidget extends StatelessWidget {
                         )
                     ),
                   ],
-                ),const SizedBox(height:10,),
+                ),
+                const SizedBox(height:10,),
                 Row(
                   children: [
                     const PImage(source:AppSvgIcons.icMoney,width:14,height:14,),

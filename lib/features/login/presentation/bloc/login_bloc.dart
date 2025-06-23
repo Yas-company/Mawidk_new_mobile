@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mawidak/core/base_network/error/handler/error_model.dart';
 import 'package:mawidak/core/base_network/general_response_model.dart';
@@ -11,7 +15,9 @@ import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
 import 'package:mawidak/di.dart';
+import 'package:mawidak/features/login/data/model/loction_request_model.dart';
 import 'package:mawidak/features/login/data/model/login_response_model.dart';
+import 'package:mawidak/features/login/data/repository/login_repository_impl.dart';
 import 'package:mawidak/features/login/domain/use_case/login_use_case.dart';
 import 'package:mawidak/features/login/presentation/bloc/login_event.dart';
 import 'package:mawidak/features/survey/presentation/bloc/survey_bloc.dart';
@@ -26,6 +32,7 @@ import '../../../../core/services/local_storage/shared_preference/shared_prefere
 class LoginBloc extends Bloc<LoginEvent, BaseState> {
   final LoginUseCase loginUseCase;
   bool isChecked = false;
+  LocationRequestModel? locationRequestModel;
   TextEditingController phone = TextEditingController();
   TextEditingController password =  TextEditingController();
 
@@ -83,6 +90,9 @@ class LoginBloc extends Bloc<LoginEvent, BaseState> {
               await SharedPreferenceService().setString(SharPrefConstants.userName,
                   ((r).model as LoginResponseModel)
                       .model?.name ?? '');
+              await SharedPreferenceService().setInt(SharPrefConstants.userId,
+                  ((r).model as LoginResponseModel)
+                      .model?.id ?? 0);
               await SharedPreferenceService().setString(SharPrefConstants.phone,
                   ((r).model as LoginResponseModel)
                       .model?.phone ?? '');
@@ -91,6 +101,10 @@ class LoginBloc extends Bloc<LoginEvent, BaseState> {
               if(!isDoctor() && isSKippedSurvey){
                 Get.context!.goNamed(isDoctor()?AppRouter.homeDoctor:AppRouter.homePatient);
                 return;
+              }
+
+              if(locationRequestModel!=null){
+                await LoginUseCase(loginRepository:getIt()).updateLocation(locationRequestModel!);
               }
               if((((r).model as LoginResponseModel).model?.surveyStatus ?? false)){
                 // goToSurveyScreen(isDoctor?UserType.doctor:UserType.patient,event.surveyBloc);
@@ -165,4 +179,34 @@ class LoginBloc extends Bloc<LoginEvent, BaseState> {
     //   );
     // }
   }
+
+  Future<void> allowLocation() async {
+    dynamic res = await getCurrentLocation();
+    if(res is LocationRequestModel){
+      locationRequestModel = res;
+      print('resss>>'+jsonEncode(res));
+    }
+  }
+}
+
+
+Future<dynamic> getCurrentLocation() async {
+  bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  LocationPermission permission = await Geolocator.checkPermission();
+
+  if (!serviceEnabled) {
+    await Geolocator.openLocationSettings();
+    return;
+  }
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+  }
+  if (permission == LocationPermission.deniedForever ||
+      permission == LocationPermission.denied) {
+    SafeToast.show(message:'Location permissions are denied',type:MessageType.error);
+    return;
+  }
+
+  Position position = await Geolocator.getCurrentPosition();
+  return LocationRequestModel(latitude: position.latitude, longitude:position.longitude);
 }

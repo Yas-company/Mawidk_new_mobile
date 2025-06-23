@@ -48,6 +48,7 @@ class LoginResponseModel {
 }
 
 class LoginModel {
+  int? id;
   String? name;
   String? phone;
   num? profileCompletionPercentage;
@@ -57,6 +58,7 @@ class LoginModel {
   String? refreshToken;
 
   LoginModel({
+    this.id,
     this.name,
     this.phone,
     this.accessToken,
@@ -67,6 +69,7 @@ class LoginModel {
   });
 
   LoginModel copyWith({
+    int? id,
     String? name,
     String? phone,
     bool? surveyStatus,
@@ -75,6 +78,7 @@ class LoginModel {
     String? refreshToken
   }) {
     return LoginModel(
+      id: id ?? this.id,
       name: name ?? this.name,
       phone: phone ?? this.phone,
       surveyStatus: surveyStatus ?? this.surveyStatus,
@@ -86,6 +90,7 @@ class LoginModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'phone': phone,
       'refreshToken': refreshToken,
@@ -98,6 +103,7 @@ class LoginModel {
 
   factory LoginModel.fromMap(Map<String, dynamic> map) {
     return LoginModel(
+      id: map['id'] != null ? map['id'] as int : null,
       name: map['name'] != null ? map['name'] as String : null,
       phone:map['phone'] != null ? map['phone'] as String : null,
       profileCompletionPercentage:map['profile_completion_percentage'] != null ?

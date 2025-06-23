@@ -6,6 +6,7 @@ import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/assets_helper/app_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/services/localization/app_localization.dart';
 import 'dart:ui' as direction;
 
@@ -19,14 +20,14 @@ void showLanguageBottomSheet(BuildContext context) {
     backgroundColor: Colors.white,
     builder: (context) {
       return StatefulBuilder(builder:(context, setState) {
-        return Directionality(textDirection:direction.TextDirection.ltr,
+        return Directionality(textDirection:isArabic()?direction.TextDirection.ltr:direction.TextDirection.rtl,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                PText(title:'اختر اللغه',size:PSize.text14,fontColor:AppColors.grey200,),
+                PText(title:'choose_language'.tr(),size:PSize.text14,fontColor:AppColors.grey200,),
                 const SizedBox(height: 20),
                 Directionality(textDirection:direction.TextDirection.rtl,
                   child:Column(mainAxisSize: MainAxisSize.min,children: [

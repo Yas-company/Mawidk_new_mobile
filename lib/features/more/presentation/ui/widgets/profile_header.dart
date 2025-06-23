@@ -5,8 +5,10 @@ import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
+import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
+import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 
 class ProfileHeader extends StatelessWidget {
   final String imageUrl;
@@ -38,7 +40,8 @@ class ProfileHeader extends StatelessWidget {
         PText(title: phoneNumber,size:PSize.text14,fontColor:AppColors.grey200),
         const SizedBox(height:6),
         GestureDetector(onTap:() {
-          context.push(AppRouter.doctorProfileDetailsScreen,extra:110);
+          context.push(AppRouter.doctorProfileDetailsScreen,
+              extra:SharedPreferenceService().getInt(SharPrefConstants.userId));
         },child: Container(padding:EdgeInsets.symmetric(horizontal:8,vertical:2),decoration:BoxDecoration(
             borderRadius:BorderRadius.circular(25),
             border:Border.all(color:AppColors.primaryColor),

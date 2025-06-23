@@ -211,12 +211,16 @@ class DioClient {
       Map<String, String>? modfiedHeader = headers;
       modfiedHeader!['Content-type'] = 'multipart/form-data';
       // Prepare the form data
+      print('body.certificateNames>>'+body.certificateNames.toString());
       FormData formData = FormData.fromMap({
         'specialization_id': (body as SurveyDoctorRequestModel).specializationId.toString(),
         'gender': body.gender.toString(),
-        'experience': body.experience.toString(),
+        // 'experience': body.experience.toString(),
         'license_number': body.licenseNumber.toString(),
+        'type_of_doctor': body.type_of_doctor.toString(),
+        'about_doctor': body.about_doctor.toString(),
         // Add certificate names as text
+        'subspecialties[]':[1,3],
         'certificate_names[]': body.certificateNames,
         // Add certificates as File objects
         'certificates[]': await Future.wait(body.certificates!.map((file) async {

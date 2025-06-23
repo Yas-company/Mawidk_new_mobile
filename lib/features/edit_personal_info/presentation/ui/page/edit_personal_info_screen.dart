@@ -31,7 +31,7 @@ class EditPersonalInfoScreen extends StatelessWidget {
         backgroundColor: AppColors.whiteBackground,
         appBar: appBar(
           context: context,
-          text: 'تعديل البيانات الشخصية',
+          text: 'edit_personal_info'.tr(),
           backBtn: true,
           height: 50,
           isCenter: true,

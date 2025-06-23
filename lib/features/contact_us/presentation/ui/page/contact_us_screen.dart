@@ -57,7 +57,8 @@ class ContactUsScreenState extends State<ContactUsScreen> {
                         enabled: false,
                         textInputAction:TextInputAction.next,
                         controller:contactUsBloc.phone = TextEditingController
-                          (text: SharedPreferenceService().getString(SharPrefConstants.phone)),labelAbove:'رقم الجوال',
+                          (text: SharedPreferenceService().getString(SharPrefConstants.phone)),
+                        labelAbove:'phone_number'.tr(),
                         prefixIcon:PImage(source:AppSvgIcons.call,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
                         // prefixIcon: Icon(size:20,Icons.phone_in_talk_rounded,color:AppColors.primaryColor,),
                         hintText: '05XXXXXXX', feedback:(value) {

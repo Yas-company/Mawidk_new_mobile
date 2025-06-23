@@ -207,6 +207,7 @@ class CommunicationMapScreenState extends State<SearchMapScreen> {
             backgroundColor: AppColors.whiteBackground,
             salary: item.consultationFee??'0',
             doctorName:item.name??'',
+            doctorType:item.doctorType??'',
             rating: 4.8,
             specialization:item.specialization??'',
             location:item.address??'',

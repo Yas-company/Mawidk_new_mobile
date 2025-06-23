@@ -9,6 +9,8 @@ class SurveyDoctorRequestModel {
   int? experience;
   int? licenseNumber;
   int? gender;
+  int? type_of_doctor;
+  String? about_doctor;
   List<File>? certificates;
   List<String>? certificateNames;
 
@@ -16,7 +18,9 @@ class SurveyDoctorRequestModel {
     this.experience,
     this.licenseNumber,
     this.specializationId,
+    this.type_of_doctor,
     this.gender,
+    this.about_doctor,
     this.certificates,
     this.certificateNames,
   });
@@ -24,6 +28,8 @@ class SurveyDoctorRequestModel {
   // Convert from JSON
   factory SurveyDoctorRequestModel.fromJson(Map<String, dynamic> json) {
     return SurveyDoctorRequestModel(
+      about_doctor: json['about_doctor'],
+      type_of_doctor: json['type_of_doctor'],
       specializationId: json['specializationId'],
       experience: json['experience'],
       licenseNumber: json['licenseNumber'],
@@ -40,6 +46,8 @@ class SurveyDoctorRequestModel {
   // Convert to JSON
   Map<String, dynamic> toJson() {
     return {
+      'about_doctor': about_doctor,
+      'type_of_doctor': type_of_doctor,
       'specializationId': specializationId,
       'experience': experience,
       'licenseNumber': licenseNumber,

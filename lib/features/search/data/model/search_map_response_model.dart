@@ -31,6 +31,8 @@ class ClinicData {
   final String? address;
   final String? latitude;
   final String? longitude;
+  final String? doctorType;
+  final num? averageRating;
   final String? workingHoursFrom;
   final String? workingHoursTo;
   final List<String>? workingDays;
@@ -44,6 +46,8 @@ class ClinicData {
     this.specialization,
     this.address,
     this.image,
+    this.doctorType,
+    this.averageRating,
     this.latitude,
     this.longitude,
     this.workingHoursFrom,
@@ -79,6 +83,8 @@ class ClinicData {
       'address': address,
       'latitude': latitude,
       'longitude': longitude,
+      'type_of_doctor': doctorType,
+      'average_rating': averageRating,
       'working_hours_from': workingHoursFrom,
       'working_hours_to': workingHoursTo,
       'working_days': workingDays,
@@ -94,6 +100,8 @@ class ClinicData {
       id: json['id'] as int?,
       distance: json['distance'] as dynamic,
       name: json['name'] as String?,
+      doctorType: json['type_of_doctor'] as String?,
+      averageRating: json['average_rating'] as num?,
       specialization: json['specialization'] as String?,
       image: json['image'] as String?,
       address: json['address'] as String?,
