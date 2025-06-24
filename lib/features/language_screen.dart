@@ -17,6 +17,7 @@ class LanguageSelectorScreen extends StatelessWidget {
         : const Locale('en', 'US');
 
     await context.setLocale(selectedLocale);
+    SharedPreferenceService().setBool(SharPrefConstants.languageCalled,true);
     if (!context.mounted) return;
     navigation(context);
   }

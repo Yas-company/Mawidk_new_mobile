@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,7 @@ import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
+import 'package:mawidak/core/data/constants/global_obj.dart';
 import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
@@ -31,17 +34,34 @@ class _NavigationScreenState extends State<ParentScreen>
     with WidgetsBindingObserver {
   bool isInit = false;
 
+  Timer? _timer;
+  void startTimer() {
+    if(isDoctor()){
+    _timer = Timer.periodic(Duration(seconds: 30), (timer) async {
+      await getDoctorProfileStatus();
+      if(isProfileDoctorIsActive){
+        Get.context!.goNamed(AppRouter.homeDoctor);
+      }
+    });
+    }
+  }
+
   @override
   void initState() {
     indexNotifier.value = 0;
+    if(!isProfileDoctorIsActive){
+      startTimer();
+    }
+    startTimer();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
-  bool _wasInactive = false;
+  // bool _wasInactive = false;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('dcsc');
     // if (!isPickFile) {
     //   if (state == AppLifecycleState.hidden ||
     //       state == AppLifecycleState.paused) {
@@ -59,6 +79,9 @@ class _NavigationScreenState extends State<ParentScreen>
 
   @override
   void dispose() {
+    if(_timer!=null){
+    _timer?.cancel();
+    }
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

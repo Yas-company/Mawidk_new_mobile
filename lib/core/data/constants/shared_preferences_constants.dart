@@ -14,6 +14,7 @@ class SharPrefConstants {
   static const String refreshToken = 'refreshToken';
   static const String userLoginTokenKey = '';
   static const String languageCodeKey = '';
+  static const String languageCalled = 'languageCalled';
   static const String dateFirstTimeOpenKey = 'dateFirstTimeOpenKey';
   static const String isFirstTimeToOpenAppKey = 'isFirstTimeToOpenAppKey';
   static const String isDarkThemeKey = 'themeKey';

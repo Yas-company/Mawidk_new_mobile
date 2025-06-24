@@ -104,61 +104,57 @@ class PatientFavouriteScreenState extends State<PatientFavouriteScreen> with Tic
                   }
 
                   if (dataList.isEmpty) {
-                    return Expanded(child: PText(title: 'no_doctors_found'.tr()));
+                    return PText(title: 'no_doctors_found'.tr());
                   } else {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: dataList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final item = dataList[index];
-                          final visible = _visibleItems.length > index && _visibleItems[index];
+                    return ListView.builder(
+                      itemCount: dataList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final item = dataList[index];
+                        final visible = _visibleItems.length > index && _visibleItems[index];
 
-                          return AnimatedOpacity(
-                            opacity: visible ? 1.0 : 0.0,
+                        return AnimatedOpacity(
+                          opacity: visible ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 500),
+                          child: AnimatedSlide(
                             duration: const Duration(milliseconds: 500),
-                            child: AnimatedSlide(
-                              duration: const Duration(milliseconds: 500),
-                              offset: visible ? Offset.zero : const Offset(0, 0.2),
-                              child: FavouriteItemWidget(
-                                onCardClick: () {
-                                  context.push(AppRouter.doctorProfileScreen, extra: {
-                                    'id': item.doctor?.id ?? 0,
-                                    'name': item.doctor?.name ?? '',
-                                    'specialization': item.doctor?.specialization ?? '',
-                                  });
-                                },
-                                onTap: () {
-                                  context.push(AppRouter.appointmentBookingScreen, extra: {
-                                    'id': item.doctor?.id ?? 0,
-                                    'name': item.doctor?.name ?? '',
-                                    'specialization': item.doctor?.specialization ?? '',
-                                  });
-                                },
-                                imageUrl: item.doctor?.photo ?? '',
-                                doctorName: item.doctor?.name ?? '',
-                                rating: 4,
-                                location: '',
-                                specialization: item.doctor?.specialization ?? '',
-                              ),
+                            offset: visible ? Offset.zero : const Offset(0, 0.2),
+                            child: FavouriteItemWidget(
+                              onCardClick: () {
+                                context.push(AppRouter.doctorProfileScreen, extra: {
+                                  'id': item.doctor?.id ?? 0,
+                                  'name': item.doctor?.name ?? '',
+                                  'specialization': item.doctor?.specialization ?? '',
+                                });
+                              },
+                              onTap: () {
+                                context.push(AppRouter.appointmentBookingScreen, extra: {
+                                  'id': item.doctor?.id ?? 0,
+                                  'name': item.doctor?.name ?? '',
+                                  'specialization': item.doctor?.specialization ?? '',
+                                });
+                              },
+                              imageUrl: item.doctor?.photo ?? '',
+                              doctorName: item.doctor?.name ?? '',
+                              rating: 4,
+                              location: '',
+                              specialization: item.doctor?.specialization ?? '',
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     );
                   }
                 },
-                loadingWidget: Expanded(child: Center(child: CustomLoader(size: 35))),
+                loadingWidget: Center(child: CustomLoader(size: 35)),
                 emptyWidget: (state) {
-                  return Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.hourglass_empty),
-                          PText(title: 'no_doctors_found'.tr(), size: PSize.text18),
-                        ],
-                      ),
+                  return Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.hourglass_empty),
+                        PText(title: 'no_doctors_found'.tr(), size: PSize.text18),
+                      ],
                     ),
                   );
                 },
