@@ -97,22 +97,27 @@ class StaticSurveyBloc extends Bloc<SurveyEvent, BaseState> {
     for (final question in currentQuestions) {
       if (question.isRequired != true && !isTrue) continue;
       final type = question.type ?? '';
+      if(type =='specializationsAndSub'){
+        print('answ>>'+isValidSpecializationAnswer(question.answer).toString());
+      }
       if (question.answer == null ||
           ((type=='multi_select'||type=='drop_down') && (question.answer as List).isEmpty) ||
-          ((type == 'text' || type == 'number' ||
-              type == 'sate' || type == 'textarea') &&
+          ((type == 'text' || type == 'number' || type == 'sate' || type == 'textarea') &&
               (question.answer ?? '').isEmpty) ||
           ((type == 'radio_button'||type=='multi_select_doctor') && (question.answer == null)) ||
           ((type == 'tag'||type=='tapped_text_field') && (question.isTrue == null || (question.isTrue == true &&
               (question.answer == null || (question.answer as List).isEmpty))))
+      || ((type == 'specializationsAndSub') && !isValidSpecializationAnswer(question.answer))
       ) {
         // if((isTrue && options.isNotEmpty)|| !isTrue){
         //   return true;
         // }else{
         //   return false;
         // }
-        if(((type == 'tag'||type=='tapped_text_field') && (question.isTrue != null && (question.isTrue == false)))
-        && (!isDoctor() && ((isTrue && options.isNotEmpty)|| !isTrue))){
+        if(
+        ((type == 'tag'|| type=='tapped_text_field') && (question.isTrue != null && (question.isTrue == false)))
+        && (!isDoctor() && ((isTrue && options.isNotEmpty)|| !isTrue))
+        ){
           return true;
         }
         return false;
@@ -120,6 +125,21 @@ class StaticSurveyBloc extends Bloc<SurveyEvent, BaseState> {
     }
     return true;
   }
+
+  bool isValidSpecializationAnswer(dynamic answer) {
+    if (answer is! Map) return false;
+    final int? specializationId = answer['main'];
+    final List? subs = answer['subs'];
+    if (specializationId == null) return false;
+    // check if this specialization has any subs
+    final hasSubs = subSpecializations.any((sub) => sub.id == specializationId);
+    // if it has subs, the user must have selected at least one
+    if (hasSubs && (subs == null || subs.isEmpty)) {
+      return false;
+    }
+    return true;
+  }
+
 
 
   Future<void> onSubmitPatientSurveyEvent(SubmitPatientSurveyEvent event, Emitter<BaseState> emit) async {
@@ -154,22 +174,23 @@ class StaticSurveyBloc extends Bloc<SurveyEvent, BaseState> {
   void submitSurvey() {
     bool isDoctor = SharedPreferenceService().getBool(SharPrefConstants.isDoctor);
     if(isDoctor){
+      final Map<String, dynamic> specializationAnswer = surveyList[0].questions?[1].answer ?? {};
+      final int specializationId = specializationAnswer['main'] ?? 0;
+      final List<int> subspecialties = (specializationAnswer['subs'] as List?)?.cast<int>() ?? [];
+
       SurveyDoctorRequestModel model = SurveyDoctorRequestModel(
           gender:1,
-
           about_doctor:(surveyList[0].questions?[0].answer??''),
-          specializationId:((surveyList[0].questions?[1].answer)??[]).first.id,
-
+          specializationId: specializationId,
+          subspecialties: subspecialties,
           type_of_doctor:(surveyList[1].questions?[0].answer??Option(id: 0)).id,
           licenseNumber:int.parse(surveyList[1].questions?[1].answer??'0'),
-
           experience:10,
-
           // experience:(surveyList[1].questions?[0].answer??Option(id: 0)).id,
         certificates: selectedFiles,
         certificateNames: selectedFiles.map((file) => basename(file.path)).toList()
     );
-      log('modelIS>>>>'+jsonEncode(model));
+      // log('modelIS>>>>'+jsonEncode(model));
       add(SubmitSurveyDoctorEvent(model:model));
     }else{
       // add(SubmitSurveyEvent(model: generateSurveySubmitRequest(surveyList)));

@@ -220,7 +220,7 @@ class DioClient {
         'type_of_doctor': body.type_of_doctor.toString(),
         'about_doctor': body.about_doctor.toString(),
         // Add certificate names as text
-        'subspecialties[]':[1,3],
+        'subspecialties[]':body.subspecialties,
         'certificate_names[]': body.certificateNames,
         // Add certificates as File objects
         'certificates[]': await Future.wait(body.certificates!.map((file) async {

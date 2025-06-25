@@ -14,6 +14,7 @@ import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/single_choice.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/single_select_choice.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/text_with_check.dart';
+import 'package:mawidak/features/survey/presentation/ui/widgets/specializations_and_sub_specializations.dart';
 
 bool isTrue = false;
 List<Option> options = [];
@@ -282,15 +283,20 @@ Widget buildQuestionWidget(Question q, Function setStateCallback){
           });
         },
       );
-      // return DropDownWidget(
-      //   options: q.options??[],
-      //   selectedValues: (q.answer as List?)?.cast<String>() ?? [],
-      //   onChanged: (value) {
-      //     setStateCallback(() {
-      //       q.answer = List<String>.from(value);
-      //     });
-      //   },
-      // );
+
+    case 'specializationsAndSub':
+      return SpecializationDropdown(
+        hint:q.hint??'اختر',
+        title: q.questionText??'',
+        onChangedSpecializations: (main, subs) {
+          setStateCallback(() {
+            q.answer = {
+              'main': main?.id,
+              'subs': subs.map((e) => e.id).toList(),
+            };
+          });
+        },
+      );
     default:
       return const SizedBox.shrink();
   }

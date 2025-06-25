@@ -629,6 +629,33 @@ List<Option> allDiseases = [
 // ];
 
 
+
+// List<Option> specializations = [
+//   Option(id: 1, optionText: "طب القلب", optionTextEn: "Cardiology", image: AppSvgIcons.two),
+//   Option(id: 2, optionText: "طب الأعصاب", optionTextEn: "Neurology", image: AppSvgIcons.three),
+//   Option(id: 3, optionText: "طب الأطفال", optionTextEn: "Pediatrics", image: AppSvgIcons.twelve),
+//   Option(id: 4, optionText: "طب الجلد", optionTextEn: "Dermatology", image: AppSvgIcons.seventeen),
+//   Option(id: 5, optionText: "جراحة العظام", optionTextEn: "Orthopedics", image:  AppSvgIcons.five),
+//   Option(id: 6, optionText: "طب الأسرة والمجتمع", optionTextEn: "Family and Community Medicine", image: AppSvgIcons.one),
+//   Option(id: 7, optionText: "أمراض القلب", optionTextEn: "Cardiology", image: AppSvgIcons.two),
+//   Option(id: 8, optionText: "طب الأعصاب", optionTextEn: "Neurology", image: AppSvgIcons.three),
+//   Option(id: 9, optionText: "طب العيون", optionTextEn: "Ophthalmology", image: AppSvgIcons.four),
+//   Option(id: 10, optionText: "جراحة العظام", optionTextEn: "Orthopedic Surgery", image: AppSvgIcons.five),
+//   Option(id: 11, optionText: "أمراض الغدد الصماء", optionTextEn: "Endocrinology", image: AppSvgIcons.eighteen),
+//   Option(id: 12, optionText: "أمراض الدم", optionTextEn: "Hematology", image: AppSvgIcons.seven),
+//   Option(id: 13, optionText: "الأمراض الباطنية", optionTextEn: "Internal Medicine", image: AppSvgIcons.eight),
+//   Option(id: 14, optionText: "أمراض الصدر", optionTextEn: "Pulmonology", image: AppSvgIcons.nine),
+//   Option(id: 15, optionText: "الأنف والأذن والحنجرة", optionTextEn: "Otolaryngology (ENT)", image: AppSvgIcons.ten),
+//   Option(id: 16, optionText: "طب الأسنان", optionTextEn: "Dentistry", image: AppSvgIcons.eleven),
+//   Option(id: 17, optionText: "طب الأطفال", optionTextEn: "Pediatrics", image: AppSvgIcons.twelve),
+//   Option(id: 18, optionText: "جراحة التجميل والترميم", optionTextEn: "Plastic & Reconstructive Surgery", image: AppSvgIcons.thirteen),
+//   Option(id: 19, optionText: "أمراض النساء والولادة", optionTextEn: "Obstetrics & Gynecology", image: AppSvgIcons.fourteen),
+//   Option(id: 20, optionText: "طب الأورام", optionTextEn: "Oncology", image: AppSvgIcons.fifteen),
+//   Option(id: 21, optionText: "الطب النفسي", optionTextEn: "Psychiatry", image: AppSvgIcons.sixteen),
+//   Option(id: 22, optionText: "الأمراض الجلدية", optionTextEn: "Dermatology", image: AppSvgIcons.seventeen),
+//   Option(id: 23, optionText: "جراحة المخ والأعصاب", optionTextEn: "Neurosurgery", image: AppSvgIcons.eighteen),
+// ];
+
 List<Option> specializations = [
   Option(id: 1, optionText: "طب الأسرة والمجتمع", optionTextEn: "Family and Community Medicine"
   ,image:AppSvgIcons.one),
@@ -653,6 +680,64 @@ List<Option> specializations = [
 ];
 
 
+List<Option> subSpecializations = [
+  Option(id:1,sepcializationId: 1, optionText: "طب المراهقين", optionTextEn: "Adolescent Medicine", image: null),
+  Option(id:2,sepcializationId: 1, optionText: "طب الشيخوخة", optionTextEn: "Geriatric Medicine", image: null),
+  Option(id:3,sepcializationId: 1, optionText: "الطب الرياضي", optionTextEn: "Sports Medicine", image: null),
+  Option(id:4,sepcializationId: 2, optionText: "أمراض القلب التداخلية", optionTextEn: "Interventional Cardiology", image: null),
+  Option(id:5,sepcializationId: 2, optionText: "فشل القلب وزراعة القلب", optionTextEn: "Advanced Heart Failure and Transplant Cardiology", image: null),
+  Option(id:6,sepcializationId: 2, optionText: "الكهرباء القلبية", optionTextEn: "Clinical Cardiac Electrophysiology", image: null),
+  Option(id:7,sepcializationId: 3, optionText: "أمراض الجهاز العصبي العضلي", optionTextEn: "Neuromuscular Medicine", image: null),
+  Option(id:8,sepcializationId: 3, optionText: "الصرع", optionTextEn: "Epilepsy", image: null),
+  Option(id:9,sepcializationId: 3, optionText: "الطب العصبي التداخلي", optionTextEn: "Interventional Neurology", image: null),
+  Option(id:10,sepcializationId: 4, optionText: "طب العيون للأطفال", optionTextEn: "Pediatric Ophthalmology", image: null),
+  Option(id:11,sepcializationId: 4, optionText: "أمراض الشبكية", optionTextEn: "Retinal Diseases", image: null),
+  Option(id:12,sepcializationId: 4, optionText: "جراحة العيون التجميلية", optionTextEn: "Oculoplastic Surgery", image: null),
+  Option(id:13,sepcializationId: 5, optionText: "جراحة العظام للأطفال", optionTextEn: "Pediatric Orthopedics", image: null),
+  Option(id:14,sepcializationId: 5, optionText: "جراحة استبدال المفاصل", optionTextEn: "Joint Replacement Surgery", image: null),
+  Option(id:15,sepcializationId: 5, optionText: "جراحة الكسور", optionTextEn: "Trauma Surgery", image: null),
+  Option(id:16,sepcializationId: 6, optionText: "أمراض الغدة الدرقية", optionTextEn: "Thyroid Disorders", image: null),
+  Option(id:17,sepcializationId: 6, optionText: "أمراض الغدة النخامية", optionTextEn: "Pituitary Disorders", image: null),
+  Option(id:18,sepcializationId: 6, optionText: "أمراض السكري", optionTextEn: "Diabetes Mellitus", image: null),
+  Option(id:19,sepcializationId: 7, optionText: "أمراض الدم السرطانية", optionTextEn: "Hematologic Malignancies", image: null),
+  Option(id:20,sepcializationId: 7, optionText: "اضطرابات تخثر الدم", optionTextEn: "Blood Clotting Disorders", image: null),
+  Option(id:21,sepcializationId: 7, optionText: "اضطرابات فقر الدم", optionTextEn: "Anemia Disorders", image: null),
+  Option(id:22,sepcializationId: 8, optionText: "أمراض الكلى", optionTextEn: "Nephrology", image: null),
+  Option(id:23,sepcializationId: 8, optionText: "أمراض الجهاز الهضمي", optionTextEn: "Gastroenterology", image: null),
+  Option(id:24,sepcializationId: 8, optionText: "أمراض الرئة", optionTextEn: "Pulmonology", image: null),
+  Option(id:25,sepcializationId: 9, optionText: "الربو", optionTextEn: "Asthma", image: null),
+  Option(id:26,sepcializationId: 9, optionText: "الأمراض التنفسية المزمنة", optionTextEn: "Chronic Respiratory Diseases", image: null),
+  Option(id:27,sepcializationId: 9, optionText: "التهاب الشعب الهوائية", optionTextEn: "Bronchitis", image: null),
+  Option(id:28,sepcializationId: 10, optionText: "جراحة الأذن", optionTextEn: "Ear Surgery", image: null),
+  Option(id:29,sepcializationId: 10, optionText: "جراحة الأنف", optionTextEn: "Nasal Surgery", image: null),
+  Option(id:30,sepcializationId: 10, optionText: "جراحة الحنجرة", optionTextEn: "Laryngeal Surgery", image: null),
+  Option(id:31,sepcializationId: 11, optionText: "جراحة الفم", optionTextEn: "Oral Surgery", image: null),
+  Option(id:32,sepcializationId: 11, optionText: "تقويم الأسنان", optionTextEn: "Orthodontics", image: null),
+  Option(id:33,sepcializationId: 11, optionText: "طب أسنان الأطفال", optionTextEn: "Pediatric Dentistry", image: null),
+  Option(id:34,sepcializationId: 12, optionText: "طب الأطفال العام", optionTextEn: "General Pediatrics", image: null),
+  Option(id:35,sepcializationId: 12, optionText: "طب حديثي الولادة", optionTextEn: "Neonatology", image: null),
+  Option(id:36,sepcializationId: 12, optionText: "طب الأطفال النفسي", optionTextEn: "Pediatric Psychiatry", image: null),
+  Option(id:37,sepcializationId: 13, optionText: "جراحة تجميل الوجه", optionTextEn: "Facial Cosmetic Surgery", image: null),
+  Option(id:38,sepcializationId: 13, optionText: "جراحة تجميل الأنسجة الرخوة", optionTextEn: "Soft Tissue Cosmetic Surgery", image: null),
+  Option(id:39,sepcializationId: 13, optionText: "جراحة الترميم", optionTextEn: "Reconstructive Surgery", image: null),
+  Option(id:40,sepcializationId: 14, optionText: "أمراض النساء", optionTextEn: "Gynecology", image: null),
+  Option(id:41,sepcializationId: 14, optionText: "التوليد", optionTextEn: "Obstetrics", image: null),
+  Option(id:42,sepcializationId: 14, optionText: "أمراض الخصوبة", optionTextEn: "Fertility Disorders", image: null),
+  Option(id:43,sepcializationId: 15, optionText: "الأورام الجراحية", optionTextEn: "Surgical Oncology", image: null),
+  Option(id:44,sepcializationId: 15, optionText: "الأورام الإشعاعية", optionTextEn: "Radiation Oncology", image: null),
+  Option(id:45,sepcializationId: 15, optionText: "الأورام الكيميائية", optionTextEn: "Medical Oncology", image: null),
+  Option(id:46,sepcializationId: 16, optionText: "الطب النفسي العام", optionTextEn: "General Psychiatry", image: null),
+  Option(id:47,sepcializationId: 16, optionText: "الطب النفسي للأطفال والمراهقين", optionTextEn: "Child and Adolescent Psychiatry", image: null),
+  Option(id:48,sepcializationId: 16, optionText: "الطب النفسي العصبي", optionTextEn: "Neuropsychiatry", image: null),
+  Option(id:49,sepcializationId: 17, optionText: "جراحة الجلد", optionTextEn: "Dermatologic Surgery", image: null),
+  Option(id:50,sepcializationId: 17, optionText: "الأمراض الجلدية المناعية", optionTextEn: "Immunodermatology", image: null),
+  Option(id:51,sepcializationId: 17, optionText: "الأمراض الجلدية التجميلية", optionTextEn: "Cosmetic Dermatology", image: null),
+  Option(id:52,sepcializationId: 18, optionText: "جراحة المخ", optionTextEn: "Brain Surgery", image: null),
+  Option(id:53,sepcializationId: 18, optionText: "جراحة العمود الفقري", optionTextEn: "Spinal Surgery", image: null),
+  Option(id:54,sepcializationId: 18, optionText: "جراحة الأعصاب الطرفية", optionTextEn: "Peripheral Nerve Surgery", image: null),
+];
+
+
 bool isDoctor(){
   return SharedPreferenceService().getBool(SharPrefConstants.isDoctor);
 }
@@ -667,7 +752,7 @@ bool isValidSaudiPhoneNumber(String phoneNumber) {
 }
 
 Future<bool> getDoctorProfileStatus() async {
-  HomePatientUseCase homePatientUseCase =HomePatientUseCase(homePatientRepository:getIt());
+  HomePatientUseCase homePatientUseCase = HomePatientUseCase(homePatientRepository:getIt());
   var response = await homePatientUseCase.getDoctorProfileStatus();
   response.fold((l) {
     isProfileDoctorIsActive = false;

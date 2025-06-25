@@ -56,18 +56,26 @@ class StaticDoctorSurveyScreenState extends State<StaticDoctorSurveyScreen> {
         //   options: [Option(id:1,optionText:"consultant".tr()),
         //     Option(id:2,optionText:"specialist".tr())],
         // ),
-        Question(padding:EdgeInsets.zero,
-          id: 1,isRequired:true,hint: 'اختر تخصصك',
-          questionText: "اختر تخصصك",
-          // type: "multi_select",
-          // type: "multi_select_doctor",
-          type: "drop_down",
-          options:specializations
-          // [Option(id:1,optionText:"باطنة"),
-          //   Option(id:2,optionText:"طب عام"), Option(id:3,optionText:"قلب"),
-          //   Option(id:4,optionText:"اطفال"), Option(id:5,optionText:"جراحة"),
-          //   Option(id:6,optionText:"انف واذن"),],
+        Question(
+            padding:EdgeInsets.zero, id: 1,
+            isRequired:true,hint: 'اختر تخصصك',
+            questionText: "اختر تخصصك",
+            type: "specializationsAndSub",
+            // options:specializations
         ),
+
+        // Question(padding:EdgeInsets.zero,
+        //   id: 1,isRequired:true,hint: 'اختر تخصصك',
+        //   questionText: "اختر تخصصك",
+        //   // type: "multi_select",
+        //   // type: "multi_select_doctor",
+        //   type: "drop_down",
+        //   options:specializations
+        //   // [Option(id:1,optionText:"باطنة"),
+        //   //   Option(id:2,optionText:"طب عام"), Option(id:3,optionText:"قلب"),
+        //   //   Option(id:4,optionText:"اطفال"), Option(id:5,optionText:"جراحة"),
+        //   //   Option(id:6,optionText:"انف واذن"),],
+        // ),
       ],
     ),
     ScreenModel(

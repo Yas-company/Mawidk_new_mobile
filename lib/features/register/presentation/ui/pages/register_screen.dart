@@ -74,7 +74,8 @@ class RegisterScreenState extends State<RegisterScreen> {
                     },),
 
                     const SizedBox(height:20,),
-                    PTextField(textInputAction:TextInputAction.next,controller:registerBloc.phone,
+                    PTextField(isHasSpecialCharcters:true,
+                      textInputAction:TextInputAction.next,controller:registerBloc.phone,
                       labelAbove:'phone_number'.tr(),textInputType: TextInputType.number,
                       prefixIcon:PImage(source:AppSvgIcons.call,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
                       // prefixIcon: Icon(size:20,Icons.phone_in_talk_rounded,color:AppColors.primaryColor,),
@@ -90,7 +91,9 @@ class RegisterScreenState extends State<RegisterScreen> {
                         return null;
                       },),
                     const SizedBox(height:14,),
-                    PTextField(textInputAction:TextInputAction.next,textInputType: TextInputType.text,controller:registerBloc.name,
+                    PTextField(
+                      isHasSpecialCharcters:true,
+                      textInputAction:TextInputAction.next,textInputType: TextInputType.text,controller:registerBloc.name,
                       labelAbove:'user_name'.tr(),
                       prefixIcon:PImage(source:AppSvgIcons.user,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
                       // prefixIcon: Icon(size:20,Icons.person,color:AppColors.primaryColor,),
@@ -98,7 +101,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         registerBloc.add(ValidationEvent());
                       }, validator:(value) => null,),
                     const SizedBox(height:14,),
-                    PTextField(textInputAction:TextInputAction.next,isEmail:true,
+                    PTextField( isHasSpecialCharcters:true,textInputAction:TextInputAction.next,isEmail:true,
                       isOptional:true,textInputType: TextInputType.emailAddress,controller:registerBloc.email,
                       labelAbove:'email'.tr(),
                       prefixIcon:PImage(source:AppSvgIcons.mail,fit:BoxFit.scaleDown,color:AppColors.primaryColor),

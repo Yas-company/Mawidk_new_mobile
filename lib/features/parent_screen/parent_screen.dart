@@ -36,7 +36,9 @@ class _NavigationScreenState extends State<ParentScreen>
 
   Timer? _timer;
   void startTimer() {
-    if(isDoctor()){
+    final location = GoRouter.of(navigatorKey.currentState!.context).state.fullPath.toString();
+    print("location>>"+location.toString());
+    if(isDoctor() && location!=AppRouter.login){
     _timer = Timer.periodic(Duration(seconds: 30), (timer) async {
       await getDoctorProfileStatus();
       if(isProfileDoctorIsActive){
@@ -52,7 +54,6 @@ class _NavigationScreenState extends State<ParentScreen>
     if(!isProfileDoctorIsActive){
       startTimer();
     }
-    startTimer();
     WidgetsBinding.instance.addObserver(this);
     super.initState();
   }

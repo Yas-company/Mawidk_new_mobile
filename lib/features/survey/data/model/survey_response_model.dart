@@ -193,8 +193,9 @@ class Option {
   String? image;
   dynamic value;
   int? order;
+  int? sepcializationId;
 
-  Option({this.id, this.optionText, this.optionTextEn,this.value, this.order,this.image});
+  Option({this.id, this.optionText, this.optionTextEn,this.value, this.order,this.image,this.sepcializationId});
 
   Option fromMap(Map<String, dynamic> json) {
     id = json['id'];
@@ -202,6 +203,7 @@ class Option {
     value = json['value'];
     order = json['order'];
     optionTextEn = json['optionTextEn'];
+    sepcializationId = json['sepcializationId'];
     return Option(id: id,optionText: optionText,order: order,value: value,optionTextEn:optionTextEn);
   }
 
@@ -212,6 +214,7 @@ class Option {
     data['value'] = this.value;
     data['order'] = this.order;
     data['optionTextEn'] = this.optionTextEn;
+    data['sepcializationId'] = this.sepcializationId;
     return data;
   }
 }

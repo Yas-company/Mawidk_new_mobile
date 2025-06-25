@@ -13,6 +13,7 @@ class SurveyDoctorRequestModel {
   String? about_doctor;
   List<File>? certificates;
   List<String>? certificateNames;
+  List<int>? subspecialties;
 
   SurveyDoctorRequestModel({
     this.experience,
@@ -23,6 +24,7 @@ class SurveyDoctorRequestModel {
     this.about_doctor,
     this.certificates,
     this.certificateNames,
+    this.subspecialties,
   });
 
   // Convert from JSON
@@ -40,6 +42,9 @@ class SurveyDoctorRequestModel {
       certificateNames: (json['certificateNames'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      subspecialties: (json['subspecialties'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
     );
   }
 
@@ -54,6 +59,7 @@ class SurveyDoctorRequestModel {
       'gender': gender,
       'certificates': certificates?.map((e) => e.path).toList(),
       'certificateNames': certificateNames,
+      'subspecialties': subspecialties,
     };
   }
 }
