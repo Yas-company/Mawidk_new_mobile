@@ -105,6 +105,8 @@ dependencies:
 #  easy_date_timeline: ^2.0.9
   easy_date_timeline: ^1.0.4
   flutter_rating_bar: ^4.0.1
+  local_hero: ^0.3.0
+#  local_hero_transform: ^1.0.6
 #  open_filex: ^4.7.0
 #  flutter_html: ^3.0.0
 

@@ -26,111 +26,111 @@ class EditPersonalInfoScreen extends StatelessWidget {
     // editPersonalInfoBloc.phone.text = phone;
     // editPersonalInfoBloc.name.text = name;
     return BlocProvider(
-      create: (_) => editPersonalInfoBloc,
-      child:Scaffold(
-        backgroundColor: AppColors.whiteBackground,
-        appBar: appBar(
-          context: context,
-          text: 'edit_personal_info'.tr(),
-          backBtn: true,
-          height: 50,
-          isCenter: true,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: BlocConsumer<EditPersonalInfoBloc,BaseState>(listener:(context, state) {
-            if(state is LoadingState){
-              loadDialog();
-            }else if(state is LoadedState || state is ErrorState){
-              hideLoadingDialog();
-            }
-          },builder:(context, state) {
-            return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Column(
+        create: (_) => editPersonalInfoBloc,
+        child:Scaffold(
+          backgroundColor: AppColors.whiteBackground,
+          appBar: appBar(
+            context: context,
+            text: 'edit_personal_info'.tr(),
+            backBtn: true,
+            height: 50,
+            isCenter: true,
+          ),
+          body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              child: BlocConsumer<EditPersonalInfoBloc,BaseState>(listener:(context, state) {
+                if(state is LoadingState){
+                  loadDialog();
+                }else if(state is LoadedState || state is ErrorState){
+                  hideLoadingDialog();
+                }
+              },builder:(context, state) {
+                return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    const SizedBox(height: 20),
-                    PTextField(
-                      controller: editPersonalInfoBloc.name,
-                      labelAbove: 'اسم المستخدم ',
-                      prefixIcon: PImage(
-                        source: AppSvgIcons.user,
-                        fit: BoxFit.scaleDown,
-                        color: AppColors.primaryColor,
-                      ),
-                      hintText: 'اسم المستخدم',
-                      feedback:(value) {
-                        editPersonalInfoBloc.name.text = value??'';
-                        editPersonalInfoBloc.add(ApplyValidationEvent());
-                      },
-                      validator: (value) {
-                        if ((value ?? '').isNotEmpty && value!.length <= 50) {
-                          return null;
-                        }
-                        return 'يرجي التاكد من الاسم';
-                      },
+                    Column(
+                      children: [
+                        const SizedBox(height: 20),
+                        PTextField(
+                          controller: editPersonalInfoBloc.name,
+                          labelAbove: 'اسم المستخدم ',
+                          prefixIcon: PImage(
+                            source: AppSvgIcons.user,
+                            fit: BoxFit.scaleDown,
+                            color: AppColors.primaryColor,
+                          ),
+                          hintText: 'اسم المستخدم',
+                          feedback:(value) {
+                            editPersonalInfoBloc.name.text = value??'';
+                            editPersonalInfoBloc.add(ApplyValidationEvent());
+                          },
+                          validator: (value) {
+                            if ((value ?? '').isNotEmpty && value!.length <= 50) {
+                              return null;
+                            }
+                            return 'يرجي التاكد من الاسم';
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        PTextField(
+                          initialText: phone,
+                          controller: editPersonalInfoBloc.phone,
+                          enabled: false,
+                          labelAbove: 'phone_number'.tr(),
+                          textInputType: TextInputType.number,
+                          prefixIcon: PImage(
+                            source: AppSvgIcons.call,
+                            fit: BoxFit.scaleDown,
+                            color: AppColors.primaryColor,
+                          ),
+                          hintText: '05XXXXXXX',
+                          feedback:(value) {
+                            editPersonalInfoBloc.phone.text = value??'';
+                            editPersonalInfoBloc.add(ApplyValidationEvent());
+                          },
+                          validator: (value) => null,
+                        ),
+                        const SizedBox(height: 16),
+                        PTextField(
+                          controller: editPersonalInfoBloc.email,
+                          labelAbove: 'البريد الالكتروني ',
+                          textInputType: TextInputType.emailAddress,
+                          prefixIcon: PImage(
+                            source: AppSvgIcons.mail,
+                            fit: BoxFit.scaleDown,
+                            color: AppColors.primaryColor,
+                          ),
+                          hintText: 'البريد الالكتروني ',
+                          feedback:(value) {
+                            editPersonalInfoBloc.add(ApplyValidationEvent());
+                          },
+                          validator:(value) {
+                            if (value == null || value.trim().isEmpty) return null; // OK if empty
+                            final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                            if (!emailRegex.hasMatch(value.trim())) {
+                              return 'valid_email'.tr();
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 16),
-                    PTextField(
-                      initialText: phone,
-                      controller: editPersonalInfoBloc.phone,
-                      enabled: false,
-                      labelAbove: 'رقم الجوال',
-                      textInputType: TextInputType.number,
-                      prefixIcon: PImage(
-                        source: AppSvgIcons.call,
-                        fit: BoxFit.scaleDown,
-                        color: AppColors.primaryColor,
-                      ),
-                      hintText: '05XXXXXXX',
-                      feedback:(value) {
-                        editPersonalInfoBloc.phone.text = value??'';
-                        editPersonalInfoBloc.add(ApplyValidationEvent());
-                      },
-                      validator: (value) => null,
-                    ),
-                    const SizedBox(height: 16),
-                    PTextField(
-                      controller: editPersonalInfoBloc.email,
-                      labelAbove: 'البريد الالكتروني ',
-                      textInputType: TextInputType.emailAddress,
-                      prefixIcon: PImage(
-                        source: AppSvgIcons.mail,
-                        fit: BoxFit.scaleDown,
-                        color: AppColors.primaryColor,
-                      ),
-                      hintText: 'البريد الالكتروني ',
-                      feedback:(value) {
-                        editPersonalInfoBloc.add(ApplyValidationEvent());
-                      },
-                      validator:(value) {
-                        if (value == null || value.trim().isEmpty) return null; // OK if empty
-                        final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                        if (!emailRegex.hasMatch(value.trim())) {
-                          return 'valid_email'.tr();
-                        }
-                        return null;
-                      },
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child:PButton<EditPersonalInfoBloc,BaseState>(title:'save_changes'.tr(),onPressed:() {
+                          editPersonalInfoBloc.add(ApplyEditPersonalInfoEvent(
+                            model: EditPersonalInfoRequestModel(
+                              name: editPersonalInfoBloc.name.text,
+                              email: editPersonalInfoBloc.email.text,
+                            ),
+                          ));
+                        },isFirstButton: true,hasBloc:true,isButtonAlwaysExist: false,isFitWidth:true)
                     ),
                   ],
-                ),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child:PButton<EditPersonalInfoBloc,BaseState>(title:'save_changes'.tr(),onPressed:() {
-                      editPersonalInfoBloc.add(ApplyEditPersonalInfoEvent(
-                        model: EditPersonalInfoRequestModel(
-                          name: editPersonalInfoBloc.name.text,
-                          email: editPersonalInfoBloc.email.text,
-                        ),
-                      ));
-                    },isFirstButton: true,hasBloc:true,isButtonAlwaysExist: false,isFitWidth:true)
-                ),
-              ],
-            );
-          },)
-        ),
-      )
+                );
+              },)
+          ),
+        )
     );
   }
 }

@@ -41,6 +41,7 @@ class IsMapState extends BaseState {
   final bool isMap;
   const IsMapState({required this.isMap});
 }
+
 class PaginatedListLoadedState<T> extends BaseState {
   final List<dynamic> list;
   final T? data;

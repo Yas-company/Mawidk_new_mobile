@@ -107,7 +107,7 @@ class VerifyOtpBloc extends Bloc<VerifyOtpEvent,BaseState> {
         :UserType.patient.index;
     final response = await LoginUseCase(loginRepository:getIt()).login(event.loginRequestModel,);
     await response.fold((l) async {emit(ErrorState(l));},
-          (r) async {emit(LoadedState(r,showToast:false));
+          (r) async {emit(FormLoadedState(r,));
       },
     );
   }

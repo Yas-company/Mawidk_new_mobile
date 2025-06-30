@@ -52,7 +52,7 @@ class _NavigationScreenState extends State<ParentScreen>
   void initState() {
     indexNotifier.value = 0;
     if(!isProfileDoctorIsActive){
-      startTimer();
+      // startTimer();
     }
     WidgetsBinding.instance.addObserver(this);
     super.initState();

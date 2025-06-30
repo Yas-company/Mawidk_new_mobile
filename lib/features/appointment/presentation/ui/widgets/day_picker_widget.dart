@@ -118,7 +118,7 @@ class _ArabicDatePickerState extends State<ArabicDatePicker> {
                       String formatted = intl.DateFormat('yyyy-MM-dd').format(date);
                       widget.onChoose(formatted);
                       selectedDate = date;
-                      // print('selectedDate>>'+selectedDate.toString());
+                      print('selectedDate>>'+selectedDate.toString());
                     });
                   },
                   activeColor: AppColors.primaryColor2200,

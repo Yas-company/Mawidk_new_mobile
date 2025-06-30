@@ -89,7 +89,9 @@ class SearchScreenState extends State<SearchScreen> {
                       ),
                       onSelected:(value) {
                         context.push(AppRouter.searchResults, extra:{
-                          'searchKey':item.optionText, 'lookupBloc':lookupBloc,
+                          // 'searchKey':item.optionText,
+                          'searchKey':'',
+                          'lookupBloc':lookupBloc,
                           'isFilterClicked':true,'specializationId':item.id
                         });
                         // context.push(AppRouter.searchResults,extra:item.optionText);

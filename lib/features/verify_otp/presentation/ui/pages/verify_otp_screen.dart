@@ -100,7 +100,7 @@ class VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         BlocListener<VerifyOtpBloc,BaseState>(listener: (context, state) {
                           if(state is LoadingState){
                             loadDialog();
-                          }else if(state is LoadedState){
+                          }else if(state is FormLoadedState){
                             hideLoadingDialog();
                             SafeToast.show(message:'resent_success'.tr());
                           }else if(state is ErrorState){

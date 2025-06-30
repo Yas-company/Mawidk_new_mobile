@@ -38,7 +38,7 @@ class SearchResultsState extends State<SearchResultsScreen> {
   @override
   void initState() {
     super.initState();
-    // print('model>>'+jsonEncode(widget.filterRequestModel));
+    print('model>>'+widget.searchKey.toString());
     // lookupBloc.add(FetchCitiesEvent());
     if(widget.isFilterClicked){
       searchBloc.add(ApplyIsMapEvent(isMap: false));
@@ -62,7 +62,9 @@ class SearchResultsState extends State<SearchResultsScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:16),
-                  child: SearchWidget(controller:TextEditingController(text:widget.searchKey),
+                  child: SearchWidget(
+                      fillColor:AppColors.whiteColor,
+                      controller:TextEditingController(text:widget.searchKey),
                     hint:'ابحث باسم الدكتور',textInputAction: TextInputAction.send,
                     onChanged:(value) {
                     },onFieldSubmitted:(value) {

@@ -5,7 +5,9 @@ import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
+import 'package:mawidak/core/extensions/navigator_extensions.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
+import 'package:local_hero/local_hero.dart';
 
 class DoctorsListWidget extends StatelessWidget {
   final String imageUrl;
@@ -126,7 +128,11 @@ class DoctorsListWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top:20),
-                  child: PButton(onPressed:onTap,
+                  child: PButton(
+                    // onPressed:onTap,
+                    onPressed:() {
+                      context.pushWidget(FancyListGridSwitcher(), '');
+                    },
                     title:'book_appointment'.tr(),hasBloc:false,isFitWidth:true,size:PSize.text16,
                     icon:PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,),
                     fontWeight:FontWeight.w700,
@@ -140,3 +146,130 @@ class DoctorsListWidget extends StatelessWidget {
     );
   }
 }
+
+
+
+
+class FancyListGridSwitcher extends StatefulWidget {
+  @override
+  State<FancyListGridSwitcher> createState() => _FancyListGridSwitcherState();
+}
+
+class _FancyListGridSwitcherState extends State<FancyListGridSwitcher> {
+  bool isGrid = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return LocalHeroScope(
+      duration: const Duration(milliseconds: 700),
+      curve: Curves.easeInOutBack,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Fancy List / Grid'),
+          actions: [
+            IconButton(
+              icon: Icon(isGrid ? Icons.view_list : Icons.grid_view_rounded),
+              onPressed: () {
+                setState(() {
+                  isGrid = !isGrid;
+                });
+              },
+            )
+          ],
+        ),
+        body: isGrid
+            ? buildGridView(key: const ValueKey('grid'))
+            : buildListView(key: const ValueKey('list')),
+      ),
+    );
+  }
+
+  Widget buildListView({Key? key}) {
+    return ListView.builder(
+      key: key,
+      padding: const EdgeInsets.all(12),
+      itemCount: 10,
+      itemBuilder: (_, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: LocalHero(
+            tag: 'item-$index',
+            child: Material(
+              color: Colors.deepPurpleAccent,
+              borderRadius: BorderRadius.circular(16),
+              elevation: 4,
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeOut,
+                height: 80,
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Text(
+                      '$index',
+                      style: const TextStyle(color: Colors.deepPurple),
+                    ),
+                  ),
+                  title: const Text(
+                    'List Item',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  subtitle: const Text(
+                    'Tap icon to switch view',
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildGridView({Key? key}) {
+    return GridView.builder(
+      key: key,
+      padding: const EdgeInsets.all(12),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
+      ),
+      itemCount: 10,
+      itemBuilder: (_, index) {
+        return LocalHero(
+          tag: 'item-$index',
+          child: TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 500),
+            tween: Tween(begin: 0.9, end: 1.0),
+            builder: (context, value, child) {
+              return Transform.scale(
+                scale: value,
+                child: Transform.rotate(
+                  angle: isGrid ? 0.05 : 0.0,
+                  child: Material(
+                    color: Colors.deepPurpleAccent,
+                    borderRadius: BorderRadius.circular(16),
+                    elevation: 4,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 400),
+                      child: Center(
+                        child: Text(
+                          'Grid $index',
+                          style: const TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+

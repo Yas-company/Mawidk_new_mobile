@@ -91,7 +91,7 @@ class StaticPatientSurveyScreenState extends State<StaticPatientSurveyScreen> {
       title: "معلومات صحية اساسية",
       subtitle: "من فضلك قم باستكمال البيانات",
       questions: [
-        Question(isRequired:true,hint:'اسم المرض',
+        Question(isRequired:true,hint:'اسم الدواء',
           questionText:"هل تستخدم اي ادوية بشكل يومي ؟",
           id: 0,
           type: "tapped_text_field",

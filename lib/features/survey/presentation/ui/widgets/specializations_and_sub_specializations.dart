@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
@@ -74,11 +75,11 @@ class _LinkedDropdownsState extends State<SpecializationDropdown> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLabeledDropdown(
-                title: 'التخصص الدقيق',
+                title:'sub_specialty'.tr(),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<Option>(
                     isExpanded: true,
-                    hint: PText(title: "اختر التخصص الدقيق"),
+                    hint: PText(title:'choose_sub_specialty'.tr()),
                     value: null,
                     dropdownColor: AppColors.whiteColor,
                     items: filteredSubSpecializations

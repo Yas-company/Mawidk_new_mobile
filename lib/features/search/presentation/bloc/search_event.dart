@@ -24,3 +24,8 @@ class ApplyFilterEvent extends SearchEvent {
   final FilterRequestModel filterRequestModel;
   const ApplyFilterEvent({required this.filterRequestModel}) : super();
 }
+
+class ApplyIsGridEvent extends SearchEvent {
+  final bool isGrid;
+  const ApplyIsGridEvent({required this.isGrid}) : super();
+}

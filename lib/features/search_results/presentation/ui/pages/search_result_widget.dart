@@ -24,6 +24,7 @@ class SearchResultWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return PBlocBuilder(bloc:searchBloc,
       init:() {
+      print('searchKey>>'+searchKey.toString());
       if(searchKey.isNotEmpty){
         searchBloc.add(ApplySearchForPatient(key: searchKey));
       }

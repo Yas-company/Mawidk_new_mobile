@@ -284,5 +284,7 @@
   "add_evaluate": "Add Evaluate",
   "add": "Add",
   "add_other_disease": "Add Another Disease",
+  "sub_specialty": "SubSpecialty",
+  "choose_sub_specialty": "Choose SubSpecialty",
   "name": "Name"
 }
