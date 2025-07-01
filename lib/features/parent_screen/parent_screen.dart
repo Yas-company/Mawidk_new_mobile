@@ -36,13 +36,19 @@ class _NavigationScreenState extends State<ParentScreen>
 
   Timer? _timer;
   void startTimer() {
+    if(isProfileDoctorIsActive)return;
     final location = GoRouter.of(navigatorKey.currentState!.context).state.fullPath.toString();
     print("location>>"+location.toString());
     if(isDoctor() && location!=AppRouter.login){
     _timer = Timer.periodic(Duration(seconds: 30), (timer) async {
       await getDoctorProfileStatus();
       if(isProfileDoctorIsActive){
-        Get.context!.goNamed(AppRouter.homeDoctor);
+        // Exit shell
+        Get.context!.go(AppRouter.splash);
+        // Re-enter shell with desired tab
+        // Future.delayed(Duration.zero, () {
+        //   Get.context!.goNamed(AppRouter.homeDoctor);
+        // });
       }
     });
     }
@@ -52,7 +58,7 @@ class _NavigationScreenState extends State<ParentScreen>
   void initState() {
     indexNotifier.value = 0;
     if(!isProfileDoctorIsActive){
-      // startTimer();
+      startTimer();
     }
     WidgetsBinding.instance.addObserver(this);
     super.initState();

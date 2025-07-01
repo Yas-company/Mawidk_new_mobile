@@ -757,8 +757,10 @@ Future<bool> getDoctorProfileStatus() async {
   response.fold((l) {
     isProfileDoctorIsActive = false;
     return false;
-  },(r) {
+  },(r) async {
    int isActive = (((r).model as DoctorProfileStatusResponseModel).model?.isActive??0);
+   await SharedPreferenceService().setBool(SharPrefConstants.isProfileDoctorIsActive,isActive==1);
+   isProfileDoctorIsActive = SharedPreferenceService().getBool(SharPrefConstants.isProfileDoctorIsActive);
    if(isActive==1){
      isProfileDoctorIsActive = true;
      return true;

@@ -20,4 +20,5 @@ class SharPrefConstants {
   static const String isDarkThemeKey = 'themeKey';
   static const String isNotificationOnline = 'isNotificationOnline';
   static const String profileCompletionPercentage = 'profileCompletionPercentage';
+  static const String isProfileDoctorIsActive = 'isProfileDoctorIsActive';
 }

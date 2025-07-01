@@ -7,9 +7,11 @@ import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
 import 'package:mawidak/core/data/constants/app_router.dart';
+import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
 import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/core/global/global_func.dart';
 import 'package:mawidak/core/global/state/base_state.dart';
+import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/features/home/data/model/home_details_response_model.dart';
 import 'package:mawidak/features/home/presentation/bloc/home_doctor_bloc.dart';
@@ -21,7 +23,7 @@ import 'package:mawidak/features/home/presentation/ui/doctor_widgets/time_ask_wi
 import 'package:mawidak/features/home/presentation/ui/page/unactive_doctor_home_screen.dart';
 import 'package:mawidak/features/home/presentation/ui/widgets/search_widget.dart';
 
-bool isProfileDoctorIsActive = false;
+bool isProfileDoctorIsActive = SharedPreferenceService().getBool(SharPrefConstants.isProfileDoctorIsActive);
 
 class HomeScreenDoctor extends StatelessWidget {
   const HomeScreenDoctor({super.key});
@@ -54,8 +56,9 @@ class HomeScreenDoctor extends StatelessWidget {
             (((state).data).model?.model ??
                 DoctorHomeModel()):DoctorHomeModel();
             return Padding(
-                padding: EdgeInsets.symmetric(horizontal:isProfileDoctorIsActive?0:14),
-                child: !isProfileDoctorIsActive ? UnActiveDoctorHomeScreen():CustomScrollView(slivers:[
+                padding: EdgeInsets.symmetric(horizontal:isProfileDoctorIsActive?14:14),
+                child: !isProfileDoctorIsActive ? UnActiveDoctorHomeScreen():
+                CustomScrollView(slivers:[
 
                   SliverToBoxAdapter(child: SearchWidget(hasFilter:false,hint:'patient_list'.tr(),
                     onTap:() => context.push(AppRouter.search),)),

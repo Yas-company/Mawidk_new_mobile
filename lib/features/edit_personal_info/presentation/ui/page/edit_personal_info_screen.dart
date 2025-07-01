@@ -17,121 +17,142 @@ import 'package:mawidak/features/edit_personal_info/presentation/bloc/edit_perso
 class EditPersonalInfoScreen extends StatelessWidget {
   final String phone;
   final String name;
-  const EditPersonalInfoScreen({super.key,required this.phone,required this.name});
+
+  const EditPersonalInfoScreen({
+    super.key,
+    required this.phone,
+    required this.name,
+  });
 
   @override
   Widget build(BuildContext context) {
-    EditPersonalInfoBloc editPersonalInfoBloc = EditPersonalInfoBloc(editPersonalInfoUseCase: getIt());
-    editPersonalInfoBloc.add(GetProfileEvent());
-    // editPersonalInfoBloc.phone.text = phone;
-    // editPersonalInfoBloc.name.text = name;
     return BlocProvider(
-        create: (_) => editPersonalInfoBloc,
-        child:Scaffold(
-          backgroundColor: AppColors.whiteBackground,
-          appBar: appBar(
-            context: context,
-            text: 'edit_personal_info'.tr(),
-            backBtn: true,
-            height: 50,
-            isCenter: true,
-          ),
-          body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-              child: BlocConsumer<EditPersonalInfoBloc,BaseState>(listener:(context, state) {
-                if(state is LoadingState){
-                  loadDialog();
-                }else if(state is LoadedState || state is ErrorState){
-                  hideLoadingDialog();
-                }
-              },builder:(context, state) {
-                return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Column(
-                      children: [
-                        const SizedBox(height: 20),
-                        PTextField(
-                          controller: editPersonalInfoBloc.name,
-                          labelAbove: 'اسم المستخدم ',
-                          prefixIcon: PImage(
-                            source: AppSvgIcons.user,
-                            fit: BoxFit.scaleDown,
-                            color: AppColors.primaryColor,
-                          ),
-                          hintText: 'اسم المستخدم',
-                          feedback:(value) {
-                            editPersonalInfoBloc.name.text = value??'';
-                            editPersonalInfoBloc.add(ApplyValidationEvent());
-                          },
-                          validator: (value) {
-                            if ((value ?? '').isNotEmpty && value!.length <= 50) {
-                              return null;
-                            }
-                            return 'يرجي التاكد من الاسم';
-                          },
+      create: (_) {
+        final bloc = EditPersonalInfoBloc(editPersonalInfoUseCase: getIt());
+        bloc.add(GetProfileEvent());
+        return bloc;
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.whiteBackground,
+        appBar: appBar(
+          context: context,
+          text: 'edit_personal_info'.tr(),
+          backBtn: true,
+          height: 50,
+          isCenter: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          child: BlocConsumer<EditPersonalInfoBloc, BaseState>(
+            listener: (context, state) {
+              if (state is LoadingState) {
+                loadDialog();
+              } else if (state is LoadedState || state is ErrorState) {
+                hideLoadingDialog();
+              }
+            },
+            builder: (context, state) {
+              final bloc = context.read<EditPersonalInfoBloc>();
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      PTextField(
+                        controller: bloc.name,
+                        labelAbove: 'اسم المستخدم ',
+                        prefixIcon: PImage(
+                          source: AppSvgIcons.user,
+                          fit: BoxFit.scaleDown,
+                          color: AppColors.primaryColor,
                         ),
-                        const SizedBox(height: 16),
-                        PTextField(
-                          initialText: phone,
-                          controller: editPersonalInfoBloc.phone,
-                          enabled: false,
-                          labelAbove: 'phone_number'.tr(),
-                          textInputType: TextInputType.number,
-                          prefixIcon: PImage(
-                            source: AppSvgIcons.call,
-                            fit: BoxFit.scaleDown,
-                            color: AppColors.primaryColor,
-                          ),
-                          hintText: '05XXXXXXX',
-                          feedback:(value) {
-                            editPersonalInfoBloc.phone.text = value??'';
-                            editPersonalInfoBloc.add(ApplyValidationEvent());
-                          },
-                          validator: (value) => null,
-                        ),
-                        const SizedBox(height: 16),
-                        PTextField(
-                          controller: editPersonalInfoBloc.email,
-                          labelAbove: 'البريد الالكتروني ',
-                          textInputType: TextInputType.emailAddress,
-                          prefixIcon: PImage(
-                            source: AppSvgIcons.mail,
-                            fit: BoxFit.scaleDown,
-                            color: AppColors.primaryColor,
-                          ),
-                          hintText: 'البريد الالكتروني ',
-                          feedback:(value) {
-                            editPersonalInfoBloc.add(ApplyValidationEvent());
-                          },
-                          validator:(value) {
-                            if (value == null || value.trim().isEmpty) return null; // OK if empty
-                            final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                            if (!emailRegex.hasMatch(value.trim())) {
-                              return 'valid_email'.tr();
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
-                    Align(
-                        alignment: Alignment.bottomCenter,
-                        child:PButton<EditPersonalInfoBloc,BaseState>(title:'save_changes'.tr(),onPressed:() {
-                          editPersonalInfoBloc.add(ApplyEditPersonalInfoEvent(
-                            model: EditPersonalInfoRequestModel(
-                              name: editPersonalInfoBloc.name.text,
-                              email: editPersonalInfoBloc.email.text,
+                        hintText: 'user_name'.tr(),
+                        feedback: (value) {
+                          bloc.add(
+                            ApplyValidationEvent(
+                              name: value ?? '',
+                              email: bloc.email.text,
                             ),
-                          ));
-                        },isFirstButton: true,hasBloc:true,isButtonAlwaysExist: false,isFitWidth:true)
+                          );
+                        },
+                        validator: (value) {
+                          if ((value ?? '').isNotEmpty && (value?.length ?? 0) <= 50) {
+                            return null;
+                          }
+                          return 'يرجي التاكد من الاسم';
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      PTextField(feedback: (value) => null,
+                        initialText: phone,
+                        controller: bloc.phone,
+                        enabled: false,
+                        labelAbove: 'phone_number'.tr(),
+                        textInputType: TextInputType.number,
+                        prefixIcon: PImage(
+                          source: AppSvgIcons.call,
+                          fit: BoxFit.scaleDown,
+                          color: AppColors.primaryColor,
+                        ),
+                        hintText: '05XXXXXXX',
+                      ),
+                      const SizedBox(height: 16),
+                      PTextField(
+                        controller: bloc.email,
+                        labelAbove: 'البريد الالكتروني ',
+                        textInputType: TextInputType.emailAddress,
+                        prefixIcon: PImage(
+                          source: AppSvgIcons.mail,
+                          fit: BoxFit.scaleDown,
+                          color: AppColors.primaryColor,
+                        ),
+                        hintText: 'email'.tr(),
+                        feedback: (value) {
+                          bloc.add(
+                            ApplyValidationEvent(
+                              name: bloc.name.text,
+                              email: value ?? '',
+                            ),
+                          );
+                        },
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty) return null;
+                          final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                          if (!emailRegex.hasMatch(value.trim())) {
+                            return 'valid_email'.tr();
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: PButton<EditPersonalInfoBloc, BaseState>(
+                      title: 'save_changes'.tr(),
+                      onPressed: () {
+                        bloc.add(
+                          ApplyEditPersonalInfoEvent(
+                            model: EditPersonalInfoRequestModel(
+                              name: bloc.name.text,
+                              email: bloc.email.text,
+                            ),
+                          ),
+                        );
+                      },
+                      isFirstButton: true,
+                      hasBloc: true,
+                      isButtonAlwaysExist: false,
+                      isFitWidth: true,
                     ),
-                  ],
-                );
-              },)
+                  ),
+                ],
+              );
+            },
           ),
-        )
+        ),
+      ),
     );
   }
 }
-

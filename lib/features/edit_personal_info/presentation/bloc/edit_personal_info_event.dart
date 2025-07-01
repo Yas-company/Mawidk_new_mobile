@@ -10,7 +10,9 @@ class ApplyEditPersonalInfoEvent extends EditPersonalInfoEvent {
 }
 
 class ApplyValidationEvent extends EditPersonalInfoEvent {
-  const ApplyValidationEvent() : super();
+  final String name;
+  final String email;
+  const ApplyValidationEvent({required this.name,required this.email}) : super();
 }
 
 class LoadPhoneNumberEvent extends EditPersonalInfoEvent {}
