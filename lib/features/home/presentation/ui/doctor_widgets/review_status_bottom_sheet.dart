@@ -57,16 +57,19 @@ class ReviewStatusBottomSheet extends StatelessWidget {
           const SizedBox(height:10,),
         Row(children: [
           // Icon(Icons.access_time_outlined),
-          PImage(source:AppSvgIcons.checkCircle),const SizedBox(width:10,),
+          (model.documentVerified??0)==1?PImage(source:AppSvgIcons.checkCircle):
+          Icon(Icons.access_time_outlined,size:18.4,color:AppColors.reviewDescColor,),const SizedBox(width:10,),
           PText(title:'document_verified'.tr(),size:PSize.text14,fontColor:AppColors.grayShade3,),
         ],),
           const SizedBox(height:6,),
         Row(children: [
+          (model.academicQualificationVerified??0)==1?PImage(source:AppSvgIcons.checkCircle):
           Icon(Icons.access_time_outlined,size:18.4,color:AppColors.reviewDescColor,),const SizedBox(width:10,),
           PText(title:'academic_qualification_verified'.tr(),size:PSize.text14,fontColor:AppColors.grayShade3,),
         ],),
           const SizedBox(height:6,),
         Row(children: [
+          (model.licenseVerified??0)==1?PImage(source:AppSvgIcons.checkCircle):
           Icon(Icons.access_time_outlined,size:18.4,color:AppColors.reviewDescColor,),const SizedBox(width:10,),
           PText(title:'license_verified'.tr(),size:PSize.text14,fontColor:AppColors.grayShade3,),
         ],)
