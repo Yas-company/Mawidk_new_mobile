@@ -97,7 +97,12 @@ class DoctorProfileScreenState extends State<DoctorProfileScreen> {
                 DoctorModel item = ((state as LoadedState).data).model?.model ?? DoctorModel();
                 // print('fe>${(state).data.model}');
                 if((state).data.model==null){
-                  return Center(child: PText(title: 'no_doctor_details'.tr()));
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    SafeToast.show(message: state.data?.message ?? '',type:MessageType.error);
+                    Navigator.pop(context);
+                  });
+                  return SizedBox.shrink();
+                  // return Center(child: PText(title: 'no_doctor_details'.tr()));
                 }
                 return Column(
                   children: [

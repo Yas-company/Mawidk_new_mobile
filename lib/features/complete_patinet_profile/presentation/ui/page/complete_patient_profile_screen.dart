@@ -2,11 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mawidak/core/component/appbar/p_appbar.dart';
 import 'package:mawidak/core/component/button/p_button.dart';
+import 'package:mawidak/core/component/custom_toast/p_toast.dart';
 import 'package:mawidak/core/component/image/p_image.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/component/text_field/p_textfield.dart';
 import 'package:mawidak/core/data/assets_helper/app_svg_icon.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
+import 'package:mawidak/core/global/enums/global_enum.dart';
 import 'package:mawidak/features/survey/data/model/survey_response_model.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/drop_down_widget.dart';
 import 'package:mawidak/features/survey/presentation/ui/widgets/patient_widgets/radio_button_widget.dart';
@@ -18,6 +20,7 @@ class CompletePatientProfileScreen extends StatefulWidget {
   State<CompletePatientProfileScreen> createState() => CompletePatientProfileScreenState();
 }
 class CompletePatientProfileScreenState extends State<CompletePatientProfileScreen> {
+  TextEditingController birthDateController = TextEditingController();
   Option? medicalAnswer;
   Option? companyAnswer;
   final List<Option> insuranceCompanies = [
@@ -75,10 +78,12 @@ class CompletePatientProfileScreenState extends State<CompletePatientProfileScre
                   initialDate: DateTime.now(),
                 );
                 if (date != null) {
-                  // nextDateController.text = '${date.year}-${date.month}-${date.day}';
-                  // nextDateController.text = DateFormat('yyyy-MM-dd').format(date);
+                  // birthDateController.text = '${date.year}-${date.month}-${date.day}';
+                  birthDateController.text = DateFormat('yyyy-MM-dd').format(date);
+                  setState(() {});
                 }
-              },child: PTextField(enabled:false,labelAbove:'birth_date'.tr(),hintText:'hint_date'.tr(),
+              },child: PTextField(controller:birthDateController,enabled:false,
+                  labelAbove:'birth_date'.tr(),hintText:'hint_date'.tr(),
                 feedback:(value) {
 
                 },disabledBorderColor:Colors.transparent),
@@ -133,7 +138,7 @@ class CompletePatientProfileScreenState extends State<CompletePatientProfileScre
 
               Spacer(),
               PButton(onPressed:() {
-
+                SafeToast.show(message:'Coming Soon',type:MessageType.warning,);
               },hasBloc:false,title:'save_info'.tr(),isFitWidth:true,),
               const SizedBox(height:16),
             ],),

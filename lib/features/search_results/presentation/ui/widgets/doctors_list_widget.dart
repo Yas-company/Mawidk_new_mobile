@@ -129,10 +129,10 @@ class DoctorsListWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top:20),
                   child: PButton(
-                    // onPressed:onTap,
-                    onPressed:() {
-                      context.pushWidget(FancyListGridSwitcher(), '');
-                    },
+                    onPressed:onTap,
+                    // onPressed:() {
+                    //   context.pushWidget(FancyListGridSwitcher(), '');
+                    // },
                     title:'book_appointment'.tr(),hasBloc:false,isFitWidth:true,size:PSize.text16,
                     icon:PImage(source:AppSvgIcons.icNext,height:14,fit:BoxFit.scaleDown,),
                     fontWeight:FontWeight.w700,

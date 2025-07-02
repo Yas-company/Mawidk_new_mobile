@@ -52,7 +52,15 @@ void showLanguageBottomSheet(BuildContext context) {
                       PText(title:'اللغة العربية',fontColor:locale==AppLocalization.getSupportedLocales[1]?
                       AppColors.blackColor:AppColors.grey200),
                       Spacer(),
-                      PImage(source:AppIcons.arabic)
+                        Padding(
+                          padding: const EdgeInsets.only(top:6),
+                          child: Text(
+                            '🇸🇦',
+                            style: TextStyle(fontSize:40),
+                          ),
+                        )
+                        // PText(title:'🇸🇦',size:PSize.text30,),
+                      // PImage(source:AppIcons.arabic)
                     ],),
                     ),
                     Padding(
@@ -80,7 +88,15 @@ void showLanguageBottomSheet(BuildContext context) {
                       PText(title:'English',fontColor:locale==AppLocalization.getSupportedLocales[0] ?
                       AppColors.blackColor:AppColors.grey200,),
                       Spacer(),
-                      PImage(source:AppIcons.english)
+                        Padding(
+                          padding: const EdgeInsets.only(top:6),
+                          child: Text(
+                            '🇺🇸',
+                            style: TextStyle(fontSize:40),
+                          ),
+                        )
+                        // PText(title:'🇺🇸',size:PSize.text30,),
+                      // PImage(source:AppIcons.english)
                     ],),
                     ),
                   ],),
