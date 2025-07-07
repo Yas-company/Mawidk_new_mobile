@@ -32,6 +32,7 @@ import 'package:mawidak/features/home/presentation/ui/page/home_screen_doctor.da
 import 'package:mawidak/features/home/presentation/ui/page/home_screen_patient.dart';
 import 'package:mawidak/features/language_screen.dart';
 import 'package:mawidak/features/login/presentation/ui/pages/login_screen.dart';
+import 'package:mawidak/features/manage_services/presentation/ui/screen/manage_services_screen.dart';
 import 'package:mawidak/features/more/presentation/ui/page/more_screen.dart';
 import 'package:mawidak/features/notification/presentation/ui/page/notification_screen.dart';
 import 'package:mawidak/features/onboarding/onboarding_screen.dart';
@@ -271,6 +272,13 @@ class RouterManager {
         path: AppRouter.doctorProfileDetailsScreen,
         pageBuilder: (context, state) {
           return createRoute(widget:  DoctorProfileDetailsScreen(id:state.extra as int));
+        },
+      ),
+      GoRoute(
+        name: AppRouter.manageServicesScreen,
+        path: AppRouter.manageServicesScreen,
+        pageBuilder: (context, state) {
+          return createRoute(widget:ManageServicesScreen());
         },
       ),
       GoRoute(

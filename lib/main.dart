@@ -1,27 +1,10 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mawidak/core/base_network/interceptors/request_interceptor.dart';
-import 'package:mawidak/core/component/button/p_button.dart';
-import 'package:mawidak/core/component/button/p_floating_action_button.dart';
-import 'package:mawidak/core/data/constants/app_colors.dart';
-import 'package:mawidak/core/data/constants/global_obj.dart';
-import 'package:mawidak/core/data/constants/shared_preferences_constants.dart';
-import 'package:mawidak/core/extensions/navigator_extensions.dart';
-import 'package:mawidak/core/global/enums/global_enum.dart';
-import 'package:mawidak/core/global/global_func.dart';
-import 'package:mawidak/core/services/local_storage/shared_preference/shared_preference_service.dart';
 import 'package:mawidak/core/services/localization/app_localization.dart';
-import 'package:mawidak/core/theme/theme.dart';
 import 'package:mawidak/di.dart';
 import 'package:mawidak/core/services/route_manager/router_manager.dart';
 import 'package:sizer/sizer.dart';
-import 'core/services/notifications/notifications_services.dart';
 
 bool isPickFile = false;
 

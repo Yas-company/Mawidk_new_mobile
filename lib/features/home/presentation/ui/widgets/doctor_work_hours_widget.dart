@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart' as locale;
 import 'package:flutter/material.dart';
 import 'package:mawidak/core/component/text/p_text.dart';
 import 'package:mawidak/core/data/constants/app_colors.dart';
@@ -110,7 +111,7 @@ class DoctorWorkHoursPickerState extends State<DoctorWorkHoursPicker> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PText(title: "ساعات العمل", size: PSize.text14),
+        PText(title: "work_hours".tr(), size: PSize.text14),
         SizedBox(height: 8),
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -118,18 +119,18 @@ class DoctorWorkHoursPickerState extends State<DoctorWorkHoursPicker> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PText(title: "من", size: PSize.text14),
+                PText(title: "from".tr(), size: PSize.text14),
                 SizedBox(height: 8),
-                _timeButton(_startTime, () => _selectTime(true), 'من'),
+                _timeButton(_startTime, () => _selectTime(true), "from".tr()),
               ],
             ),
             SizedBox(width: 20),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PText(title: "إلى", size: PSize.text14),
+                PText(title: "to".tr(), size: PSize.text14),
                 SizedBox(height: 8),
-                _timeButton(_endTime, () => _selectTime(false), 'إلى'),
+                _timeButton(_endTime, () => _selectTime(false), 'to'.tr()),
               ],
             ),
           ],

@@ -100,7 +100,7 @@ class EditPersonalInfoScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       PTextField(
                         controller: bloc.email,
-                        labelAbove: 'البريد الالكتروني ',
+                        labelAbove: 'email'.tr(),
                         textInputType: TextInputType.emailAddress,
                         prefixIcon: PImage(
                           source: AppSvgIcons.mail,

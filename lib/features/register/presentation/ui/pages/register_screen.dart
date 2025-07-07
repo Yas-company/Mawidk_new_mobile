@@ -101,7 +101,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                         registerBloc.add(ValidationEvent());
                       }, validator:(value) => null,),
                     const SizedBox(height:14,),
-                    PTextField( isHasSpecialCharcters:true,textInputAction:TextInputAction.next,isEmail:true,
+                    PTextField(isHasSpecialCharcters:true,textInputAction:TextInputAction.next,isEmail:true,
                       isOptional:true,textInputType: TextInputType.emailAddress,controller:registerBloc.email,
                       labelAbove:'email'.tr(),
                       prefixIcon:PImage(source:AppSvgIcons.mail,fit:BoxFit.scaleDown,color:AppColors.primaryColor),
@@ -164,6 +164,7 @@ class RegisterScreenState extends State<RegisterScreen> {
                       child: PButton<RegisterBloc,BaseState>(onPressed:() {
                         registerBloc.add(AddRegisterEvent(registerRequestModel:
                         RegisterRequestModel(name:registerBloc.name.text,
+                            email:registerBloc.email.text,
                             phone:registerBloc.phone.text,
                             password:registerBloc.password.text,
                             type:3,countryCode:'+20')));

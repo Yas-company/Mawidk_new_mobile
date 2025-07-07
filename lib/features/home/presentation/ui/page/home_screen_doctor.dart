@@ -113,8 +113,8 @@ class HomeScreenDoctor extends StatelessWidget {
                   ),),
                   SliverToBoxAdapter(
                     child:ClinicManagementCard(list:list, onTap:() {
-                      SafeToast.show(message:'Coming Soon',type:MessageType.warning);
-                      // context.push(AppRouter.locationScreen);
+                      // SafeToast.show(message:'Coming Soon',type:MessageType.warning);
+                      context.push(AppRouter.manageServicesScreen);
                     },),
                   ),
                   SliverToBoxAdapter(child:Card(color:Colors.white,

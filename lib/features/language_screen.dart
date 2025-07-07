@@ -23,22 +23,22 @@ class LanguageSelectorScreen extends StatelessWidget {
   }
 
   void navigation(BuildContext context) {
-      String userType = SharedPreferenceService().getString(SharPrefConstants.userType);
-      if (userType.isEmpty) {
-        context.push(AppRouter.doctorOrPatientScreen);
-      } else {
-        bool isLoginKey = SharedPreferenceService().getBool(SharPrefConstants.isLoginKey);
-        if (isLoginKey) {
-          bool surveyStatus = SharedPreferenceService().getBool(SharPrefConstants.surveyStatus);
-          if (surveyStatus) {
-            context.goNamed(userType == 'doctor' ? AppRouter.doctorSurvey : AppRouter.patientSurvey);
-          } else {
-            context.goNamed(userType == 'doctor' ? AppRouter.homeDoctor : AppRouter.homePatient);
-          }
+    String userType = SharedPreferenceService().getString(SharPrefConstants.userType);
+    if (userType.isEmpty) {
+      context.push(AppRouter.doctorOrPatientScreen);
+    } else {
+      bool isLoginKey = SharedPreferenceService().getBool(SharPrefConstants.isLoginKey);
+      if (isLoginKey) {
+        bool surveyStatus = SharedPreferenceService().getBool(SharPrefConstants.surveyStatus);
+        if (surveyStatus) {
+          context.goNamed(userType == 'doctor' ? AppRouter.doctorSurvey : AppRouter.patientSurvey);
         } else {
-          context.goNamed(AppRouter.login);
+          context.goNamed(userType == 'doctor' ? AppRouter.homeDoctor : AppRouter.homePatient);
         }
+      } else {
+        context.goNamed(AppRouter.login);
       }
+    }
   }
 
   @override
